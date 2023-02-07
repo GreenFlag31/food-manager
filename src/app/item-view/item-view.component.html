@@ -1,0 +1,38 @@
+<div class="layer">
+  <app-change-item [item]="item"></app-change-item>
+  <main>
+    <div class="goto-left" (click)="changeItem(-1)">
+      <i class="fa-solid fa-arrow-left"></i>
+    </div>
+    <div class="food-container">
+      <div class="left-container">
+        <h2>
+          {{ item.name }}
+        </h2>
+
+        <div class="best-before-container">
+          <div class="best-before">
+            <i class="fa-regular fa-calendar-days"></i>
+            <p [ngClass]="item.class">
+              {{ item.bestBefore | date : "dd-MM-yyyy" }}
+            </p>
+          </div>
+          <div class="dayLeft">
+            <i class="fa-regular fa-clock"></i>
+            <p>{{ item.dayLeft }} day{{ item.dayLeft! > 1 ? "s" : "" }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="right-container">
+        <img src="../../assets/login.jpg" alt="" />
+      </div>
+    </div>
+    <div class="goto-right" (click)="changeItem(+1)">
+      <i class="fa-solid fa-arrow-right"></i>
+    </div>
+  </main>
+  <div class="actions">
+    <button type="button" (click)="goBack()">Back to the list</button>
+  </div>
+  <app-tips></app-tips>
+</div>

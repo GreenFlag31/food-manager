@@ -1,0 +1,61 @@
+<div class="layer">
+  <app-create-component (newItemAdded)="addItem($event)"></app-create-component>
+  <main>
+    <div class="header">
+      <p
+        attr.data-title="sorted in {{ orderStatusName }} order"
+        (click)="changeOrder($event)"
+      >
+        Name<i [ngClass]="getClassOf(orderStatusName)"></i>
+      </p>
+      <p
+        class="above-time"
+        attr.data-title="sorted in {{ orderStatusDate }} order"
+        (click)="changeOrder($event)"
+      >
+        Date<i [ngClass]="getClassOf(orderStatusDate)"></i>
+      </p>
+      <p><i class="fa-solid fa-magnifying-glass"></i> Search</p>
+    </div>
+    <hr />
+    <div class="event-messages">
+      <div
+        class="no-item"
+        *ngIf="!listItems.length && !isLoading && !error"
+        [@fadeInOut]
+      >
+        <p>
+          <i class="fa-solid fa-circle-exclamation"></i>Add an item by entering
+          a name and a expiry date
+        </p>
+      </div>
+      <div class="loading" *ngIf="isLoading">
+        <span class="loader"></span>
+      </div>
+      <div class="error" *ngIf="error" [@fadeInOut]>
+        <p>
+          <i class="fa-solid fa-circle-exclamation"></i>Unable to retrieve data
+          from the server :/
+        </p>
+      </div>
+    </div>
+    <section class="wrapper" [@slidingApparition]="listItems.length">
+      <div class="food-container" *ngFor="let item of listItems">
+        <app-item
+          [item]="item"
+          [routerLink]="['/my-list/item']"
+          [queryParams]="{
+            name: item.name,
+            bestBefore: item.bestBefore,
+            id: item.itemId
+          }"
+          class="item"
+        ></app-item>
+      </div>
+    </section>
+  </main>
+  <div class="clear">
+    <button type="button" (click)="onDeleteAll()">Clear all</button>
+  </div>
+  <app-tips></app-tips>
+</div>

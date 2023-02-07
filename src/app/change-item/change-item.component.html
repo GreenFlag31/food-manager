@@ -1,0 +1,32 @@
+<form (ngSubmit)="onSubmit(itemForm)" #itemForm="ngForm">
+  <div class="change-item-container">
+    <div class="name">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        id="name"
+        ngModel="{{ item.name }}"
+        name="name"
+        required
+      />
+    </div>
+    <div class="date">
+      <label for="date">Best Before</label>
+      <input
+        type="date"
+        id="date"
+        [ngModel]="item.bestBefore | date : 'yyyy-MM-dd'"
+        name="date"
+        required
+      />
+    </div>
+    <div class="actions">
+      <button type="submit" [disabled]="!itemForm.valid">
+        <i class="fa-regular fa-pen-to-square"></i>Save
+      </button>
+      <button type="button" (click)="onDeleteItem()">
+        <i class="fa-regular fa-trash-can"></i>Delete
+      </button>
+    </div>
+  </div>
+</form>

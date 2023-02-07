@@ -1,0 +1,57 @@
+header {
+  background: rgb(0 106 187);
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+.left-side {
+  display: flex;
+  /* gap: 1em; */
+}
+nav a {
+  text-decoration: none;
+  color: white;
+}
+.started,
+.login,
+.logout,
+.list {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.625em;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+.started:hover,
+.login:hover,
+.logout:hover,
+.list:hover {
+  background: rgb(33, 33, 197);
+  transition: 0.3s ease-in-out;
+}
+.started i,
+.login i,
+.logout i,
+.list i {
+  font-size: 0.8em;
+  color: rgb(85 161 220);
+}
+.started:hover i,
+.login:hover i,
+.logout:hover i,
+.list:hover i {
+  animation: appear 0.4s ease-in-out;
+}
+@keyframes appear {
+  from {
+    transform: scale(0.1);
+  }
+  to {
+    transform: scale(1);
+  }
+}

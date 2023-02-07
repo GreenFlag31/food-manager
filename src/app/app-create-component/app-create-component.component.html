@@ -1,0 +1,30 @@
+<form (ngSubmit)="onSubmit(itemForm, name, bestBefore)" #itemForm="ngForm">
+  <div class="form-container">
+    <img class="fridge" src="../../assets/fridge.jpg" alt="fridge with food" />
+    <div class="change-item-container">
+      <div class="name">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required ngModel #name />
+      </div>
+      <div class="date">
+        <label for="bestBefore">Best Before</label>
+        <input
+          type="date"
+          id="bestBefore"
+          name="bestBefore"
+          required
+          [ngModel]="dateNextWeek | date : 'yyyy-MM-dd'"
+          #bestBefore
+        />
+      </div>
+      <div class="actions">
+        <button type="submit" [disabled]="!itemForm.valid">
+          <i class="fa-regular fa-pen-to-square"></i>Save
+        </button>
+        <button type="button" (click)="onCancel(name, bestBefore)">
+          <i class="fa-solid fa-xmark"></i>Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

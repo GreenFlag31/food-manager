@@ -1,0 +1,57 @@
+.form-container {
+  position: relative;
+  height: 130px;
+}
+.fridge {
+  position: absolute;
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+}
+.change-item-container {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  color: rgb(0 106 187);
+  background: var(--background-1);
+  border-radius: 0.4em;
+  padding: 1em;
+  opacity: 0.9;
+  width: 97%;
+  margin: auto;
+}
+.change-item-container label {
+  font-weight: 600;
+}
+.change-item-container button {
+  background: var(--background-2);
+  outline: none;
+  padding: 0.625em;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 0.2em;
+}
+.change-item-container input {
+  display: block;
+  outline: none;
+  border: 1px solid rgb(198, 198, 198);
+}
+.actions button:first-child {
+  margin-right: 0.2em;
+}
+.actions button:first-child:disabled {
+  background: rgb(85 161 220);
+}
+.actions button:nth-child(2) {
+  background: brown;
+}
+.change-item-container i {
+  margin-right: 0.4em;
+}
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}

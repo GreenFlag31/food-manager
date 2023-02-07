@@ -1,0 +1,14 @@
+.tips {
+  align-self: flex-end;
+}
+.tips i {
+  font-size: 0.7em;
+  margin-right: 0.3em;
+}
+.tips p {
+  font-size: 0.9em;
+}
+.tips p i:first-child {
+  color: rgb(244, 210, 19);
+  font-size: 1em;
+}
