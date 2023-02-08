@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { map, Observable, of, Subscription } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { foodObject, Icriteria } from './IfoodObject';
 
 @Injectable({
@@ -12,7 +11,7 @@ export class FoodDataService implements OnInit {
   currentDate!: string | Date;
   compute!: number;
   url =
-    'https://my-list-a7fb0-default-rtdb.europe-west1.firebasedatabase.app/item.json';
+    'https://my-list-a7fb0-default-rtdb.europe-west1.firebasedatabase.app/items.json';
   criteria: Icriteria = {
     sortedBy: 'date',
     order: 'ascending',
@@ -37,6 +36,7 @@ export class FoodDataService implements OnInit {
   }
 
   addItem(form: foodObject): Observable<foodObject> {
+    // const formWithId = { [this.uniqueId++]: form };
     return this.http.post<foodObject>(this.url, form);
   }
 
@@ -98,33 +98,22 @@ export class FoodDataService implements OnInit {
     }
   }
 
-  getItem(id: number): Observable<foodObject> | any {
+  getItem(id: number): any {
     if (this.listItems.length) {
       const item = this.listItems.find((item) => item.itemId === id)!;
-      return of(item);
+      return item;
     }
-
-    // accessed thourgh direct url ?
-    this.fetchItems().subscribe({
-      next: (items: foodObject[]) => {
-        this.listItems = items;
-        this.setDayLeftItems();
-        this.sortItems(this.criteria.sortedBy, this.criteria.order);
-        debugger;
-        const item = this.listItems.find((item) => item.itemId === id)!;
-        return of(item);
-      },
-    });
-  }
-
-  updateItem(id: number, form: NgForm) {
-    const item = this.listItems[id];
-    item.name = form.form.value.name;
-    item.bestBefore = new Date(form.form.value.date);
-    this.setDayLeftItem(item);
   }
 
   deleteItems() {
     return this.http.delete(this.url);
+  }
+
+  deleteSingleItem(endpoint: string) {
+    return this.http.delete(endpoint);
+  }
+
+  patchItem(endpoint: string, body: { name: string; bestBefore: string }) {
+    return this.http.patch(endpoint, body);
   }
 }

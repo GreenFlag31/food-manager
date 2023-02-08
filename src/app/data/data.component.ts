@@ -45,9 +45,9 @@ export class DataComponent implements OnInit {
 
   addItem(newItem: foodObject) {
     this.listItems.push(newItem);
+    this.updateCentralListItems(this.listItems);
     this.foodData.setDayLeftItem(newItem);
     this.foodData.sortItems(this.criteria.sortedBy, this.criteria.order);
-    this.updateCentralListItems(this.listItems);
   }
 
   onDeleteAll() {
@@ -91,5 +91,9 @@ export class DataComponent implements OnInit {
     } else {
       return 'fa-solid fa-sort-down';
     }
+  }
+
+  method(e: any) {
+    console.log(e);
   }
 }

@@ -4,7 +4,7 @@ export interface foodObject {
   bestBefore: Date;
   class?: string;
   dayLeft?: number;
-  itemId?: number;
+  itemId: number;
 }
 export interface Icriteria {
   sortedBy: string;

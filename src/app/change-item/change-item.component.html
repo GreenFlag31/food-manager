@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit(itemForm)" #itemForm="ngForm">
+<form (ngSubmit)="onChange(itemForm)" #itemForm="ngForm">
   <div class="change-item-container">
     <div class="name">
       <label for="name">Name</label>
@@ -11,18 +11,18 @@
       />
     </div>
     <div class="date">
-      <label for="date">Best Before</label>
+      <label for="bestBefore">Best Before</label>
       <input
         type="date"
-        id="date"
+        id="bestBefore"
         [ngModel]="item.bestBefore | date : 'yyyy-MM-dd'"
-        name="date"
+        name="bestBefore"
         required
       />
     </div>
     <div class="actions">
       <button type="submit" [disabled]="!itemForm.valid">
-        <i class="fa-regular fa-pen-to-square"></i>Save
+        <i class="fa-regular fa-pen-to-square"></i>Edit
       </button>
       <button type="button" (click)="onDeleteItem()">
         <i class="fa-regular fa-trash-can"></i>Delete

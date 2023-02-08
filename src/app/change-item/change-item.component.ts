@@ -15,11 +15,14 @@ export class ChangeItemComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSubmit(form: NgForm) {
-    // this.foodData.updateItem(this.item.id, form);
+  onChange(form: NgForm) {
+    console.log(form.form.value);
+    const url = `https://my-list-a7fb0-default-rtdb.europe-west1.firebasedatabase.app/items/${this.item.id}.json`;
+    this.foodData.patchItem(url, form.form.value).subscribe();
   }
 
   onDeleteItem() {
-    // this.foodData.deleteItem(this.item.id);
+    const url = `https://my-list-a7fb0-default-rtdb.europe-west1.firebasedatabase.app/items/${this.item.id}.json`;
+    this.foodData.deleteSingleItem(url).subscribe();
   }
 }

@@ -14,7 +14,15 @@
     </p>
   </div>
   <div class="actions">
-    <i class="fa-regular fa-pen-to-square"></i>
+    <i
+      class="fa-regular fa-pen-to-square"
+      [routerLink]="['/my-list/item']"
+      [queryParams]="{
+        name: item.name,
+        bestBefore: item.bestBefore,
+        id: item.itemId
+      }"
+    ></i>
     <i class="fa-regular fa-trash-can" (click)="onDeleteItem()"></i>
   </div>
 </div>
