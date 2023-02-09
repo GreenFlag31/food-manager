@@ -92,8 +92,4 @@ export class DataComponent implements OnInit {
       return 'fa-solid fa-sort-down';
     }
   }
-
-  method(e: any) {
-    console.log(e);
-  }
 }

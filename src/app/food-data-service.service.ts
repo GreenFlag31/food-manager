@@ -58,6 +58,7 @@ export class FoodDataService implements OnInit {
       item.class = 'priority-2';
     }
     item.dayLeft = Math.floor(this.compute);
+    return item.dayLeft;
   }
 
   sortItems(type: string, order: string) {

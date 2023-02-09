@@ -1,25 +1,43 @@
 <div class="layer">
-  <app-change-item [item]="item"></app-change-item>
+  <app-change-item
+    [item]="item"
+    (itemChanged)="statusChanged($event)"
+  ></app-change-item>
   <main>
     <div class="goto-left" (click)="changeItem(-1)">
       <i class="fa-solid fa-arrow-left"></i>
     </div>
     <div class="food-container">
       <div class="left-container">
-        <h2>
+        <h2
+          [@openClose]="
+            statusAnimation && changedName ? 'invisible' : 'visible'
+          "
+        >
           {{ item.name }}
         </h2>
 
         <div class="best-before-container">
           <div class="best-before">
             <i class="fa-regular fa-calendar-days"></i>
-            <p [ngClass]="item.class">
+            <p
+              [ngClass]="item.class"
+              [@openClose]="
+                statusAnimation && changedDate ? 'invisible' : 'visible'
+              "
+            >
               {{ item.bestBefore | date : "dd-MM-yyyy" }}
             </p>
           </div>
           <div class="dayLeft">
             <i class="fa-regular fa-clock"></i>
-            <p>{{ item.dayLeft }} day{{ item.dayLeft! > 1 ? "s" : "" }}</p>
+            <p
+              [@openClose]="
+                statusAnimation && changedDate ? 'invisible' : 'visible'
+              "
+            >
+              {{ item.dayLeft }} day{{ item.dayLeft! > 1 ? "s" : "" }}
+            </p>
           </div>
         </div>
       </div>

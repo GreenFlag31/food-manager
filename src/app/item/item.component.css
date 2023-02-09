@@ -1,6 +1,7 @@
 .description {
   display: flex;
   justify-content: space-between;
+  padding: 0.25rem 0.625em;
 }
 
 .description .name {
@@ -19,8 +20,8 @@
   display: flex;
 }
 .actions i {
-  will-change: transform;
   cursor: pointer;
+  will-change: transform;
 }
 .actions i:hover {
   transform: scale(1.3);

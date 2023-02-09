@@ -6,9 +6,13 @@
 
 :root {
   --background-1: rgb(226 230 243);
-  /* --background-2: rgb(0 106 187); */
   --background-2: #1976d2;
 }
+
+/* @font-face {
+  font-family: "Consolas";
+  src: url("./assets/consolas/Consolas.ttf");
+} */
 
 body {
   font-family: sans-serif;

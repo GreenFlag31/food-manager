@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { FoodDataService } from '../food-data-service.service';
 import { foodObject } from '../IfoodObject';
@@ -10,15 +10,18 @@ import { foodObject } from '../IfoodObject';
 })
 export class ChangeItemComponent implements OnInit {
   @Input() item!: foodObject;
+  @Output() itemChanged = new EventEmitter();
 
   constructor(private foodData: FoodDataService) {}
 
   ngOnInit(): void {}
 
   onChange(form: NgForm) {
-    console.log(form.form.value);
+    const copiedItem = { ...this.item };
+    const formValues = form.form.value;
     const url = `https://my-list-a7fb0-default-rtdb.europe-west1.firebasedatabase.app/items/${this.item.id}.json`;
-    this.foodData.patchItem(url, form.form.value).subscribe();
+    this.foodData.patchItem(url, formValues).subscribe();
+    this.itemChanged.emit([copiedItem, formValues]);
   }
 
   onDeleteItem() {

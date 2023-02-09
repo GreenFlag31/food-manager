@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, ENVIRONMENT_INITIALIZER, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { changedAnimation } from '../animations';
 import { FoodDataService } from '../food-data-service.service';
 import { foodObject } from '../IfoodObject';
 
@@ -8,10 +9,14 @@ import { foodObject } from '../IfoodObject';
   selector: 'app-item-view',
   templateUrl: './item-view.component.html',
   styleUrls: ['./item-view.component.css'],
+  animations: [changedAnimation],
 })
 export class ItemViewComponent implements OnInit {
   item!: foodObject;
   id!: number;
+  statusAnimation = false;
+  changedName = false;
+  changedDate = false;
   pageNo = 0;
   snapshotPageNo = 0;
 
@@ -35,28 +40,17 @@ export class ItemViewComponent implements OnInit {
   }
 
   getItem(id: number) {
-    const item = this.foodData.getItem(id);
-    if (item) {
-      this.item = item;
-    } else {
-      this.retrieveDataIfUnexistant(id);
-    }
-  }
-
-  retrieveDataIfUnexistant(id: number) {
-    // accessed through direct url
-    this.foodData.fetchItems().subscribe({
-      next: (items: foodObject[]) => {
-        this.foodData.listItems = items;
-        this.foodData.setDayLeftItems();
-        this.foodData.sortItems(
-          this.foodData.criteria.sortedBy,
-          this.foodData.criteria.order
-        );
-        this.item =
-          this.foodData.listItems.find((item) => item.itemId === id) ||
-          this.foodData.listItems[0];
-      },
+    this.route.data.subscribe(({ items }) => {
+      if (this.foodData.listItems.length) return;
+      this.foodData.listItems = items;
+      this.foodData.setDayLeftItems();
+      this.foodData.sortItems(
+        this.foodData.criteria.sortedBy,
+        this.foodData.criteria.order
+      );
+      this.item =
+        this.foodData.listItems.find((item) => item.itemId === id) ||
+        this.foodData.listItems[0];
     });
   }
 
@@ -66,5 +60,17 @@ export class ItemViewComponent implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+
+  statusChanged(copiedItem: foodObject[]) {
+    this.changedName = copiedItem[0].name !== copiedItem[1].name;
+    this.changedDate = copiedItem[0].bestBefore !== copiedItem[1].bestBefore;
+    this.statusAnimation = !this.statusAnimation;
+
+    setTimeout(() => {
+      this.item.name = copiedItem[1].name;
+      this.item.bestBefore = copiedItem[1].bestBefore;
+      this.statusAnimation = !this.statusAnimation;
+    }, 700);
   }
 }

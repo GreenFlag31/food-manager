@@ -80,10 +80,8 @@ export const fadeInOut = trigger('fadeInOut', [
 
 export const slidingApparition = trigger('slidingApparition', [
   transition('* => *', [
-    // Initially the all cards are not visible
     query(':enter', style({ opacity: 0 }), { optional: true }),
 
-    // Each card will appear sequentially with the delay of 300ms
     query(
       ':enter',
       stagger('200ms', [
@@ -99,4 +97,20 @@ export const slidingApparition = trigger('slidingApparition', [
       { optional: true }
     ),
   ]),
+]);
+
+export const changedAnimation = trigger('openClose', [
+  state(
+    'visible',
+    style({
+      opacity: 1,
+    })
+  ),
+  state(
+    'invisible',
+    style({
+      opacity: 0,
+    })
+  ),
+  transition('invisible <=> visible', [animate('0.3s')]),
 ]);

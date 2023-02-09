@@ -4,6 +4,7 @@ import { DataComponent } from './data/data.component';
 import { ItemViewComponent } from './item-view/item-view.component';
 import { GettingStartedComponent } from './getting-started/getting-started.component';
 import { LoginComponent } from './login/login.component';
+import { DataResolverService } from './data-resolver.service';
 
 const routes: Routes = [
   {
@@ -20,6 +21,9 @@ const routes: Routes = [
   {
     path: 'my-list/item',
     component: ItemViewComponent,
+    resolve: {
+      items: DataResolverService,
+    },
     data: { animation: 'id' },
   },
   {
