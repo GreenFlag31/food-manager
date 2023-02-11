@@ -49,15 +49,17 @@ export class FoodDataService implements OnInit {
 
   setDayLeftItem(item: foodObject) {
     this.currentDate = new Date();
-    this.compute =
-      (+new Date(item.bestBefore) - +this.currentDate) / 1000 / 3600 / 24;
-
+    this.compute = Math.floor(
+      (+new Date(item.bestBefore) - +this.currentDate) / 1000 / 3600 / 24
+    );
     if (this.compute < 7) {
       item.class = 'priority-1';
     } else if (this.compute <= 10) {
       item.class = 'priority-2';
+    } else {
+      item.class = '';
     }
-    item.dayLeft = Math.floor(this.compute);
+    item.dayLeft = this.compute;
     return item.dayLeft;
   }
 
@@ -107,14 +109,18 @@ export class FoodDataService implements OnInit {
   }
 
   deleteItems() {
+    this.listItems = [];
     return this.http.delete(this.url);
   }
 
-  deleteSingleItem(endpoint: string) {
+  deleteSingleItem(endpoint: string, item: foodObject) {
+    this.listItems.splice(item.itemId, 1);
     return this.http.delete(endpoint);
   }
 
   patchItem(endpoint: string, body: { name: string; bestBefore: string }) {
+    console.log(this.listItems);
+
     return this.http.patch(endpoint, body);
   }
 }

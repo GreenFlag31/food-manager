@@ -62,6 +62,9 @@ main {
 .best-before {
   margin-bottom: 0.6em;
 }
+.best-before i {
+  width: 1em;
+}
 .best-before p {
   display: inline-block;
 }

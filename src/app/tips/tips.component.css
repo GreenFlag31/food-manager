@@ -12,3 +12,11 @@
   color: rgb(244, 210, 19);
   font-size: 1em;
 }
+.fa-lightbulb {
+  animation: rotate 2s ease-out 1s;
+}
+@keyframes rotate {
+  to {
+    transform: rotateY(7turn);
+  }
+}

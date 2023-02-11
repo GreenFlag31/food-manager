@@ -11,6 +11,7 @@ import { foodObject } from '../IfoodObject';
 export class ChangeItemComponent implements OnInit {
   @Input() item!: foodObject;
   @Output() itemChanged = new EventEmitter();
+  @Output() itemDeleted = new EventEmitter();
 
   constructor(private foodData: FoodDataService) {}
 
@@ -26,6 +27,10 @@ export class ChangeItemComponent implements OnInit {
 
   onDeleteItem() {
     const url = `https://my-list-a7fb0-default-rtdb.europe-west1.firebasedatabase.app/items/${this.item.id}.json`;
-    this.foodData.deleteSingleItem(url).subscribe();
+    this.foodData.deleteSingleItem(url, this.item).subscribe({
+      complete: () => {
+        this.itemDeleted.emit();
+      },
+    });
   }
 }

@@ -2,9 +2,10 @@
   <app-change-item
     [item]="item"
     (itemChanged)="statusChanged($event)"
+    (itemDeleted)="itemDeleted()"
   ></app-change-item>
   <main>
-    <div class="goto-left" (click)="changeItem(-1)">
+    <div class="goto-left" (click)="navigateTo(-1)">
       <i class="fa-solid fa-arrow-left"></i>
     </div>
     <div class="food-container">
@@ -45,7 +46,7 @@
         <img src="../../assets/login.jpg" alt="" />
       </div>
     </div>
-    <div class="goto-right" (click)="changeItem(+1)">
+    <div class="goto-right" (click)="navigateTo(+1)">
       <i class="fa-solid fa-arrow-right"></i>
     </div>
   </main>
