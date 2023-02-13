@@ -1,4 +1,3 @@
-import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { delay, interval, takeWhile } from 'rxjs';
@@ -23,7 +22,6 @@ export class ItemViewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private foodData: FoodDataService,
-    private location: Location,
     private router: Router
   ) {}
 
@@ -39,7 +37,8 @@ export class ItemViewComponent implements OnInit {
       // keeping criteria set by user
       if (
         this.foodData.criteria.sortedBy !== 'date' ||
-        this.foodData.criteria.order !== 'ascending'
+        this.foodData.criteria.order !== 'ascending' ||
+        this.foodData.listItems[0].dayLeft
       ) {
         return;
       }
@@ -118,6 +117,6 @@ export class ItemViewComponent implements OnInit {
   }
 
   goBack() {
-    this.location.back();
+    this.router.navigate(['my-list']);
   }
 }

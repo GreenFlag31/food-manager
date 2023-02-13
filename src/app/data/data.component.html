@@ -40,13 +40,28 @@
       </div>
     </div>
     <section class="wrapper" [@slidingApparition]="listItems.length">
-      <div class="food-container" *ngFor="let item of listItems">
-        <app-item [item]="item" class="item"></app-item>
+      <div class="food-container" *ngFor="let item of itemsToDisplay">
+        <app-item
+          [item]="item"
+          class="item"
+          (itemDeleted)="onDelete()"
+        ></app-item>
       </div>
     </section>
   </main>
-  <div class="clear">
-    <button type="button" (click)="onDeleteAll()">Clear all</button>
+  <div class="pagination">
+    <app-pagination
+      [current]="currentPage"
+      [total]="totalPages"
+      (goTo)="onGoTo($event)"
+      (next)="onNext($event)"
+      (previous)="onPrevious($event)"
+    ></app-pagination>
   </div>
-  <app-tips></app-tips>
+  <footer>
+    <app-tips></app-tips>
+    <div class="clear">
+      <button type="button" (click)="onDeleteAll()">Clear all</button>
+    </div>
+  </footer>
 </div>

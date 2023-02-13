@@ -1,12 +1,9 @@
 .description {
   display: flex;
   justify-content: space-between;
-  padding: 0.25rem 0.625em;
 }
-
 .description .name {
   text-transform: capitalize;
-  font-weight: bold;
 }
 .description p {
   min-width: 60px;

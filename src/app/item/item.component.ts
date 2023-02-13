@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FoodDataService } from '../food-data-service.service';
 import { foodObject } from '../IfoodObject';
 
@@ -10,14 +10,15 @@ import { foodObject } from '../IfoodObject';
 })
 export class ItemComponent implements OnInit {
   @Input() item!: foodObject;
+  @Output() itemDeleted = new EventEmitter();
 
   constructor(private foodService: FoodDataService) {}
 
-  ngOnInit(): void {}
+  ngOnInit() {}
 
   onDeleteItem() {
-    console.log(this.item);
     const url = `https://my-list-a7fb0-default-rtdb.europe-west1.firebasedatabase.app/items/${this.item.id}.json`;
     this.foodService.deleteSingleItem(url, this.item).subscribe();
+    this.itemDeleted.emit();
   }
 }

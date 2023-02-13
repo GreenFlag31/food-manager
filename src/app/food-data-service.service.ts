@@ -88,7 +88,7 @@ export class FoodDataService implements OnInit {
   }
 
   setUniqueId() {
-    if (this.listItems[0].itemId) return;
+    // if (this.listItems[0].itemId) return;
 
     for (let i = 0; i < this.listItems.length; i++) {
       this.listItems[i].itemId = i;
@@ -115,6 +115,7 @@ export class FoodDataService implements OnInit {
 
   deleteSingleItem(endpoint: string, item: foodObject) {
     this.listItems.splice(item.itemId, 1);
+    this.setUniqueId();
     return this.http.delete(endpoint);
   }
 

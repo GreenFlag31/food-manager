@@ -2,12 +2,17 @@
   grid-template-rows: 130px auto min-content min-content;
 }
 main {
-  margin-top: 1.5em;
+  margin-top: 1em;
+}
+main,
+footer {
+  padding: 0.625em;
 }
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-weight: bold;
 }
 .header p {
   cursor: pointer;
@@ -48,8 +53,9 @@ main {
 }
 hr {
   background: rgb(0 106 187);
-  height: 2px;
-  margin: 0 0.625em 0.1em;
+  height: 1px;
+  border: none;
+  margin: 0.1em 0 0.3em 0;
 }
 .event-messages {
   display: flex;
@@ -79,29 +85,18 @@ hr {
 }
 .error p {
   background: #ffd2d2;
-  padding: 0.625em;
   font-weight: 600;
   border-radius: 0.2em;
 }
 .food-container {
   font-size: 0.8em;
+  padding: 0.3em 0;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
 }
 
-/* .food-container::after {
-  content: "";
-  display: block;
-  width: 100%;
-  height: 0.5px;
-  background: rgb(0 106 187);
-} */
-.clear,
-app-tips,
-.header {
-  padding: 0.625em;
-}
-.clear {
-  margin-left: auto;
-}
 .clear button {
   padding: 0.625em;
   background: brown;
@@ -110,6 +105,8 @@ app-tips,
   border-radius: 0.2em;
   cursor: pointer;
 }
-app-tips {
-  align-self: flex-end;
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 }

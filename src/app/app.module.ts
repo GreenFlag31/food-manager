@@ -16,6 +16,7 @@ import { DatePipe } from '@angular/common';
 import { GettingStartedComponent } from './getting-started/getting-started.component';
 import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app-routing.module';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { AppRoutingModule } from './app-routing.module';
     TipsComponent,
     GettingStartedComponent,
     LoginComponent,
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,6 @@ import { AppRoutingModule } from './app-routing.module';
     HttpClientModule,
   ],
   providers: [DatePipe],
-
   bootstrap: [AppComponent],
 })
 export class AppModule {}

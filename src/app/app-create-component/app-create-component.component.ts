@@ -21,7 +21,7 @@ export class AppCreateComponentComponent implements OnInit {
     );
   }
 
-  onSubmit(
+  onCreateItem(
     itemForm: NgForm,
     name: HTMLInputElement,
     bestBefore: HTMLInputElement

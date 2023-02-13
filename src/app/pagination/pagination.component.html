@@ -1,0 +1,38 @@
+<nav aria-label="pagination" [@openClose]="total ? 'visible' : 'invisible'">
+  <ul>
+    <li>
+      <button
+        aria-label="Go To Previous Page"
+        [attr.aria-disabled]="current === 1"
+        [disabled]="current === 1"
+        (click)="onPrevious()"
+      >
+        <i class="fa-solid fa-angles-left"></i>
+      </button>
+    </li>
+    <li *ngFor="let page of pages; let indexPage = index">
+      <a
+        [attr.aria-current]="page === current ? 'page' : null"
+        [attr.aria-label]="
+          page === current ? 'Current Page, Page ' + page : 'Go to Page ' + page
+        "
+        [class.current]="page === current"
+        tabindex="0"
+        (click)="onGoTo(indexPage)"
+        (keyup.enter)="onGoTo(indexPage)"
+      >
+        {{ page }}</a
+      >
+    </li>
+    <li>
+      <button
+        aria-label="Go To Next Page"
+        [attr.aria-disabled]="current === total"
+        [disabled]="current === total"
+        (click)="onNext()"
+      >
+        <i class="fa-solid fa-angles-right"></i>
+      </button>
+    </li>
+  </ul>
+</nav>

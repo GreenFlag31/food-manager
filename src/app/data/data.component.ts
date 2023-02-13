@@ -17,6 +17,10 @@ export class DataComponent implements OnInit {
   orderStatusName = 'ascending';
   orderStatusDate = 'ascending';
   criteria: Icriteria = this.foodData.criteria;
+  currentPage = 1;
+  itemsToDisplay: foodObject[] = [];
+  itemsperPage = 3;
+  totalPages: number = 0;
 
   ngOnInit() {
     this.fetchItems();
@@ -35,6 +39,7 @@ export class DataComponent implements OnInit {
         this.foodData.setDayLeftItems();
         this.foodData.sortItems(this.criteria.sortedBy, this.criteria.order);
         this.isLoading = false;
+        this.updateItemsToDisplay();
       },
       error: () => {
         this.error = true;
@@ -48,6 +53,18 @@ export class DataComponent implements OnInit {
     this.updateCentralListItems(this.listItems);
     this.foodData.setDayLeftItem(newItem);
     this.foodData.sortItems(this.criteria.sortedBy, this.criteria.order);
+    this.updateItemsToDisplay();
+  }
+
+  updateItemsToDisplay() {
+    this.totalPages = Math.ceil(
+      this.foodData.listItems.length / this.itemsperPage
+    );
+    this.itemsToDisplay = this.paginate(this.currentPage, this.itemsperPage);
+  }
+
+  onDelete() {
+    this.updateItemsToDisplay();
   }
 
   onDeleteAll() {
@@ -91,5 +108,28 @@ export class DataComponent implements OnInit {
     } else {
       return 'fa-solid fa-sort-down';
     }
+  }
+
+  onGoTo(page: number) {
+    this.currentPage = page;
+    this.itemsToDisplay = this.paginate(this.currentPage, this.itemsperPage);
+  }
+
+  onNext(page: number) {
+    this.currentPage = page + 1;
+    this.itemsToDisplay = this.paginate(this.currentPage, this.itemsperPage);
+  }
+
+  onPrevious(page: number) {
+    this.currentPage = page - 1;
+    this.itemsToDisplay = this.paginate(this.currentPage, this.itemsperPage);
+  }
+
+  paginate(currentPage: number, itemsperPage: number): foodObject[] {
+    return [
+      ...this.foodData.listItems
+        .slice((currentPage - 1) * itemsperPage)
+        .slice(0, itemsperPage),
+    ];
   }
 }

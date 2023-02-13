@@ -13,7 +13,7 @@
   font-size: 1em;
 }
 .fa-lightbulb {
-  animation: rotate 2s ease-out 1s;
+  animation: rotate 2s ease-out 2s;
 }
 @keyframes rotate {
   to {
