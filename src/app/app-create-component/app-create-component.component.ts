@@ -27,9 +27,11 @@ export class AppCreateComponentComponent implements OnInit {
     bestBefore: HTMLInputElement
   ) {
     const values = itemForm.form.value;
-    this.foodData.addItem(values).subscribe(() => {
+    this.foodData.addItem(values).subscribe((res) => {
+      values.id = res.name;
+
       this.resetFields(name, bestBefore);
-      this.newItemAdded.emit(itemForm.form.value);
+      this.newItemAdded.emit(values);
     });
   }
 

@@ -1,5 +1,5 @@
 export interface foodObject {
-  id?: number;
+  id?: string;
   name: string;
   bestBefore: Date;
   class?: string;

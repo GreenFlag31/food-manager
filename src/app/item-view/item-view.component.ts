@@ -113,6 +113,9 @@ export class ItemViewComponent implements OnInit {
   }
 
   itemDeleted() {
+    if (!this.foodData.listItems.length) {
+      return this.goBack();
+    }
     this.navigateTo(this.id + 1);
   }
 

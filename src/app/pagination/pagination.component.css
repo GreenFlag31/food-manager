@@ -21,8 +21,10 @@ li {
 
 a {
   cursor: pointer;
-  padding: 0.225em 0.525em;
+  color: #333;
+  padding: 0.4em 0.7em;
   border-radius: 50%;
+  background-color: #f5f5f5;
 }
 
 a.current,
@@ -41,7 +43,7 @@ a.current {
 
 button {
   display: flex;
-  background-color: #e9ecef;
+  background-color: #f5f5f5;
   border: none;
   cursor: pointer;
   color: #007acc;
@@ -52,7 +54,8 @@ button {
 
 button[disabled] {
   cursor: default;
-  color: #212529;
+  color: #a1d1ff;
+  cursor: not-allowed;
 }
 
 button:not([disabled]):hover {

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DebugEventListener, OnInit } from '@angular/core';
 import { FoodDataService } from '../food-data-service.service';
 import { foodObject, Icriteria } from '../IfoodObject';
 import { fadeInOut, slidingApparition } from '../animations';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-data',
@@ -10,19 +11,27 @@ import { fadeInOut, slidingApparition } from '../animations';
   animations: [fadeInOut, slidingApparition],
 })
 export class DataComponent implements OnInit {
-  constructor(private foodData: FoodDataService) {}
   listItems: foodObject[] = this.foodData.listItems;
   error = false;
   isLoading = false;
   orderStatusName = 'ascending';
   orderStatusDate = 'ascending';
   criteria: Icriteria = this.foodData.criteria;
-  currentPage = 1;
+  currentPage!: number;
   itemsToDisplay: foodObject[] = [];
   itemsperPage = 3;
   totalPages: number = 0;
 
+  constructor(
+    private foodData: FoodDataService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
+
   ngOnInit() {
+    this.currentPage =
+      Number(this.route.snapshot.queryParamMap.get('page')) || 1;
+
     this.fetchItems();
   }
 
@@ -32,6 +41,7 @@ export class DataComponent implements OnInit {
       next: (items: foodObject[]) => {
         if (items.length === 0) {
           this.isLoading = false;
+          this.addPaginationToUrl(true);
           return;
         }
 
@@ -60,18 +70,25 @@ export class DataComponent implements OnInit {
     this.totalPages = Math.ceil(
       this.foodData.listItems.length / this.itemsperPage
     );
-    this.itemsToDisplay = this.paginate(this.currentPage, this.itemsperPage);
+    this.itemsToDisplay = this.paginate();
   }
 
+  // trop de données - mettre dans un service - utiliser ngOnChanges pour détecter les changements ?
   onDelete() {
     this.updateItemsToDisplay();
+    if (this.totalPages === 0) {
+      this.addPaginationToUrl(true);
+    }
   }
 
   onDeleteAll() {
     this.foodData.deleteItems().subscribe(() => {
       // add an alert confirm message
       this.listItems = [];
-      this.updateCentralListItems(this.listItems);
+      this.itemsToDisplay = [];
+      this.totalPages = 0;
+      this.addPaginationToUrl(true);
+      console.log(this.currentPage);
     });
   }
 
@@ -80,11 +97,12 @@ export class DataComponent implements OnInit {
   }
 
   changeOrder(element: MouseEvent) {
+    if (!this.foodData.listItems.length) return;
+
     const name = (
       element.target as HTMLParagraphElement
     ).innerText.toLowerCase();
     let order = (element.target as HTMLParagraphElement).dataset['title']!;
-
     if (order.includes('ascending')) {
       order = 'descending';
     } else {
@@ -100,6 +118,7 @@ export class DataComponent implements OnInit {
     this.criteria.sortedBy = name;
     this.criteria.order = order;
     this.foodData.sortItems(this.criteria.sortedBy, this.criteria.order);
+    this.itemsToDisplay = this.paginate();
   }
 
   getClassOf(order: string) {
@@ -112,24 +131,39 @@ export class DataComponent implements OnInit {
 
   onGoTo(page: number) {
     this.currentPage = page;
-    this.itemsToDisplay = this.paginate(this.currentPage, this.itemsperPage);
+    this.itemsToDisplay = this.paginate();
   }
 
   onNext(page: number) {
     this.currentPage = page + 1;
-    this.itemsToDisplay = this.paginate(this.currentPage, this.itemsperPage);
+    this.itemsToDisplay = this.paginate();
   }
 
   onPrevious(page: number) {
     this.currentPage = page - 1;
-    this.itemsToDisplay = this.paginate(this.currentPage, this.itemsperPage);
+    this.itemsToDisplay = this.paginate();
   }
 
-  paginate(currentPage: number, itemsperPage: number): foodObject[] {
+  paginate(): foodObject[] {
+    this.addPaginationToUrl();
     return [
       ...this.foodData.listItems
-        .slice((currentPage - 1) * itemsperPage)
-        .slice(0, itemsperPage),
+        .slice((this.currentPage - 1) * this.itemsperPage)
+        .slice(0, this.itemsperPage),
     ];
+  }
+
+  addPaginationToUrl(noParam = false) {
+    if (this.totalPages === 0 && !noParam) return;
+    if (this.currentPage > this.totalPages && this.totalPages) {
+      this.currentPage = this.totalPages;
+    }
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        page: noParam ? null : this.currentPage,
+      },
+    });
   }
 }

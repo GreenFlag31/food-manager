@@ -3,17 +3,31 @@
   <main>
     <div class="header">
       <p
-        attr.data-title="sorted in {{ orderStatusName }} order"
+        attr.data-title="{{
+          listItems.length
+            ? 'sorted in ' + orderStatusName + ' order'
+            : 'Add data to sort'
+        }}"
         (click)="changeOrder($event)"
       >
-        Name<i [ngClass]="getClassOf(orderStatusName)"></i>
+        Name<i
+          *ngIf="listItems.length"
+          [ngClass]="getClassOf(orderStatusName)"
+        ></i>
       </p>
       <p
         class="above-time"
-        attr.data-title="sorted in {{ orderStatusDate }} order"
+        attr.data-title="{{
+          listItems.length
+            ? 'sorted in ' + orderStatusDate + ' order'
+            : 'Add data to sort'
+        }}"
         (click)="changeOrder($event)"
       >
-        Date<i [ngClass]="getClassOf(orderStatusDate)"></i>
+        Date<i
+          *ngIf="listItems.length"
+          [ngClass]="getClassOf(orderStatusDate)"
+        ></i>
       </p>
       <p><i class="fa-solid fa-magnifying-glass"></i> Search</p>
     </div>
@@ -61,7 +75,13 @@
   <footer>
     <app-tips></app-tips>
     <div class="clear">
-      <button type="button" (click)="onDeleteAll()">Clear all</button>
+      <button
+        type="button"
+        [disabled]="!itemsToDisplay.length"
+        (click)="onDeleteAll()"
+      >
+        Clear all
+      </button>
     </div>
   </footer>
 </div>

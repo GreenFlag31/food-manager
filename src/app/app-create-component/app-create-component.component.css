@@ -45,6 +45,7 @@
 }
 .actions button:first-child:disabled {
   background: rgb(85 161 220);
+  cursor: not-allowed;
 }
 .actions button:nth-child(2) {
   background: brown;
