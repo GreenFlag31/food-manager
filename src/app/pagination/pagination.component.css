@@ -58,9 +58,13 @@ button[disabled] {
   cursor: not-allowed;
 }
 
-button:not([disabled]):hover {
+button:not([disabled]):not(.invisible):hover {
   background-color: #007acc;
   color: #fff;
   cursor: pointer;
   outline: none;
+}
+
+button.invisible {
+  cursor: auto;
 }

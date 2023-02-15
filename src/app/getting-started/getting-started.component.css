@@ -24,6 +24,16 @@ button:hover {
 .text {
   padding: 0.625em;
 }
+p {
+  margin-bottom: 0.3em;
+}
+.emphasize {
+  font-weight: 600;
+  color: var(--background-3);
+}
+a {
+  text-decoration: none;
+}
 .confirm-landing {
   display: flex;
   gap: 0.4em;

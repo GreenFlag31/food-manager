@@ -17,6 +17,7 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
 import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PaginationComponent } from './pagination/pagination.component';
+import { PageNotFoundComponent } from './page-not-found-component/page-not-found-component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { PaginationComponent } from './pagination/pagination.component';
     GettingStartedComponent,
     LoginComponent,
     PaginationComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,

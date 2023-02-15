@@ -5,6 +5,7 @@ import { ItemViewComponent } from './item-view/item-view.component';
 import { GettingStartedComponent } from './getting-started/getting-started.component';
 import { LoginComponent } from './login/login.component';
 import { DataResolverService } from './data-resolver.service';
+import { PageNotFoundComponent } from './page-not-found-component/page-not-found-component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,7 @@ const routes: Routes = [
     component: LoginComponent,
     data: { animation: 'login' },
   },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({

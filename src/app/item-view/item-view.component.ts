@@ -18,6 +18,7 @@ export class ItemViewComponent implements OnInit {
   changedName = false;
   changedDate = false;
   enableCountUp = true;
+  listItems: foodObject[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -27,7 +28,6 @@ export class ItemViewComponent implements OnInit {
 
   ngOnInit() {
     this.id = Number(this.route.snapshot.queryParamMap.get('id')) || 0;
-
     this.addDataIfDirectAccess();
     this.navigateTo(0);
   }
@@ -40,6 +40,7 @@ export class ItemViewComponent implements OnInit {
         this.foodData.criteria.order !== 'ascending' ||
         this.foodData.listItems[0].dayLeft
       ) {
+        this.listItems = this.foodData.listItems;
         return;
       }
 
@@ -48,6 +49,7 @@ export class ItemViewComponent implements OnInit {
         this.foodData.criteria.sortedBy,
         this.foodData.criteria.order
       );
+      this.listItems = this.foodData.listItems;
     });
   }
 
@@ -63,6 +65,10 @@ export class ItemViewComponent implements OnInit {
   }
 
   navigateTo(n: number) {
+    if (!this.foodData.listItems.length) {
+      return this.goBack();
+    }
+
     this.enableCountUp = false;
     this.correctIdUrl(this.id + n);
     this.getItem(this.id);

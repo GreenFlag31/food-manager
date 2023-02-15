@@ -1,4 +1,9 @@
-import { Component, DebugEventListener, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { FoodDataService } from '../food-data-service.service';
 import { foodObject, Icriteria } from '../IfoodObject';
 import { fadeInOut, slidingApparition } from '../animations';
@@ -9,6 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './data.component.html',
   styleUrls: ['./data.component.css'],
   animations: [fadeInOut, slidingApparition],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataComponent implements OnInit {
   listItems: foodObject[] = this.foodData.listItems;
@@ -25,7 +31,8 @@ export class DataComponent implements OnInit {
   constructor(
     private foodData: FoodDataService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private ref: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -54,6 +61,9 @@ export class DataComponent implements OnInit {
       error: () => {
         this.error = true;
         this.isLoading = false;
+      },
+      complete: () => {
+        this.ref.markForCheck();
       },
     });
   }
@@ -88,7 +98,7 @@ export class DataComponent implements OnInit {
       this.itemsToDisplay = [];
       this.totalPages = 0;
       this.addPaginationToUrl(true);
-      console.log(this.currentPage);
+      this.ref.markForCheck();
     });
   }
 
@@ -97,7 +107,7 @@ export class DataComponent implements OnInit {
   }
 
   changeOrder(element: MouseEvent) {
-    if (!this.foodData.listItems.length) return;
+    if (this.foodData.listItems.length <= 1) return;
 
     const name = (
       element.target as HTMLParagraphElement

@@ -7,6 +7,9 @@ main {
   align-items: center;
   height: 10em;
 }
+main.center {
+  justify-content: center;
+}
 .goto-left,
 .goto-right {
   display: flex;
