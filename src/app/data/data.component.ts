@@ -2,7 +2,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   OnInit,
+  ViewChild,
 } from '@angular/core';
 import { FoodDataService } from '../food-data-service.service';
 import { foodObject, Icriteria } from '../IfoodObject';
@@ -27,6 +29,7 @@ export class DataComponent implements OnInit {
   itemsToDisplay: foodObject[] = [];
   itemsperPage = 3;
   totalPages: number = 0;
+  @ViewChild('searchBox') searchBox!: ElementRef;
 
   constructor(
     private foodData: FoodDataService,
@@ -57,6 +60,7 @@ export class DataComponent implements OnInit {
         this.foodData.sortItems(this.criteria.sortedBy, this.criteria.order);
         this.isLoading = false;
         this.updateItemsToDisplay();
+        this.updateCentralListItems(this.listItems);
       },
       error: () => {
         this.error = true;
@@ -83,7 +87,6 @@ export class DataComponent implements OnInit {
     this.itemsToDisplay = this.paginate();
   }
 
-  // trop de données - mettre dans un service - utiliser ngOnChanges pour détecter les changements ?
   onDelete() {
     this.updateItemsToDisplay();
     if (this.totalPages === 0) {
@@ -107,7 +110,8 @@ export class DataComponent implements OnInit {
   }
 
   changeOrder(element: MouseEvent) {
-    if (this.foodData.listItems.length <= 1) return;
+    if (this.foodData.listItems.length <= 1 || this.itemsToDisplay.length <= 1)
+      return;
 
     const name = (
       element.target as HTMLParagraphElement
@@ -139,19 +143,37 @@ export class DataComponent implements OnInit {
     }
   }
 
+  onSearch(term: string) {
+    const items = this.foodData.getItemByName(term);
+    if (items.length) {
+      this.itemsToDisplay = items;
+      const current = Math.ceil((items[0].itemId + 1) / this.itemsperPage);
+      this.currentPage = current === 0 ? 1 : current;
+      this.paginate();
+    } else if (!term.trim()) {
+      this.currentPage = 1;
+      this.itemsToDisplay = this.paginate();
+    } else {
+      this.itemsToDisplay = [];
+    }
+  }
+
   onGoTo(page: number) {
     this.currentPage = page;
     this.itemsToDisplay = this.paginate();
+    this.searchBox.nativeElement.value = '';
   }
 
   onNext(page: number) {
     this.currentPage = page + 1;
     this.itemsToDisplay = this.paginate();
+    this.searchBox.nativeElement.value = '';
   }
 
   onPrevious(page: number) {
     this.currentPage = page - 1;
     this.itemsToDisplay = this.paginate();
+    this.searchBox.nativeElement.value = '';
   }
 
   paginate(): foodObject[] {

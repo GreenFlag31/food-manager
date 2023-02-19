@@ -4,7 +4,16 @@
     <div class="change-item-container">
       <div class="name">
         <label for="name">Name</label>
-        <input type="text" id="name" name="name" required ngModel #name />
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          ngModel
+          #name
+          tabindex="0"
+          (keyup.escape)="onCancel(name, bestBefore)"
+        />
       </div>
       <div class="date">
         <label for="bestBefore">Best Before</label>
@@ -15,6 +24,7 @@
           required
           [ngModel]="dateNextWeek | date : 'yyyy-MM-dd'"
           #bestBefore
+          (keyup.escape)="onCancel(name, bestBefore)"
         />
       </div>
       <div class="actions">

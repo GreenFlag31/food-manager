@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { foodObject, Icriteria } from './IfoodObject';
 
 @Injectable({
@@ -108,6 +108,17 @@ export class FoodDataService implements OnInit {
     }
   }
 
+  getItemByName(term: string) {
+    term = term.toLowerCase().trim();
+    if (!term || !this.listItems.length) {
+      return [];
+    }
+
+    return this.listItems.filter(
+      (item) => item.name.toLowerCase().trim() === term
+    )!;
+  }
+
   deleteItems() {
     this.listItems = [];
     return this.http.delete(this.url);
@@ -120,8 +131,6 @@ export class FoodDataService implements OnInit {
   }
 
   patchItem(endpoint: string, body: { name: string; bestBefore: string }) {
-    console.log(this.listItems);
-
     return this.http.patch(endpoint, body);
   }
 }

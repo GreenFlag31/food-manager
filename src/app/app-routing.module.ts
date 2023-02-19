@@ -6,6 +6,7 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
 import { LoginComponent } from './login/login.component';
 import { DataResolverService } from './data-resolver.service';
 import { PageNotFoundComponent } from './page-not-found-component/page-not-found-component';
+import { ContactComponent } from './contact/contact.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,11 @@ const routes: Routes = [
     data: { animation: 'id' },
   },
   {
+    path: 'contact',
+    component: ContactComponent,
+    data: { animation: 'zzz' },
+  },
+  {
     path: 'getting-started',
     component: GettingStartedComponent,
     data: { animation: 'started' },
@@ -37,7 +43,7 @@ const routes: Routes = [
     component: LoginComponent,
     data: { animation: 'login' },
   },
-  { path: '**', component: PageNotFoundComponent },
+  { path: '**', component: PageNotFoundComponent, data: { animation: 'lost' } },
 ];
 
 @NgModule({

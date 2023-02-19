@@ -1,4 +1,4 @@
-<div class="layer">
+<div class="layer" appKeyDown>
   <app-create-component (newItemAdded)="addItem($event)"></app-create-component>
   <main>
     <div class="header">
@@ -29,7 +29,15 @@
           [ngClass]="getClassOf(orderStatusDate)"
         ></i>
       </p>
-      <p><i class="fa-solid fa-magnifying-glass"></i> Search</p>
+      <div class="search">
+        <i class="fa-solid fa-magnifying-glass"></i
+        ><input
+          type="text"
+          placeholder="Search"
+          #searchBox
+          (keyup)="onSearch(searchBox.value)"
+        />
+      </div>
     </div>
     <hr />
     <div class="event-messages">
@@ -53,7 +61,7 @@
         </p>
       </div>
     </div>
-    <section class="wrapper" [@slidingApparition]="listItems.length">
+    <section class="wrapper" [@slidingApparition]="itemsToDisplay.length">
       <div class="food-container" *ngFor="let item of itemsToDisplay">
         <app-item
           [item]="item"
@@ -77,7 +85,7 @@
     <div class="clear">
       <button
         type="button"
-        [disabled]="!itemsToDisplay.length"
+        [disabled]="!listItems.length"
         (click)="onDeleteAll()"
       >
         Clear all

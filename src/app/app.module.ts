@@ -18,6 +18,9 @@ import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PaginationComponent } from './pagination/pagination.component';
 import { PageNotFoundComponent } from './page-not-found-component/page-not-found-component';
+import { KeyDownDirective } from './key-down.directive';
+import { SafeHTMLPipe } from './safe-html.pipe';
+import { ContactComponent } from './contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,9 @@ import { PageNotFoundComponent } from './page-not-found-component/page-not-found
     LoginComponent,
     PaginationComponent,
     PageNotFoundComponent,
+    KeyDownDirective,
+    SafeHTMLPipe,
+    ContactComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +47,7 @@ import { PageNotFoundComponent } from './page-not-found-component/page-not-found
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, SafeHTMLPipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

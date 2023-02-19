@@ -10,3 +10,8 @@ export interface Icriteria {
   sortedBy: string;
   order: string;
 }
+
+export interface Shortcut {
+  keys: string[];
+  cb: { (): void };
+}

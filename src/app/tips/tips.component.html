@@ -1,7 +1,12 @@
 <div class="tips">
   <p>
-    <i class="fa-regular fa-lightbulb"></i>Tips : Use arrows
-    <i class="fa-solid fa-arrow-up"></i><i class="fa-solid fa-arrow-down"></i> |
-    TAB to change the date easely
+    <i class="fa-regular fa-lightbulb"></i>Tips:
+    <span
+      class="tips-message"
+      #tips
+      [innerHTML]="getTips() | safeHTML"
+      [@tips]="isOpen ? 'visible' : 'default'"
+    >
+    </span>
   </p>
 </div>

@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { delay, interval, takeWhile } from 'rxjs';
 import { changedAnimation } from '../animations';
@@ -10,6 +15,7 @@ import { foodObject } from '../IfoodObject';
   templateUrl: './item-view.component.html',
   styleUrls: ['./item-view.component.css'],
   animations: [changedAnimation],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemViewComponent implements OnInit {
   item!: foodObject;
@@ -23,7 +29,8 @@ export class ItemViewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private foodData: FoodDataService,
-    private router: Router
+    private router: Router,
+    private ref: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -103,6 +110,7 @@ export class ItemViewComponent implements OnInit {
       const totalDays = this.foodData.setDayLeftItem(this.item);
       this.countUp(totalDays);
       this.statusAnimation = !this.statusAnimation;
+      this.ref.markForCheck();
     }, 500);
   }
 
@@ -115,7 +123,11 @@ export class ItemViewComponent implements OnInit {
       delay(300),
       takeWhile((value) => value < totalDays && this.enableCountUp)
     );
-    daysSub.subscribe(() => this.item.dayLeft!++);
+
+    daysSub.subscribe(() => {
+      this.item.dayLeft!++;
+      this.ref.markForCheck();
+    });
   }
 
   itemDeleted() {

@@ -1,22 +1,31 @@
 .tips {
   align-self: flex-end;
 }
-.tips i {
-  font-size: 0.7em;
-  margin-right: 0.3em;
+.container {
+  display: flex;
 }
 .tips p {
+  /* display: flex; */
   font-size: 0.9em;
 }
-.tips p i:first-child {
+.title {
+  display: flex;
+}
+.tips i.fa-lightbulb {
+  margin-right: 0.3em;
   color: rgb(244, 210, 19);
   font-size: 1em;
-}
-.fa-lightbulb {
-  animation: rotate 2s ease-out 2s;
+  animation: rotate 1.5s ease-out 1s;
 }
 @keyframes rotate {
   to {
-    transform: rotateY(7turn);
+    transform: rotateY(5turn);
   }
+}
+
+.tips-message {
+  display: inline-block;
+}
+.two {
+  display: none;
 }

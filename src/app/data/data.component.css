@@ -112,3 +112,15 @@ footer {
   justify-content: space-between;
   align-items: flex-end;
 }
+.search {
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+  max-width: 6em;
+}
+.search input {
+  border: none;
+  width: 100%;
+  color: rgb(0 106 187);
+  outline: none;
+}
