@@ -31,7 +31,7 @@ const routes: Routes = [
   {
     path: 'contact',
     component: ContactComponent,
-    data: { animation: 'zzz' },
+    data: { animation: 'contact' },
   },
   {
     path: 'getting-started',

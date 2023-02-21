@@ -1,85 +1,15 @@
 <div class="layer" appKeyDown>
   <app-create-component (newItemAdded)="addItem($event)"></app-create-component>
-  <main>
-    <div class="header">
-      <p
-        attr.data-title="{{
-          listItems.length
-            ? 'sorted in ' + orderStatusName + ' order'
-            : 'Add data to sort'
-        }}"
-        (click)="changeOrder($event)"
-      >
-        Name<i
-          *ngIf="listItems.length"
-          [ngClass]="getClassOf(orderStatusName)"
-        ></i>
-      </p>
-      <p
-        class="above-time"
-        attr.data-title="{{
-          listItems.length
-            ? 'sorted in ' + orderStatusDate + ' order'
-            : 'Add data to sort'
-        }}"
-        (click)="changeOrder($event)"
-      >
-        Date<i
-          *ngIf="listItems.length"
-          [ngClass]="getClassOf(orderStatusDate)"
-        ></i>
-      </p>
-      <div class="search">
-        <i class="fa-solid fa-magnifying-glass"></i
-        ><input
-          type="text"
-          placeholder="Search"
-          #searchBox
-          (keyup)="onSearch(searchBox.value)"
-        />
-      </div>
-    </div>
-    <hr />
-    <div class="event-messages">
-      <div
-        class="no-item"
-        *ngIf="!listItems.length && !isLoading && !error"
-        [@fadeInOut]
-      >
-        <p>
-          <i class="fa-solid fa-circle-exclamation"></i>Add an item by entering
-          a name and a expiry date
-        </p>
-      </div>
-      <div class="loading" *ngIf="isLoading">
-        <span class="loader"></span>
-      </div>
-      <div class="error" *ngIf="error" [@fadeInOut]>
-        <p>
-          <i class="fa-solid fa-circle-exclamation"></i>Unable to retrieve data
-          from the server :/
-        </p>
-      </div>
-    </div>
-    <section class="wrapper" [@slidingApparition]="itemsToDisplay.length">
-      <div class="food-container" *ngFor="let item of itemsToDisplay">
-        <app-item
-          [item]="item"
-          class="item"
-          (itemDeleted)="onDelete()"
-        ></app-item>
-      </div>
-    </section>
-  </main>
-  <div class="pagination">
-    <app-pagination
-      [current]="currentPage"
-      [total]="totalPages"
-      (goTo)="onGoTo($event)"
-      (next)="onNext($event)"
-      (previous)="onPrevious($event)"
-    ></app-pagination>
-  </div>
+
+  <app-general-overview
+    [itemsToDisplay]="itemsToDisplay"
+    [totalPages]="totalPages"
+    (updateTP)="updateTotalPages($event)"
+    (choosenCriteria)="updateCriteria($event)"
+    [listItems]="listItems"
+    (LI)="updateLI($event)"
+    [(searching)]="searchInProgress"
+  ></app-general-overview>
   <footer>
     <app-tips></app-tips>
     <div class="clear">

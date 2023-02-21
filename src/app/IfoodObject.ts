@@ -6,7 +6,7 @@ export interface foodObject {
   dayLeft?: number;
   itemId: number;
 }
-export interface Icriteria {
+export interface Criteria {
   sortedBy: string;
   order: string;
 }
@@ -15,3 +15,7 @@ export interface Shortcut {
   keys: string[];
   cb: { (): void };
 }
+
+export type paginationSchema = {
+  type: 'endMore' | 'startMore' | 'symmetrical';
+};

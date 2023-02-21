@@ -21,6 +21,7 @@ import { PageNotFoundComponent } from './page-not-found-component/page-not-found
 import { KeyDownDirective } from './key-down.directive';
 import { SafeHTMLPipe } from './safe-html.pipe';
 import { ContactComponent } from './contact/contact.component';
+import { GeneralOverviewComponent } from './general-overview/general-overview.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { ContactComponent } from './contact/contact.component';
     KeyDownDirective,
     SafeHTMLPipe,
     ContactComponent,
+    GeneralOverviewComponent,
   ],
   imports: [
     BrowserModule,

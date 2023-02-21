@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
-import { foodObject, Icriteria } from './IfoodObject';
+import { foodObject, Criteria } from './IfoodObject';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ export class FoodDataService implements OnInit {
   compute!: number;
   url =
     'https://my-list-a7fb0-default-rtdb.europe-west1.firebasedatabase.app/items.json';
-  criteria: Icriteria = {
+  criteria: Criteria = {
     sortedBy: 'date',
     order: 'ascending',
   };
