@@ -22,6 +22,7 @@ import { KeyDownDirective } from './key-down.directive';
 import { SafeHTMLPipe } from './safe-html.pipe';
 import { ContactComponent } from './contact/contact.component';
 import { GeneralOverviewComponent } from './general-overview/general-overview.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { GeneralOverviewComponent } from './general-overview/general-overview.co
     SafeHTMLPipe,
     ContactComponent,
     GeneralOverviewComponent,
+    NotificationsComponent,
   ],
   imports: [
     BrowserModule,

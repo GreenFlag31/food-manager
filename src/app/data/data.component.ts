@@ -17,10 +17,11 @@ import { PaginationService } from '../pagination-service.service';
 export class DataComponent implements OnInit {
   listItems: foodObject[] = this.foodData.listItems;
   itemsToDisplay: foodObject[] = [];
-  currentPage = 1;
+  currentPage!: number;
   totalPages!: number;
   criteria: Criteria = this.foodData.criteria;
   searchInProgress = false;
+  notificationsNumber!: number;
 
   constructor(
     private foodData: FoodDataService,
@@ -42,7 +43,6 @@ export class DataComponent implements OnInit {
       this.foodData.listItems.length / this.pagination.itemsperPage
     );
 
-    // debugger;
     if (this.searchInProgress) {
       this.currentPage = 1;
       this.searchInProgress = false;
@@ -51,6 +51,10 @@ export class DataComponent implements OnInit {
     }
     this.pagination.totalPages = this.totalPages;
     this.itemsToDisplay = this.pagination.paginate(this.currentPage);
+  }
+
+  updateNotifications(notifications: number) {
+    this.notificationsNumber = notifications;
   }
 
   updateCriteria(criteria: Criteria) {

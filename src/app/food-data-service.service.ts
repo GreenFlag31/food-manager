@@ -16,6 +16,8 @@ export class FoodDataService implements OnInit {
     sortedBy: 'date',
     order: 'ascending',
   };
+  notificationsDays = 5;
+  hasBeenNotified = 0;
 
   constructor(private http: HttpClient) {}
 
@@ -40,21 +42,36 @@ export class FoodDataService implements OnInit {
     return this.http.post<foodObject>(this.url, form);
   }
 
-  setDayLeftItems() {
+  deleteItems() {
+    this.listItems = [];
+    return this.http.delete(this.url);
+  }
+
+  deleteSingleItem(endpoint: string, item: foodObject) {
+    this.listItems.splice(item.itemId, 1);
+    this.setUniqueId();
+    return this.http.delete(endpoint);
+  }
+
+  patchItem(endpoint: string, body: { name: string; bestBefore: string }) {
+    return this.http.patch(endpoint, body);
+  }
+
+  setDayLeftItems(notificationsDays = 7): foodObject[] {
     for (const item of this.listItems) {
-      this.setDayLeftItem(item);
+      this.setDayLeftItem(item, notificationsDays);
     }
     return this.listItems;
   }
 
-  setDayLeftItem(item: foodObject) {
+  setDayLeftItem(item: foodObject, notificationsDays = 7) {
     this.currentDate = new Date();
-    this.compute = Math.floor(
+    this.compute = Math.ceil(
       (+new Date(item.bestBefore) - +this.currentDate) / 1000 / 3600 / 24
     );
-    if (this.compute < 7) {
+    if (this.compute <= notificationsDays) {
       item.class = 'priority-1';
-    } else if (this.compute <= 10) {
+    } else if (this.compute <= notificationsDays + 3) {
       item.class = 'priority-2';
     } else {
       item.class = '';
@@ -63,9 +80,13 @@ export class FoodDataService implements OnInit {
     return item.dayLeft;
   }
 
-  sortItems(type: string, order: string) {
+  filterAccordingToDaysBefore(daysBefore: number): foodObject[] {
+    return this.listItems.filter((item) => item.dayLeft! <= daysBefore);
+  }
+
+  sortItems(type: string, order: string, defaultItems = this.listItems) {
     if (type === 'name') {
-      this.listItems.sort((item1, item2) => {
+      defaultItems.sort((item1, item2) => {
         const nameA = item1.name.toLowerCase();
         const nameB = item2.name.toLowerCase();
         if (nameA < nameB) return -1;
@@ -74,13 +95,13 @@ export class FoodDataService implements OnInit {
       });
     }
     if (type === 'date') {
-      this.listItems.sort(
+      defaultItems.sort(
         (item1, item2) => <number>item1.dayLeft - <number>item2.dayLeft
       );
     }
 
     if (order === 'descending') {
-      this.listItems.reverse();
+      defaultItems.reverse();
     }
 
     this.setUniqueId();
@@ -117,20 +138,5 @@ export class FoodDataService implements OnInit {
     return this.listItems.filter(
       (item) => item.name.toLowerCase().trim() === term
     )!;
-  }
-
-  deleteItems() {
-    this.listItems = [];
-    return this.http.delete(this.url);
-  }
-
-  deleteSingleItem(endpoint: string, item: foodObject) {
-    this.listItems.splice(item.itemId, 1);
-    this.setUniqueId();
-    return this.http.delete(endpoint);
-  }
-
-  patchItem(endpoint: string, body: { name: string; bestBefore: string }) {
-    return this.http.patch(endpoint, body);
   }
 }

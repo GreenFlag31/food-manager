@@ -36,9 +36,6 @@ export class PaginationService {
 
   addPaginationToUrl(noParam = false) {
     if (this.totalPages === 0 && !noParam) return;
-    // if (this.currentPage > this.totalPages && this.totalPages) {
-    //   this.currentPage = this.totalPages;
-    // }
 
     this.router.navigate([], {
       relativeTo: this.route,

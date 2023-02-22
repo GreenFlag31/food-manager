@@ -1,8 +1,6 @@
 header {
   background: var(--background-3);
   border-radius: 0.5rem 0.5rem 0 0;
-  /* position: relative; */
-  /* z-index: 1; */
 }
 nav {
   display: flex;
@@ -12,11 +10,11 @@ nav {
 }
 .left-side {
   display: flex;
-  /* gap: 1em; */
 }
 .right-side {
   display: flex;
 }
+
 nav a {
   text-decoration: none;
   color: white;
@@ -25,19 +23,46 @@ nav a {
 .login,
 .logout,
 .list,
-.contact {
+.contact,
+.notifications {
   display: flex;
   align-items: center;
   gap: 0.4em;
   padding: 0.625em;
+  padding-bottom: 0.5em;
   cursor: pointer;
   transition: 0.3s ease-in-out;
+  border-bottom: 3px solid transparent;
 }
+.notifications {
+  font-size: 0.9em;
+  position: relative;
+}
+.notifications span {
+  position: absolute;
+  top: 4px;
+  left: 15px;
+  padding: 0px 3px;
+  background: red;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.8em;
+}
+.started.active,
+.login.active,
+.logout.active,
+.list.active,
+.contact.active,
+.notifications.active {
+  border-bottom: 3px solid #1f1f89;
+}
+
 .started:hover,
 .login:hover,
 .logout:hover,
 .list:hover,
-.contact:hover {
+.contact:hover,
+.notifications:hover {
   background: rgb(33, 33, 197);
   transition: 0.3s ease-in-out;
 }

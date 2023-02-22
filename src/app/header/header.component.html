@@ -1,25 +1,34 @@
 <header>
   <nav>
     <div class="left-side">
-      <div class="started">
+      <div
+        class="started"
+        routerLink="/getting-started"
+        routerLinkActive="active"
+      >
         <i class="fa-solid fa-play"></i>
-        <a routerLink="/getting-started">Getting Started</a>
+        <a>Getting Started</a>
       </div>
-      <div class="login">
-        <i class="fa-solid fa-right-to-bracket"></i
-        ><a routerLink="/login">Log In</a>
+      <div class="login" routerLink="/login" routerLinkActive="active">
+        <i class="fa-solid fa-right-to-bracket"></i><a>Log In</a>
       </div>
-      <div class="list">
-        <i class="fa-solid fa-rectangle-list"></i
-        ><a routerLink="/my-list">My List</a>
+      <div class="list" routerLink="/my-list" routerLinkActive="active">
+        <i class="fa-solid fa-rectangle-list"></i><a>My List</a>
       </div>
     </div>
     <div class="right-side">
-      <div class="contact">
-        <i class="fa-solid fa-address-card"></i
-        ><a routerLink="/contact">Contact</a>
+      <div
+        class="notifications"
+        routerLink="/notifications"
+        routerLinkActive="active"
+      >
+        <span *ngIf="notificationsNumber > 0">{{ notificationsNumber }}</span>
+        <i class="fa-solid fa-bell"></i>
       </div>
-      <div class="logout">
+      <div class="contact" routerLink="/contact" routerLinkActive="active">
+        <i class="fa-solid fa-address-card"></i><a>Contact</a>
+      </div>
+      <div class="logout" routerLinkActive="active">
         <i class="fa-solid fa-right-from-bracket"></i><a>Log Out</a>
       </div>
     </div>

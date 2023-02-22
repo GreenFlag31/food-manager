@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { DataResolverService } from './data-resolver.service';
 import { PageNotFoundComponent } from './page-not-found-component/page-not-found-component';
 import { ContactComponent } from './contact/contact.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,11 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     data: { animation: 'login' },
+  },
+  {
+    path: 'notifications',
+    component: NotificationsComponent,
+    data: { animation: 'notifications' },
   },
   { path: '**', component: PageNotFoundComponent, data: { animation: 'lost' } },
 ];

@@ -5,11 +5,13 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { fadeInOut, slidingApparition } from '../animations';
 import { FoodDataService } from '../food-data-service.service';
 import { Criteria, foodObject } from '../IfoodObject';
@@ -22,7 +24,7 @@ import { PaginationService } from '../pagination-service.service';
   animations: [fadeInOut, slidingApparition],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GeneralOverviewComponent implements OnInit {
+export class GeneralOverviewComponent implements OnInit, OnChanges {
   @Input() listItems: foodObject[] = this.foodData.listItems;
   error = false;
   isLoading = false;
@@ -38,14 +40,17 @@ export class GeneralOverviewComponent implements OnInit {
   @Input() itemsToDisplay: foodObject[] = [];
   @Output() LI = new EventEmitter();
   @Output() updateTP = new EventEmitter();
-  currentPage!: number;
+  @Input() currentPage!: number;
+  @Input() notificationsDays!: number;
+  filteredItems!: foodObject[];
+  @Output() itemsToExpire = new EventEmitter<number>(true);
+  @Output() notificationsNumber = new EventEmitter<number>();
 
   constructor(
     private foodData: FoodDataService,
     private pagination: PaginationService,
     private ref: ChangeDetectorRef,
-    private route: ActivatedRoute,
-    private router: Router
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -66,11 +71,12 @@ export class GeneralOverviewComponent implements OnInit {
         }
 
         this.listItems = items;
-        this.foodData.setDayLeftItems();
+        this.foodData.setDayLeftItems(this.notificationsDays);
         this.foodData.sortItems(this.criteria.sortedBy, this.criteria.order);
         this.isLoading = false;
-        this.updateItemsToDisplay();
-        this.updateCentralListItems(this.listItems);
+        this.updateItemsToDisplay(this.notificationsDays);
+        // this.updateCentralListItems(this.listItems); //optional ?
+        this.setNotification();
       },
       error: () => {
         this.error = true;
@@ -82,8 +88,27 @@ export class GeneralOverviewComponent implements OnInit {
     });
   }
 
-  updateItemsToDisplay() {
-    this.totalPages = this.pagination.updateItemsToDisplay();
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['notificationsDays']?.currentValue) {
+      this.updateItemsToDisplay(this.notificationsDays);
+    }
+  }
+
+  setNotification() {
+    const notifications =
+      this.foodData.filterAccordingToDaysBefore(this.foodData.notificationsDays)
+        .length - this.foodData.hasBeenNotified;
+    this.notificationsNumber.emit(notifications);
+  }
+
+  updateItemsToDisplay(daysBefore = Infinity) {
+    if (daysBefore < Infinity) {
+      this.filteredItems =
+        this.foodData.filterAccordingToDaysBefore(daysBefore);
+      this.itemsToExpire.emit(this.filteredItems.length);
+    }
+
+    this.totalPages = this.pagination.updateItemsToDisplay(this.filteredItems);
     // wrong page number in URL
     if (this.currentPage <= 0) {
       this.currentPage = 1;
@@ -91,7 +116,10 @@ export class GeneralOverviewComponent implements OnInit {
       this.currentPage = this.totalPages;
     }
 
-    this.itemsToDisplay = this.pagination.paginate(this.currentPage);
+    this.itemsToDisplay = this.pagination.paginate(
+      this.currentPage,
+      this.filteredItems
+    );
   }
 
   onDelete() {
@@ -130,9 +158,16 @@ export class GeneralOverviewComponent implements OnInit {
 
     this.criteria.sortedBy = name;
     this.criteria.order = order;
-    this.foodData.sortItems(this.criteria.sortedBy, this.criteria.order);
+    this.foodData.sortItems(
+      this.criteria.sortedBy,
+      this.criteria.order,
+      this.filteredItems
+    );
     this.choosenCriteria.emit(this.criteria);
-    this.itemsToDisplay = this.pagination.paginate(this.currentPage);
+    this.itemsToDisplay = this.pagination.paginate(
+      this.currentPage,
+      this.filteredItems
+    );
   }
 
   getClassOf(order: string) {
@@ -150,10 +185,6 @@ export class GeneralOverviewComponent implements OnInit {
       this.totalPages = this.pagination.updateItemsToDisplay(items);
       this.currentPage = 1;
       this.itemsToDisplay = this.pagination.paginate(this.currentPage, items);
-      // this.currentPage = Math.ceil(
-      //   (items[0].itemId + 1) / this.pagination.itemsperPage
-      // );
-
       this.searching = true;
     } else if (!term.trim()) {
       this.currentPage = 1;
@@ -162,7 +193,6 @@ export class GeneralOverviewComponent implements OnInit {
       this.searching = false;
     } else {
       this.totalPages = this.pagination.updateItemsToDisplay();
-
       this.itemsToDisplay = [];
       this.searching = false;
     }
@@ -174,20 +204,20 @@ export class GeneralOverviewComponent implements OnInit {
     this.currentPage = page;
     this.itemsToDisplay = this.searching
       ? this.pagination.paginate(this.currentPage, this.searchingItems)
-      : this.pagination.paginate(this.currentPage);
+      : this.pagination.paginate(this.currentPage, this.filteredItems);
   }
 
   onNext(page: number) {
     this.currentPage = page + 1;
     this.itemsToDisplay = this.searching
       ? this.pagination.paginate(this.currentPage, this.searchingItems)
-      : this.pagination.paginate(this.currentPage);
+      : this.pagination.paginate(this.currentPage, this.filteredItems);
   }
 
   onPrevious(page: number) {
     this.currentPage = page - 1;
     this.itemsToDisplay = this.searching
       ? this.pagination.paginate(this.currentPage, this.searchingItems)
-      : this.pagination.paginate(this.currentPage);
+      : this.pagination.paginate(this.currentPage, this.filteredItems);
   }
 }

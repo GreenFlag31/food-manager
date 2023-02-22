@@ -142,7 +142,7 @@ export const iconsCode = trigger('up', [
       ':enter',
       stagger('200ms', [
         animate(
-          '0.7s 0.5s ease-in-out',
+          '0.6s 0.5s ease-in-out',
           keyframes([
             style({ transform: 'translateY(50%)' }),
             style({ opacity: 1, transform: 'translateY(0)' }),

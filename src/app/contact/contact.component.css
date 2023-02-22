@@ -2,10 +2,14 @@
   grid-template-rows: min-content;
 }
 .header {
-  background: var(--background-3);
+  /* background: var(--background-3); */
+  background: radial-gradient(
+    circle,
+    rgb(105 150 246),
+    var(--background-3) 80%
+  );
   height: 10em;
   padding: 1.625em;
-  box-shadow: 0px 5px 7px -5px rgb(120 120 122);
 }
 .presentation {
   display: flex;

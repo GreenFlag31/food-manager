@@ -1,0 +1,27 @@
+<app-header></app-header>
+
+<div class="layer">
+  <div class="alert-change-container">
+    <div class="alert">
+      <i class="fa-solid fa-bell"></i>
+      Set a notification for items that expire in max
+      <input type="number" [(ngModel)]="notificationsDays" />
+      days
+    </div>
+  </div>
+  <div class="expiring-container" [@down]="nItemsToExpire">
+    <p>
+      {{ nItemsToExpire }} item{{ nItemsToExpire > 1 ? "s" : "" }} are about to
+      expire according to your criteria.
+    </p>
+  </div>
+  <div class="notifications-container">
+    <app-general-overview
+      [notificationsDays]="notificationsDays"
+      (itemsToExpire)="numberItemsToExpire($event)"
+    ></app-general-overview>
+    <div class="actions">
+      <button routerLink="/my-list">Back to the List</button>
+    </div>
+  </div>
+</div>

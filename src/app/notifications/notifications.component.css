@@ -1,0 +1,59 @@
+.layer {
+  grid-template-rows: 95px min-content auto;
+  overflow: hidden;
+}
+.alert-change-container {
+  display: flex;
+  align-items: center;
+  padding: 0.625em;
+  color: #fff;
+}
+.alert {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 80%;
+  gap: 0.2em;
+  box-shadow: 0px 5px 7px -5px rgb(0 0 0 / 71%);
+  background: var(--background-2);
+  border-radius: 0.2em;
+  padding: 0.625em;
+}
+.alert i {
+  font-size: 0.8em;
+  color: #1a2d65;
+  margin-right: 0.2em;
+}
+.notifications-container {
+  padding: 0.625em;
+  display: grid;
+  grid-template-rows: auto min-content;
+}
+app-general-overview {
+  padding: 0;
+  margin: 1em 0 3em 0;
+  display: block;
+}
+.actions button {
+  padding: 0.625em;
+  border: none;
+  color: white;
+  background: rgb(164, 164, 164);
+  border-radius: 0.2em;
+  cursor: pointer;
+}
+.alert input {
+  max-width: 3em;
+  border: none;
+  background: var(--background-2);
+  color: #fff;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  margin: 0 0.2em;
+}
+.expiring-container p {
+  margin: 0 0.625em;
+  padding: 0.425em;
+  border-left: 2px solid orange;
+}
