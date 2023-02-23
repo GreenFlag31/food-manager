@@ -1,4 +1,4 @@
-<form (ngSubmit)="onCreateItem(itemForm, name, bestBefore)" #itemForm="ngForm">
+<form (ngSubmit)="onCreateItem(itemForm, name)" #itemForm="ngForm">
   <div class="form-container">
     <img class="fridge" src="../../assets/fridge.jpg" alt="fridge with food" />
     <div class="change-item-container">
@@ -12,7 +12,7 @@
           ngModel
           #name
           tabindex="0"
-          (keyup.escape)="onCancel(name, bestBefore)"
+          (keyup.escape)="onCancel(name)"
         />
       </div>
       <div class="date">
@@ -22,16 +22,16 @@
           id="bestBefore"
           name="bestBefore"
           required
-          [ngModel]="dateNextWeek | date : 'yyyy-MM-dd'"
+          [(ngModel)]="dateNextWeekStringified"
           #bestBefore
-          (keyup.escape)="onCancel(name, bestBefore)"
+          (keyup.escape)="onCancel(name)"
         />
       </div>
       <div class="actions">
         <button type="submit" [disabled]="!itemForm.valid">
           <i class="fa-regular fa-pen-to-square"></i>Save
         </button>
-        <button type="button" (click)="onCancel(name, bestBefore)">
+        <button type="button" (click)="onCancel(name)">
           <i class="fa-solid fa-xmark"></i>Cancel
         </button>
       </div>

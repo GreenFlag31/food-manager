@@ -13,12 +13,13 @@ export class NotificationsComponent implements OnInit {
   nItemsToExpire!: number;
   constructor(private foodData: FoodDataService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.foodData.newItemUnderNotification = [];
+  }
 
   numberItemsToExpire(numberItems: number) {
     this.nItemsToExpire = numberItems;
     this.foodData.notificationsDays = this.notificationsDays;
     this.foodData.hasBeenNotified = this.nItemsToExpire;
-    console.log(this.foodData.hasBeenNotified);
   }
 }

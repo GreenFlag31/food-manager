@@ -11,37 +11,40 @@ import { foodObject } from '../IfoodObject';
 })
 export class AppCreateComponentComponent implements OnInit {
   dateNextWeek = new Date();
+  dateNextWeekStringified!: string;
   @Output() newItemAdded = new EventEmitter<foodObject>();
 
   constructor(private foodData: FoodDataService, private date: DatePipe) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.dateNextWeek = new Date(
       this.dateNextWeek.setDate(this.dateNextWeek.getDate() + 7)
     );
+    this.dateNextWeekStringified = this.date.transform(
+      this.dateNextWeek,
+      'yyyy-MM-dd'
+    )!;
   }
 
-  onCreateItem(
-    itemForm: NgForm,
-    name: HTMLInputElement,
-    bestBefore: HTMLInputElement
-  ) {
+  onCreateItem(itemForm: NgForm, name: HTMLInputElement) {
     const values = itemForm.form.value;
     this.foodData.addItem(values).subscribe((res) => {
       values.id = res.name;
-
-      this.resetFields(name, bestBefore);
+      this.resetFields(name);
       this.newItemAdded.emit(values);
     });
   }
 
-  onCancel(name: HTMLInputElement, bestBefore: HTMLInputElement) {
-    this.resetFields(name, bestBefore);
+  onCancel(name: HTMLInputElement) {
+    this.resetFields(name);
   }
 
-  resetFields(name: HTMLInputElement, bestBefore: HTMLInputElement) {
+  resetFields(name: HTMLInputElement) {
     name.value = '';
-    bestBefore.value = this.date.transform(this.dateNextWeek, 'yyyy-MM-dd')!;
+    this.dateNextWeekStringified = this.date.transform(
+      this.dateNextWeek,
+      'yyyy-MM-dd'
+    )!;
     name.focus();
   }
 }

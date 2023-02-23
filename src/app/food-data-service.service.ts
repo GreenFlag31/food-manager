@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { foodObject, Criteria } from './IfoodObject';
 
 @Injectable({
@@ -18,10 +18,11 @@ export class FoodDataService implements OnInit {
   };
   notificationsDays = 5;
   hasBeenNotified = 0;
+  newItemUnderNotification: foodObject[] = [];
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {}
+  ngOnInit() {}
 
   fetchItems(): Observable<foodObject[]> {
     return this.http.get<foodObject>(this.url).pipe(
@@ -38,7 +39,6 @@ export class FoodDataService implements OnInit {
   }
 
   addItem(form: foodObject): Observable<foodObject> {
-    // const formWithId = { [this.uniqueId++]: form };
     return this.http.post<foodObject>(this.url, form);
   }
 
@@ -47,9 +47,7 @@ export class FoodDataService implements OnInit {
     return this.http.delete(this.url);
   }
 
-  deleteSingleItem(endpoint: string, item: foodObject) {
-    this.listItems.splice(item.itemId, 1);
-    this.setUniqueId();
+  deleteSingleItem(endpoint: string) {
     return this.http.delete(endpoint);
   }
 
@@ -109,8 +107,6 @@ export class FoodDataService implements OnInit {
   }
 
   setUniqueId() {
-    // if (this.listItems[0].itemId) return;
-
     for (let i = 0; i < this.listItems.length; i++) {
       this.listItems[i].itemId = i;
     }
@@ -129,13 +125,13 @@ export class FoodDataService implements OnInit {
     }
   }
 
-  getItemByName(term: string) {
+  getItemByName(term: string, defaultItems: foodObject[]) {
     term = term.toLowerCase().trim();
-    if (!term || !this.listItems.length) {
+    if (!term || !defaultItems.length) {
       return [];
     }
 
-    return this.listItems.filter(
+    return defaultItems.filter(
       (item) => item.name.toLowerCase().trim() === term
     )!;
   }

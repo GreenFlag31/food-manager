@@ -7,9 +7,9 @@ import { foodObject } from './IfoodObject';
   providedIn: 'root',
 })
 export class PaginationService {
-  currentPage!: number;
+  currentPage = 1;
   itemsperPage = 3;
-  totalPages: number = 1;
+  totalPages = 1;
 
   constructor(
     private foodData: FoodDataService,

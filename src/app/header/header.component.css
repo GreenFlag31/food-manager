@@ -40,13 +40,13 @@ nav a {
 }
 .notifications span {
   position: absolute;
-  top: 4px;
+  top: 2px;
   left: 15px;
-  padding: 0px 3px;
+  padding: 1px 3px;
   background: red;
   color: #fff;
   border-radius: 50%;
-  font-size: 0.8em;
+  font-size: 0.7em;
 }
 .started.active,
 .login.active,

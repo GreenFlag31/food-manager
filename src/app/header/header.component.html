@@ -22,7 +22,9 @@
         routerLink="/notifications"
         routerLinkActive="active"
       >
-        <span *ngIf="notificationsNumber > 0">{{ notificationsNumber }}</span>
+        <span *ngIf="notificationsNumber > 0" [@fadeInOut]>{{
+          notificationsNumber > 9 ? "9+" : notificationsNumber
+        }}</span>
         <i class="fa-solid fa-bell"></i>
       </div>
       <div class="contact" routerLink="/contact" routerLinkActive="active">

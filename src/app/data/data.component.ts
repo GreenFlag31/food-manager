@@ -21,7 +21,7 @@ export class DataComponent implements OnInit {
   totalPages!: number;
   criteria: Criteria = this.foodData.criteria;
   searchInProgress = false;
-  notificationsNumber!: number;
+  notificationsNumber = 0;
 
   constructor(
     private foodData: FoodDataService,
@@ -43,14 +43,22 @@ export class DataComponent implements OnInit {
       this.foodData.listItems.length / this.pagination.itemsperPage
     );
 
+    // debugger;
     if (this.searchInProgress) {
       this.currentPage = 1;
       this.searchInProgress = false;
+    } else if (this.totalPages === 1) {
+      this.currentPage = 1;
     } else {
       this.currentPage = this.pagination.currentPage;
     }
     this.pagination.totalPages = this.totalPages;
     this.itemsToDisplay = this.pagination.paginate(this.currentPage);
+
+    if (newItem.dayLeft! <= this.foodData.notificationsDays) {
+      this.notificationsNumber++;
+      this.foodData.newItemUnderNotification.push(newItem);
+    }
   }
 
   updateNotifications(notifications: number) {
@@ -63,6 +71,7 @@ export class DataComponent implements OnInit {
 
   updateTotalPages(total: number) {
     this.totalPages = total;
+    if (this.totalPages === 0) this.currentPage = 0;
   }
 
   updateLI(list: foodObject[]) {
@@ -74,6 +83,8 @@ export class DataComponent implements OnInit {
       // add an alert confirm message
       this.listItems = [];
       this.itemsToDisplay = [];
+      this.foodData.newItemUnderNotification = [];
+      this.notificationsNumber = 0;
       this.totalPages = 0;
       this.pagination.addPaginationToUrl(true);
       this.ref.markForCheck();

@@ -45,6 +45,7 @@ export class GeneralOverviewComponent implements OnInit, OnChanges {
   filteredItems!: foodObject[];
   @Output() itemsToExpire = new EventEmitter<number>(true);
   @Output() notificationsNumber = new EventEmitter<number>();
+  numberOfNotifications = 0;
 
   constructor(
     private foodData: FoodDataService,
@@ -75,7 +76,7 @@ export class GeneralOverviewComponent implements OnInit, OnChanges {
         this.foodData.sortItems(this.criteria.sortedBy, this.criteria.order);
         this.isLoading = false;
         this.updateItemsToDisplay(this.notificationsDays);
-        // this.updateCentralListItems(this.listItems); //optional ?
+        this.updateCentralListItems(this.listItems);
         this.setNotification();
       },
       error: () => {
@@ -95,17 +96,28 @@ export class GeneralOverviewComponent implements OnInit, OnChanges {
   }
 
   setNotification() {
-    const notifications =
-      this.foodData.filterAccordingToDaysBefore(this.foodData.notificationsDays)
-        .length - this.foodData.hasBeenNotified;
-    this.notificationsNumber.emit(notifications);
+    const notifications = this.foodData.filterAccordingToDaysBefore(
+      this.foodData.notificationsDays
+    );
+    this.numberOfNotifications =
+      notifications.length - this.foodData.hasBeenNotified;
+
+    if (this.numberOfNotifications > 0) {
+      this.foodData.newItemUnderNotification = [...notifications];
+    }
+    this.notificationsNumber.emit(this.numberOfNotifications);
   }
 
   updateItemsToDisplay(daysBefore = Infinity) {
     if (daysBefore < Infinity) {
       this.filteredItems =
         this.foodData.filterAccordingToDaysBefore(daysBefore);
+      this.foodData.setDayLeftItems(daysBefore);
+
       this.itemsToExpire.emit(this.filteredItems.length);
+      if (this.filteredItems.length === 0) {
+        this.pagination.addPaginationToUrl(true);
+      }
     }
 
     this.totalPages = this.pagination.updateItemsToDisplay(this.filteredItems);
@@ -122,9 +134,17 @@ export class GeneralOverviewComponent implements OnInit, OnChanges {
     );
   }
 
-  onDelete() {
+  onDelete(item: foodObject) {
+    if (this.filteredItems?.length) {
+      this.filteredItems.splice(item.itemId, 1);
+      this.itemsToExpire.emit(this.filteredItems.length);
+    }
+
     this.updateItemsToDisplay();
     this.updateTP.emit(this.totalPages);
+    this.notificationsNumber.emit(
+      this.foodData.newItemUnderNotification.length
+    );
 
     this.currentPage = this.pagination.currentPage;
     if (this.totalPages === 0) {
@@ -179,7 +199,9 @@ export class GeneralOverviewComponent implements OnInit, OnChanges {
   }
 
   onSearch(term: string) {
-    const items = this.foodData.getItemByName(term);
+    // debugger;
+    const defaultItems = this.filteredItems || this.listItems;
+    const items = this.foodData.getItemByName(term, defaultItems);
     if (items.length) {
       this.searchingItems = items;
       this.totalPages = this.pagination.updateItemsToDisplay(items);
@@ -192,7 +214,7 @@ export class GeneralOverviewComponent implements OnInit, OnChanges {
       this.itemsToDisplay = this.pagination.paginate(this.currentPage);
       this.searching = false;
     } else {
-      this.totalPages = this.pagination.updateItemsToDisplay();
+      // this.totalPages = this.pagination.updateItemsToDisplay();
       this.itemsToDisplay = [];
       this.searching = false;
     }

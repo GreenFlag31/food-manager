@@ -11,9 +11,9 @@
     [listItems]="listItems"
     [(searching)]="searchInProgress"
     [currentPage]="currentPage"
+    (LI)="updateLI($event)"
     (notificationsNumber)="updateNotifications($event)"
   ></app-general-overview>
-  <!-- (LI)="updateLI($event)" -->
   <footer>
     <app-tips></app-tips>
     <div class="clear">

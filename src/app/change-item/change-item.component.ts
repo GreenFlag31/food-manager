@@ -27,8 +27,10 @@ export class ChangeItemComponent implements OnInit {
 
   onDeleteItem() {
     const url = `https://my-list-a7fb0-default-rtdb.europe-west1.firebasedatabase.app/items/${this.item.id}.json`;
-    this.foodData.deleteSingleItem(url, this.item).subscribe({
+    this.foodData.deleteSingleItem(url).subscribe({
       complete: () => {
+        this.foodData.listItems.splice(this.item.itemId, 1);
+        this.foodData.setUniqueId();
         this.itemDeleted.emit();
       },
     });

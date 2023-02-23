@@ -6,13 +6,13 @@
       <i class="fa-solid fa-bell"></i>
       Set a notification for items that expire in max
       <input type="number" [(ngModel)]="notificationsDays" />
-      days
+      day{{ nItemsToExpire > 1 ? "s" : "" }}
     </div>
   </div>
   <div class="expiring-container" [@down]="nItemsToExpire">
     <p>
-      {{ nItemsToExpire }} item{{ nItemsToExpire > 1 ? "s" : "" }} are about to
-      expire according to your criteria.
+      {{ nItemsToExpire }} item{{ nItemsToExpire > 1 ? "s are" : " is" }} about
+      to expire according to your criteria.
     </p>
   </div>
   <div class="notifications-container">

@@ -36,7 +36,6 @@ export class PaginationComponent implements OnInit, OnChanges {
 
   onGoTo(page: number) {
     page = page + 1;
-    // debugger;
 
     if (this.paginationSchema.type === 'symmetrical') {
       if (page === 6) {

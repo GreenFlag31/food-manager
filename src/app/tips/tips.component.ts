@@ -23,8 +23,7 @@ export class TipsComponent implements OnInit {
 "></i
     ><i class="fa-solid fa-arrow-down" style="
     font-size: 0.8em;margin-right: 0.3em;
-"></i> | TAB | Enter to change the date
-    easely`,
+"></i> | TAB | Enter to add a new item easely`,
     },
     {
       content: '',
