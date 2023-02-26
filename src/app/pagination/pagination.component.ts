@@ -7,9 +7,8 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { max } from 'rxjs';
 import { changedAnimation } from '../animations';
-import type { paginationSchema } from '../IfoodObject';
+import { PaginationService } from '../pagination-service.service';
 
 @Component({
   selector: 'app-pagination',
@@ -19,25 +18,22 @@ import type { paginationSchema } from '../IfoodObject';
 })
 export class PaginationComponent implements OnInit, OnChanges {
   pages: (number | string)[] = [];
-  paginationSchema: paginationSchema = {
-    type: 'endMore',
-  };
+
   @Input() current = 0;
   @Input() total = 0;
-  maxPages = 7;
 
   @Output() goTo = new EventEmitter<number>();
   @Output() next = new EventEmitter<number>();
   @Output() previous = new EventEmitter<number>();
 
-  constructor() {}
+  constructor(private pagination: PaginationService) {}
 
   ngOnInit() {}
 
   onGoTo(page: number) {
     page = page + 1;
 
-    if (this.paginationSchema.type === 'symmetrical') {
+    if (this.pagination.paginationSchema.type === 'symmetrical') {
       if (page === 6) {
         page = this.current + 2;
       } else if (page > 6) {
@@ -50,15 +46,15 @@ export class PaginationComponent implements OnInit, OnChanges {
       }
     }
 
-    if (this.paginationSchema.type === 'startMore') {
+    if (this.pagination.paginationSchema.type === 'startMore') {
       if (page === 2) {
         page = this.total - 5;
       } else if (page > 2) {
-        const correctionIndex = this.total - this.maxPages;
+        const correctionIndex = this.total - this.pagination.maxPages;
         page += correctionIndex;
       }
     }
-    if (this.paginationSchema.type === 'endMore') {
+    if (this.pagination.paginationSchema.type === 'endMore') {
       if (page > 6) {
         page = this.total;
       }
@@ -74,30 +70,8 @@ export class PaginationComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (
-      (changes['current'] && changes['current'].currentValue) ||
-      (changes['total'] && changes['total'].currentValue)
-    ) {
-      this.pages = this.getPages(this.current, this.total);
+    if (changes['current']?.currentValue || changes['total']?.currentValue) {
+      this.pages = this.pagination.getPages(this.current, this.total);
     }
-  }
-
-  getPages(current: number, total: number): (number | string)[] {
-    if (total <= this.maxPages) {
-      return [...Array(total).keys()].map((x) => ++x);
-    }
-
-    if (current > 5) {
-      if (current >= total - 4) {
-        this.paginationSchema.type = 'startMore';
-        return [1, '...', total - 4, total - 3, total - 2, total - 1, total];
-      } else {
-        this.paginationSchema.type = 'symmetrical';
-        return [1, '...', current - 1, current, current + 1, '...', total];
-      }
-    }
-
-    this.paginationSchema.type = 'endMore';
-    return [1, 2, 3, 4, 5, '...', total];
   }
 }

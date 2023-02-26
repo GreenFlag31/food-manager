@@ -2,7 +2,6 @@
   grid-template-rows: min-content;
 }
 .header {
-  /* background: var(--background-3); */
   background: radial-gradient(
     circle,
     rgb(105 150 246),

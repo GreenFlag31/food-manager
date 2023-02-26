@@ -25,6 +25,7 @@ export class ItemViewComponent implements OnInit {
   changedDate = false;
   enableCountUp = true;
   listItems: foodObject[] = [];
+  notificationsNumber = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,6 +38,18 @@ export class ItemViewComponent implements OnInit {
     this.id = Number(this.route.snapshot.queryParamMap.get('id')) || 0;
     this.addDataIfDirectAccess();
     this.navigateTo(0);
+    this.setNotification();
+  }
+
+  setNotification() {
+    // if direct URL
+    this.foodData.newItemUnderNotification = this.foodData.itemsToBeNotified();
+    this.notificationsNumber =
+      this.foodData.newItemUnderNotification.length -
+      this.foodData.hasBeenNotified;
+    if (this.notificationsNumber === 0) {
+      this.foodData.newItemUnderNotification = [];
+    }
   }
 
   addDataIfDirectAccess() {
@@ -51,7 +64,7 @@ export class ItemViewComponent implements OnInit {
         return;
       }
 
-      this.foodData.setDayLeftItems();
+      this.foodData.setDayLeftItems(this.foodData.notificationsDays);
       this.foodData.sortItems(
         this.foodData.criteria.sortedBy,
         this.foodData.criteria.order
@@ -66,7 +79,10 @@ export class ItemViewComponent implements OnInit {
       this.foodData.listItems[0];
 
     // if animation stopped by changing item, recompute
-    this.item.dayLeft = this.foodData.setDayLeftItem(this.item);
+    this.item.dayLeft = this.foodData.setDayLeftItem(
+      this.item,
+      this.foodData.notificationsDays
+    );
 
     this.id = this.foodData.listItems.indexOf(this.item);
   }
@@ -107,11 +123,47 @@ export class ItemViewComponent implements OnInit {
     setTimeout(() => {
       this.item.name = copiedItem[1].name;
       this.item.bestBefore = copiedItem[1].bestBefore;
-      const totalDays = this.foodData.setDayLeftItem(this.item);
+      const totalDays = this.foodData.setDayLeftItem(
+        this.item,
+        this.foodData.notificationsDays
+      );
+
+      this.changeNotification(copiedItem[0]);
       this.countUp(totalDays);
       this.statusAnimation = !this.statusAnimation;
       this.ref.markForCheck();
     }, 500);
+  }
+
+  changeNotification(itemBeforeChange: foodObject) {
+    const [index, hasBeenNotified] = this.checkIfNotified();
+    // no notification if previous already under notification
+    if (
+      itemBeforeChange.dayLeft! >= this.foodData.notificationsDays &&
+      this.item.dayLeft! <= this.foodData.notificationsDays &&
+      !hasBeenNotified
+    ) {
+      this.notificationsNumber++;
+      this.foodData.newItemUnderNotification.push(this.item);
+    } else if (
+      this.item.dayLeft! > this.foodData.notificationsDays &&
+      hasBeenNotified
+    ) {
+      this.notificationsNumber--;
+      this.foodData.newItemUnderNotification.splice(index, 1);
+    }
+  }
+
+  checkIfNotified(): [number, boolean] {
+    let index = 0;
+    for (let i = 0; i < this.foodData.newItemUnderNotification.length; i++) {
+      index = i;
+      if (this.item.id === this.foodData.newItemUnderNotification[i].id) {
+        return [index, true];
+      }
+    }
+
+    return [index, false];
   }
 
   countUp(totalDays: number) {
@@ -131,6 +183,11 @@ export class ItemViewComponent implements OnInit {
   }
 
   itemDeleted() {
+    const [index, notified] = this.checkIfNotified();
+    if (notified) {
+      this.notificationsNumber--;
+      this.foodData.newItemUnderNotification.splice(index, 1);
+    }
     if (!this.foodData.listItems.length) {
       return this.goBack();
     }

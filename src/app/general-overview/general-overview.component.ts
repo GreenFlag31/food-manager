@@ -2,14 +2,12 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { fadeInOut, slidingApparition } from '../animations';
@@ -34,12 +32,11 @@ export class GeneralOverviewComponent implements OnInit, OnChanges {
   orderStatusName = 'ascending';
   orderStatusDate = 'ascending';
   criteria: Criteria = this.foodData.criteria;
-  @Output() choosenCriteria = new EventEmitter();
-  @ViewChild('searchBox') searchBox!: ElementRef;
-  @Input() totalPages: number = 0;
+  @Output() choosenCriteria = new EventEmitter<Criteria>();
+  @Input() totalPages = 0;
   @Input() itemsToDisplay: foodObject[] = [];
-  @Output() LI = new EventEmitter();
-  @Output() updateTP = new EventEmitter();
+  @Output() LI = new EventEmitter<foodObject[]>();
+  @Output() updateTP = new EventEmitter<number>();
   @Input() currentPage!: number;
   @Input() notificationsDays!: number;
   filteredItems!: foodObject[];

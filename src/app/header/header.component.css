@@ -40,7 +40,7 @@ nav a {
 }
 .notifications span {
   position: absolute;
-  top: 2px;
+  top: 3px;
   left: 15px;
   padding: 1px 3px;
   background: red;
@@ -55,6 +55,7 @@ nav a {
 .contact.active,
 .notifications.active {
   border-bottom: 3px solid #1f1f89;
+  /* border-bottom: 3px solid #107b35; */
 }
 
 .started:hover,

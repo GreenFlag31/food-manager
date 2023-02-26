@@ -9,7 +9,7 @@ import { foodObject } from './IfoodObject';
 export class DataResolverService {
   constructor(private foodData: FoodDataService) {}
 
-  resolve(): Observable<foodObject[]> | Promise<foodObject> | foodObject[] {
+  resolve(): Observable<foodObject[]> | foodObject[] {
     if (this.foodData.listItems.length) return of(this.foodData.listItems);
     return this.foodData.fetchItems();
   }

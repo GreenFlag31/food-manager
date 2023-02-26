@@ -118,7 +118,7 @@ export class FoodDataService implements OnInit {
     }
   }
 
-  getItem(id: number): any {
+  getItem(id: number): foodObject | void {
     if (this.listItems.length) {
       const item = this.listItems.find((item) => item.itemId === id)!;
       return item;
@@ -134,5 +134,13 @@ export class FoodDataService implements OnInit {
     return defaultItems.filter(
       (item) => item.name.toLowerCase().trim() === term
     )!;
+  }
+
+  itemsToBeNotified(): foodObject[] {
+    return this.filterAccordingToDaysBefore(this.notificationsDays);
+  }
+
+  numberOfNotifications(): number {
+    return this.itemsToBeNotified().length - this.hasBeenNotified;
   }
 }

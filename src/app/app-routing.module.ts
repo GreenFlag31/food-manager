@@ -1,13 +1,7 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { DataComponent } from './data/data.component';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { ItemViewComponent } from './item-view/item-view.component';
-import { GettingStartedComponent } from './getting-started/getting-started.component';
-import { LoginComponent } from './login/login.component';
 import { DataResolverService } from './data-resolver.service';
-import { PageNotFoundComponent } from './page-not-found-component/page-not-found-component';
-import { ContactComponent } from './contact/contact.component';
-import { NotificationsComponent } from './notifications/notifications.component';
 
 const routes: Routes = [
   {
@@ -18,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'my-list',
-    component: DataComponent,
+    loadChildren: () => import('./data/data.module').then((m) => m.DataModule),
     data: { animation: 'myList' },
   },
   {
@@ -31,29 +25,51 @@ const routes: Routes = [
   },
   {
     path: 'contact',
-    component: ContactComponent,
+    loadChildren: () =>
+      import('./contact/contact.module').then((m) => m.ContactModule),
+    resolve: {
+      items: DataResolverService,
+    },
     data: { animation: 'contact' },
   },
   {
     path: 'getting-started',
-    component: GettingStartedComponent,
+    loadChildren: () =>
+      import('./getting-started/getting-started.module').then(
+        (m) => m.GettingStartedModule
+      ),
     data: { animation: 'started' },
   },
   {
     path: 'login',
-    component: LoginComponent,
+    loadChildren: () =>
+      import('./login/login.module').then((m) => m.LoginModule),
     data: { animation: 'login' },
   },
   {
     path: 'notifications',
-    component: NotificationsComponent,
+    loadChildren: () =>
+      import('./notifications/notifications.module').then(
+        (m) => m.NotificationsModule
+      ),
     data: { animation: 'notifications' },
   },
-  { path: '**', component: PageNotFoundComponent, data: { animation: 'lost' } },
+  {
+    path: '**',
+    loadChildren: () =>
+      import('./page-not-found/page-not-found.module').then(
+        (m) => m.PageNotFoundModule
+      ),
+    data: { animation: 'lost' },
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: PreloadAllModules,
+    }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

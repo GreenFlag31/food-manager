@@ -29,6 +29,7 @@ export class TipsComponent implements OnInit {
       content: '',
     },
   ];
+  routes = ['Getting Started', 'Log In', 'My List', 'Contact', 'Log Out'];
 
   constructor(private ref: ChangeDetectorRef) {}
 
@@ -40,15 +41,8 @@ export class TipsComponent implements OnInit {
   }
 
   generateTipsContentAboutNavigation() {
-    const routes = [
-      'Getting Started',
-      'Log In',
-      'My List',
-      'Contact',
-      'Log Out',
-    ];
-    const randomRouteTips = this.getRandom(routes);
-    const lastWordRouteTips = routes[randomRouteTips].split(' ');
+    const randomRouteTips = this.getRandom(this.routes);
+    const lastWordRouteTips = this.routes[randomRouteTips].split(' ');
     const upperFirstLetter = lastWordRouteTips.at(-1)![0].toUpperCase();
     const restWord = lastWordRouteTips.at(-1)!.slice(1);
 

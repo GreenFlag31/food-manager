@@ -20,19 +20,22 @@ export class ChangeItemComponent implements OnInit {
   onChange(form: NgForm) {
     const copiedItem = { ...this.item };
     const formValues = form.form.value;
-    const url = `https://my-list-a7fb0-default-rtdb.europe-west1.firebasedatabase.app/items/${this.item.id}.json`;
-    this.foodData.patchItem(url, formValues).subscribe();
-    this.itemChanged.emit([copiedItem, formValues]);
+    const url = this.targetUrl();
+    this.foodData.patchItem(url, formValues).subscribe(() => {
+      this.itemChanged.emit([copiedItem, formValues]);
+    });
   }
 
   onDeleteItem() {
-    const url = `https://my-list-a7fb0-default-rtdb.europe-west1.firebasedatabase.app/items/${this.item.id}.json`;
-    this.foodData.deleteSingleItem(url).subscribe({
-      complete: () => {
-        this.foodData.listItems.splice(this.item.itemId, 1);
-        this.foodData.setUniqueId();
-        this.itemDeleted.emit();
-      },
+    const url = this.targetUrl();
+    this.foodData.deleteSingleItem(url).subscribe(() => {
+      this.foodData.listItems.splice(this.item.itemId, 1);
+      this.foodData.setUniqueId();
+      this.itemDeleted.emit();
     });
+  }
+
+  targetUrl(): string {
+    return `https://my-list-a7fb0-default-rtdb.europe-west1.firebasedatabase.app/items/${this.item.id}.json`;
   }
 }

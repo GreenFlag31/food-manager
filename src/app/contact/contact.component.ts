@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { fadeInOut, iconsCode, selfPic, title } from '../animations';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { iconsCode, selfPic, title } from '../animations';
+import { FoodDataService } from '../food-data-service.service';
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css'],
   animations: [iconsCode, selfPic, title],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactComponent implements OnInit {
-  show = true;
+  notificationsNumber = 0;
   imgList = [
     '../../assets/contact-page/Angular.png',
     '../../assets/contact-page/JS.png',
@@ -16,7 +19,16 @@ export class ContactComponent implements OnInit {
     '../../assets/contact-page/CSS.png',
     '../../assets/contact-page/NodeJS.png',
   ];
-  constructor() {}
+  constructor(
+    private foodData: FoodDataService,
+    private route: ActivatedRoute
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    this.route.data.subscribe(() => {
+      this.foodData.setDayLeftItems(this.foodData.notificationsDays);
+
+      this.notificationsNumber = this.foodData.numberOfNotifications();
+    });
+  }
 }

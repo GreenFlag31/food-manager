@@ -9,7 +9,10 @@
       day{{ nItemsToExpire > 1 ? "s" : "" }}
     </div>
   </div>
-  <div class="expiring-container" [@down]="nItemsToExpire">
+  <div
+    class="expiring-container"
+    [@expiration]="animate ? 'visible' : 'default'"
+  >
     <p>
       {{ nItemsToExpire }} item{{ nItemsToExpire > 1 ? "s are" : " is" }} about
       to expire according to your criteria.

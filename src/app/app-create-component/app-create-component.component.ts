@@ -9,7 +9,7 @@ import { foodObject } from '../IfoodObject';
   templateUrl: './app-create-component.component.html',
   styleUrls: ['./app-create-component.component.css'],
 })
-export class AppCreateComponentComponent implements OnInit {
+export class AppCreateComponent implements OnInit {
   dateNextWeek = new Date();
   dateNextWeekStringified!: string;
   @Output() newItemAdded = new EventEmitter<foodObject>();
