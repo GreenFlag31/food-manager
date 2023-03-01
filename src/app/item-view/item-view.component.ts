@@ -7,8 +7,8 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { delay, interval, takeWhile } from 'rxjs';
 import { changedAnimation } from '../animations';
-import { FoodDataService } from '../food-data-service.service';
-import { foodObject } from '../IfoodObject';
+import { FoodDataService } from '../shared/food-data-service.service';
+import { foodObject } from '../shared/IfoodObject';
 
 @Component({
   selector: 'app-item-view',
@@ -143,14 +143,20 @@ export class ItemViewComponent implements OnInit {
       this.item.dayLeft! <= this.foodData.notificationsDays &&
       !hasBeenNotified
     ) {
-      this.notificationsNumber++;
+      // this.notificationsNumber++;
       this.foodData.newItemUnderNotification.push(this.item);
+      this.foodData.ObsArrayNotifications.next(
+        this.foodData.newItemUnderNotification.length
+      );
     } else if (
       this.item.dayLeft! > this.foodData.notificationsDays &&
       hasBeenNotified
     ) {
-      this.notificationsNumber--;
+      // this.notificationsNumber--;
       this.foodData.newItemUnderNotification.splice(index, 1);
+      this.foodData.ObsArrayNotifications.next(
+        this.foodData.newItemUnderNotification.length
+      );
     }
   }
 
@@ -185,8 +191,11 @@ export class ItemViewComponent implements OnInit {
   itemDeleted() {
     const [index, notified] = this.checkIfNotified();
     if (notified) {
-      this.notificationsNumber--;
+      // this.notificationsNumber--;
       this.foodData.newItemUnderNotification.splice(index, 1);
+      this.foodData.ObsArrayNotifications.next(
+        this.foodData.newItemUnderNotification.length
+      );
     }
     if (!this.foodData.listItems.length) {
       return this.goBack();

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DataRoutingModule } from './data-routing.module';
 import { DataComponent } from './data.component';
 
-import { SharedMainModule } from '../shared-module/shared-module.module';
+import { SharedMainModule } from '../shared/shared-module.module';
 
 @NgModule({
   declarations: [DataComponent],

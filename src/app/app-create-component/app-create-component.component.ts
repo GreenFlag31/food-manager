@@ -1,20 +1,35 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { FoodDataService } from '../food-data-service.service';
+import { FoodDataService } from '../shared/food-data-service.service';
 import { DatePipe } from '@angular/common';
-import { foodObject } from '../IfoodObject';
+import { foodObject } from '../shared/IfoodObject';
+import { selfPic } from '../animations';
 
 @Component({
   selector: 'app-create-component',
   templateUrl: './app-create-component.component.html',
   styleUrls: ['./app-create-component.component.css'],
+  animations: [selfPic],
 })
 export class AppCreateComponent implements OnInit {
   dateNextWeek = new Date();
+  currentDate = new Date();
   dateNextWeekStringified!: string;
+  dateError = false;
   @Output() newItemAdded = new EventEmitter<foodObject>();
+  @Output() wrongDate = new EventEmitter<boolean>();
 
-  constructor(private foodData: FoodDataService, private date: DatePipe) {}
+  constructor(
+    private foodData: FoodDataService,
+    private date: DatePipe,
+    private ref: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.dateNextWeek = new Date(
@@ -26,9 +41,21 @@ export class AppCreateComponent implements OnInit {
     )!;
   }
 
-  onCreateItem(itemForm: NgForm, name: HTMLInputElement) {
+  onCreateItem(
+    itemForm: NgForm,
+    name: HTMLInputElement,
+    bestBefore: HTMLInputElement
+  ) {
     const values = itemForm.form.value;
+    if (!this.foodData.checkValidDate(values.bestBefore)) {
+      this.dateError = true;
+      bestBefore.blur();
+      bestBefore.focus();
+      return;
+    }
+
     this.foodData.addItem(values).subscribe((res) => {
+      this.dateError = false;
       values.id = res.name;
       this.resetFields(name);
       this.newItemAdded.emit(values);

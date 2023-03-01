@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FoodDataService } from '../food-data-service.service';
-import { foodObject } from '../IfoodObject';
+import { FoodDataService } from '../shared/food-data-service.service';
+import { foodObject } from '../shared/IfoodObject';
 
 @Component({
   selector: 'app-item',

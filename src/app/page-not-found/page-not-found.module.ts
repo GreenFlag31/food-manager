@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { PageNotFoundRoutingModule } from './page-not-found-routing.module';
 import { PageNotFoundComponent } from './page-not-found-component';
-import { SharedHeaderOnlyModule } from '../shared-module/sharedHeaderOnly-module.module';
+import { SharedHeaderOnlyModule } from '../shared/sharedHeaderOnly-module.module';
 
 @NgModule({
   declarations: [PageNotFoundComponent],

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, Subject } from 'rxjs';
 import { foodObject, Criteria } from './IfoodObject';
 
 @Injectable({
@@ -19,6 +19,8 @@ export class FoodDataService implements OnInit {
   notificationsDays = 5;
   hasBeenNotified = 0;
   newItemUnderNotification: foodObject[] = [];
+  ObsArrayNotifications = new Subject<number>();
+  // notification = new Subject<number>();
 
   constructor(private http: HttpClient) {}
 
@@ -142,5 +144,12 @@ export class FoodDataService implements OnInit {
 
   numberOfNotifications(): number {
     return this.itemsToBeNotified().length - this.hasBeenNotified;
+  }
+
+  checkValidDate(choosenDate: string) {
+    if (new Date(choosenDate) < this.currentDate) {
+      return false;
+    }
+    return true;
   }
 }

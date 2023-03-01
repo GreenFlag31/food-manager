@@ -1,11 +1,6 @@
 .layer {
   grid-template-rows: 130px auto min-content;
 }
-section.main {
-  display: grid;
-  grid-template-rows: auto min-content;
-  padding: 0.625em;
-}
 
 .clear button {
   padding: 0.625em;

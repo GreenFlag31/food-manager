@@ -9,7 +9,12 @@
         <i class="fa-solid fa-play"></i>
         <a>Getting Started</a>
       </div>
-      <div class="login" routerLink="/login" routerLinkActive="active">
+      <div
+        class="login"
+        routerLink="/login"
+        routerLinkActive="active"
+        [@openClose]="isAuthenticated ? 'invisible' : 'visible'"
+      >
         <i class="fa-solid fa-right-to-bracket"></i><a>Log In</a>
       </div>
       <div class="list" routerLink="/my-list" routerLinkActive="active">
@@ -25,12 +30,20 @@
         <span *ngIf="notificationsNumber > 0" [@fadeInOut]>{{
           notificationsNumber > 9 ? "9+" : notificationsNumber
         }}</span>
-        <i class="fa-solid fa-bell"></i>
+        <i
+          [ngClass]="{ active: notificationsNumber > 0 }"
+          class="fa-solid fa-bell"
+        ></i>
       </div>
       <div class="contact" routerLink="/contact" routerLinkActive="active">
         <i class="fa-solid fa-address-card"></i><a>Contact</a>
       </div>
-      <div class="logout" routerLinkActive="active">
+      <div
+        class="logout"
+        routerLinkActive="active"
+        *ngIf="isAuthenticated"
+        [@fadeInOut]
+      >
         <i class="fa-solid fa-right-from-bracket"></i><a>Log Out</a>
       </div>
     </div>

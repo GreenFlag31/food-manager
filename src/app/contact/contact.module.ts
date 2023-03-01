@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ContactRoutingModule } from './contact-routing.module';
 import { ContactComponent } from './contact.component';
 
-import { SharedHeaderOnlyModule } from '../shared-module/sharedHeaderOnly-module.module';
+import { SharedHeaderOnlyModule } from '../shared/sharedHeaderOnly-module.module';
 
 @NgModule({
   declarations: [ContactComponent],

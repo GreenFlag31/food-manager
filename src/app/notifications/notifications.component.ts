@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { itemsToExpire } from '../animations';
-import { FoodDataService } from '../food-data-service.service';
+import { FoodDataService } from '../shared/food-data-service.service';
 
 @Component({
   selector: 'app-notifications',
@@ -14,7 +14,7 @@ export class NotificationsComponent implements OnInit {
   animate = true;
   constructor(private foodData: FoodDataService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.foodData.newItemUnderNotification = [];
     this.toggleAnimation();
   }

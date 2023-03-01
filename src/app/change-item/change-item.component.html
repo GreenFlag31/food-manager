@@ -1,4 +1,4 @@
-<form (ngSubmit)="onChange(itemForm)" #itemForm="ngForm">
+<form (ngSubmit)="onChange(itemForm, bestBefore)" #itemForm="ngForm">
   <div class="change-item-container">
     <div class="name">
       <label for="name">Name</label>
@@ -7,6 +7,7 @@
         id="name"
         ngModel="{{ item.name }}"
         name="name"
+        maxlength="20"
         required
       />
     </div>
@@ -16,7 +17,9 @@
         type="date"
         id="bestBefore"
         [ngModel]="item.bestBefore | date : 'yyyy-MM-dd'"
+        [ngClass]="{ 'ng-invalid': dateError }"
         name="bestBefore"
+        #bestBefore
         required
       />
     </div>
@@ -28,5 +31,8 @@
         <i class="fa-regular fa-trash-can"></i>Delete
       </button>
     </div>
+  </div>
+  <div class="date-error" *ngIf="dateError" [@down]="dateError">
+    <p>Date can't be set in the past</p>
   </div>
 </form>

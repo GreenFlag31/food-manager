@@ -5,8 +5,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 
-import { SharedMainModule } from './shared-module/shared-module.module';
-import { SharedHeaderOnlyModule } from './shared-module/sharedHeaderOnly-module.module';
+import { SharedMainModule } from './shared/shared-module.module';
+import { SharedHeaderOnlyModule } from './shared/sharedHeaderOnly-module.module';
 
 @NgModule({
   declarations: [AppComponent],

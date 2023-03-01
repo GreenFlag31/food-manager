@@ -1,22 +1,70 @@
 <app-header></app-header>
 
 <div class="layer">
+  <div class="error" *ngIf="error" [@down]="error">
+    <p>
+      <i class="fa-solid fa-circle-exclamation"></i>{{ ErrorResponseMessage }}
+    </p>
+  </div>
   <img src="../../assets/login.jpg" alt="" />
   <div class="form-container">
     <div class="form-content">
       <span class="login-header"> </span>
       <div class="form">
-        <form>
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm, choice)">
           <div class="user">
             <i class="fa-solid fa-user"></i>
-            <input type="text" id="email" placeholder="Email adress" />
+            <input
+              type="text"
+              id="email"
+              name="email"
+              placeholder="Email adress"
+              ngModel
+              required
+              email
+            />
           </div>
           <div class="password">
             <i class="fa-solid fa-lock"></i>
-            <input type="password" id="password" placeholder="Password" />
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Password"
+              ngModel
+              required
+              minlength="6"
+            />
+          </div>
+          <div class="submit">
+            <button
+              class="login"
+              type="submit"
+              [disabled]="!loginForm.valid"
+              [ngClass]="{ loading: isLoading }"
+            >
+              Login
+              <i
+                *ngIf="isLoading && !error"
+                class="fas fa-spinner fa-pulse"
+              ></i>
+            </button>
           </div>
         </form>
-        <button class="login">Sign In</button>
+      </div>
+      <div class="sign-choice">
+        <div class="option">
+          <p #choiceText>Sign In</p>
+        </div>
+        <div class="checkbox">
+          <input
+            type="checkbox"
+            id="cbx-3"
+            #choice
+            (click)="toggleLogin(choice, choiceText)"
+          />
+          <label for="cbx-3" class="toggle"><span></span></label>
+        </div>
       </div>
     </div>
   </div>

@@ -8,7 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { changedAnimation } from '../animations';
-import { PaginationService } from '../pagination-service.service';
+import { PaginationService } from '../shared/pagination-service.service';
 
 @Component({
   selector: 'app-pagination',

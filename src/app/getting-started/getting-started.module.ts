@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { GettingStartedRoutingModule } from './getting-started-routing.module';
 import { GettingStartedComponent } from './getting-started.component';
-import { SharedHeaderOnlyModule } from '../shared-module/sharedHeaderOnly-module.module';
+import { SharedHeaderOnlyModule } from '../shared/sharedHeaderOnly-module.module';
 
 @NgModule({
   declarations: [GettingStartedComponent],

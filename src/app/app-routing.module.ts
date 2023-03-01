@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { ItemViewComponent } from './item-view/item-view.component';
-import { DataResolverService } from './data-resolver.service';
+import { DataResolverService } from './shared/data-resolver.service';
 
 const routes: Routes = [
   {

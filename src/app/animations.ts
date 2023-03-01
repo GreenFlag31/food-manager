@@ -114,12 +114,18 @@ export const changedAnimation = trigger('openClose', [
     'visible',
     style({
       opacity: 1,
+      width: '*',
+      height: '*',
+      padding: '*',
     })
   ),
   state(
     'invisible',
     style({
       opacity: 0,
+      width: '0',
+      height: '0',
+      padding: '0',
     })
   ),
   transition('invisible <=> visible', [animate('0.3s')]),

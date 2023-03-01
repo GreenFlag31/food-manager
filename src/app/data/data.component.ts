@@ -4,9 +4,10 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { FoodDataService } from '../food-data-service.service';
-import { Criteria, foodObject } from '../IfoodObject';
-import { PaginationService } from '../pagination-service.service';
+import { of } from 'rxjs';
+import { FoodDataService } from '../shared/food-data-service.service';
+import { Criteria, foodObject } from '../shared/IfoodObject';
+import { PaginationService } from '../shared/pagination-service.service';
 
 @Component({
   selector: 'app-data',
@@ -22,6 +23,7 @@ export class DataComponent implements OnInit {
   criteria: Criteria = this.foodData.criteria;
   searchInProgress = false;
   notificationsNumber = 0;
+  dateError = false;
 
   constructor(
     private foodData: FoodDataService,
@@ -56,8 +58,13 @@ export class DataComponent implements OnInit {
     this.itemsToDisplay = this.pagination.paginate(this.currentPage);
 
     if (newItem.dayLeft! <= this.foodData.notificationsDays) {
-      this.notificationsNumber++;
+      // this.notificationsNumber++;
+      // this.foodData.notification.next(+1);
       this.foodData.newItemUnderNotification.push(newItem);
+
+      this.foodData.ObsArrayNotifications.next(
+        this.foodData.newItemUnderNotification.length
+      );
     }
   }
 
@@ -84,6 +91,7 @@ export class DataComponent implements OnInit {
       this.listItems = [];
       this.itemsToDisplay = [];
       this.foodData.newItemUnderNotification = [];
+      this.foodData.ObsArrayNotifications.next(0);
       this.notificationsNumber = 0;
       this.totalPages = 0;
       this.pagination.addPaginationToUrl(true);

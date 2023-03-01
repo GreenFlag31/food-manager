@@ -1,5 +1,6 @@
 .layer {
   padding: 0.625em;
+  grid-template-rows: 135px auto min-content;
 }
 main {
   display: flex;

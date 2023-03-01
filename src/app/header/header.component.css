@@ -55,7 +55,14 @@ nav a {
 .contact.active,
 .notifications.active {
   border-bottom: 3px solid #1f1f89;
-  /* border-bottom: 3px solid #107b35; */
+}
+
+.notifications i {
+  color: rgb(85 161 220);
+}
+.notifications i.active,
+.notifications.active i {
+  color: white;
 }
 
 .started:hover,

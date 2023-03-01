@@ -11,9 +11,9 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { fadeInOut, slidingApparition } from '../animations';
-import { FoodDataService } from '../food-data-service.service';
-import { Criteria, foodObject } from '../IfoodObject';
-import { PaginationService } from '../pagination-service.service';
+import { FoodDataService } from '../shared/food-data-service.service';
+import { Criteria, foodObject } from '../shared/IfoodObject';
+import { PaginationService } from '../shared/pagination-service.service';
 
 @Component({
   selector: 'app-general-overview',
@@ -135,6 +135,7 @@ export class GeneralOverviewComponent implements OnInit, OnChanges {
     if (this.filteredItems?.length) {
       this.filteredItems.splice(item.itemId, 1);
       this.itemsToExpire.emit(this.filteredItems.length);
+      this.foodData.ObsArrayNotifications.next(this.filteredItems.length);
     }
 
     this.updateItemsToDisplay();

@@ -14,9 +14,12 @@
   height: 100%;
   color: var(--background-2);
 }
+form {
+  height: 100%;
+}
 .form-content {
   display: grid;
-  grid-template-rows: 2em auto;
+  grid-template-rows: 2em auto min-content;
   width: 45%;
   height: 60%;
   background: var(--background-1);
@@ -39,7 +42,14 @@
   border-bottom: 1px solid rgb(193 193 193);
   background: var(--background-1);
 }
-.login {
+.submit {
+  margin: 1em;
+}
+button.login {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  justify-content: center;
   border: none;
   padding: 0.4em 2.4em;
   border-radius: 1.2em;
@@ -48,9 +58,16 @@
   cursor: pointer;
   transition: 0.3s;
   box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 71%);
+  margin: auto;
+  width: 95px;
+  height: 30px;
 }
-.login:hover {
+button.login:hover:not([disabled]):not(.loading) {
   transform: translateY(-0.2em);
+}
+button.login[disabled] {
+  background: rgb(85 161 220);
+  cursor: not-allowed;
 }
 .form {
   padding: 0.625em;
@@ -64,6 +81,12 @@
   position: relative;
   margin: 1em 0;
 }
+.user {
+  margin-top: 1.5em;
+}
+.password {
+  margin-bottom: 2em;
+}
 .user i,
 .password i {
   position: absolute;
@@ -73,4 +96,96 @@
 }
 ::placeholder {
   color: rgb(102, 107, 122);
+}
+
+.sign-choice {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.2em;
+  padding: 0.625em;
+}
+.sign-choice input[type="checkbox"] {
+  visibility: hidden;
+  display: none;
+}
+.sign-choice .toggle {
+  position: relative;
+  display: block;
+  width: 40px;
+  height: 20px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transform: translate3d(0, 0, 0);
+}
+.sign-choice .toggle:before {
+  content: "";
+  position: relative;
+  top: 3px;
+  left: 3px;
+  width: 30px;
+  height: 13px;
+  display: block;
+  background: #9a9999;
+  border-radius: 8px;
+  transition: 0.2s ease;
+}
+.sign-choice .toggle span {
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  width: 15px;
+  height: 15px;
+  display: block;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(154, 153, 153, 0.5);
+  transition: all 0.2s ease;
+}
+.sign-choice .toggle span:before {
+  content: "";
+  position: absolute;
+  display: block;
+  margin: -14px;
+  width: 45px;
+  height: 45px;
+  background: var(--background-2);
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 1;
+  pointer-events: none;
+}
+
+.sign-choice #cbx-3:checked + .toggle:before {
+  background: rgb(139, 186, 222);
+}
+.sign-choice #cbx-3:checked + .toggle span {
+  background: var(--background-2);
+  transform: translateX(15px);
+  transition: 0.2s ease-out;
+  box-shadow: 0 3px 8px rgba(79, 46, 220, 0.2);
+}
+.sign-choice #cbx-3:checked + .toggle span:before {
+  transform: scale(1);
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+.error {
+  position: absolute;
+  width: 100%;
+  padding-top: 0.6em;
+}
+.error i {
+  margin-right: 0.3em;
+  color: #e71a1a;
+}
+.error p {
+  max-width: 300px;
+  margin: auto;
+  padding: 0.625em;
+  background: var(--background-1);
+  opacity: 0.9;
+  text-align: center;
+  color: red;
+  font-weight: bolder;
+  border-radius: 0.2em;
 }

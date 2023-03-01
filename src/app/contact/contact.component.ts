@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { iconsCode, selfPic, title } from '../animations';
-import { FoodDataService } from '../food-data-service.service';
+import { FoodDataService } from '../shared/food-data-service.service';
 
 @Component({
   selector: 'app-contact',

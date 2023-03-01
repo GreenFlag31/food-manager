@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './login.component';
 
-import { SharedHeaderOnlyModule } from '../shared-module/sharedHeaderOnly-module.module';
+import { SharedHeaderOnlyModule } from '../shared/sharedHeaderOnly-module.module';
 
 @NgModule({
   declarations: [LoginComponent],

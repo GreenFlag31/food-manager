@@ -19,3 +19,12 @@ export interface Shortcut {
 export type paginationSchema = {
   type: 'endMore' | 'startMore' | 'symmetrical';
 };
+
+export interface AuthResponseData {
+  idToken: string;
+  email: string;
+  refreshToken: string;
+  expiresIn: string;
+  localId: string;
+  registered?: boolean;
+}
