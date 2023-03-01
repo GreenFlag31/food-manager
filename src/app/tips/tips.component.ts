@@ -4,7 +4,7 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { tipsAnimation } from '../animations';
+import { tipsAnimation } from '../shared/animations';
 
 @Component({
   selector: 'app-tips',

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FoodDataService } from '../shared/food-data-service.service';
 import { foodObject } from '../shared/IfoodObject';
+import { NotificationsService } from '../shared/notifications-service.service';
 
 @Component({
   selector: 'app-item',
@@ -12,7 +13,10 @@ export class ItemComponent implements OnInit {
   @Input() item!: foodObject;
   @Output() itemDeleted = new EventEmitter();
 
-  constructor(private foodService: FoodDataService) {}
+  constructor(
+    private foodService: FoodDataService,
+    private notification: NotificationsService
+  ) {}
 
   ngOnInit() {}
 
@@ -27,7 +31,7 @@ export class ItemComponent implements OnInit {
   }
 
   updateListOfNotifiedItems() {
-    const notifiedItems = this.foodService.newItemUnderNotification;
+    const notifiedItems = this.notification.newItemUnderNotification;
     for (let i = 0; i < notifiedItems.length; i++) {
       if (notifiedItems[i].id === this.item.id) {
         notifiedItems.splice(i, 1);

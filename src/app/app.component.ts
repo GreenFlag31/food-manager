@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChildrenOutletContexts } from '@angular/router';
-import { slideInAnimation } from './animations';
+import { AuthService } from './login/auth.service';
+import { slideInAnimation } from './shared/animations';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,15 @@ import { slideInAnimation } from './animations';
   styleUrls: ['./app.component.css'],
   animations: [slideInAnimation],
 })
-export class AppComponent {
-  constructor(private contexts: ChildrenOutletContexts) {}
+export class AppComponent implements OnInit {
+  constructor(
+    private contexts: ChildrenOutletContexts,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit(): void {
+    this.authService.keepLogedIn();
+  }
 
   getRouteAnimationData() {
     return this.contexts.getContext('primary')?.route?.snapshot?.data?.[

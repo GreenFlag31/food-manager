@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
-import { map, Observable, Subject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { map, Observable } from 'rxjs';
 import { foodObject, Criteria } from './IfoodObject';
 
 @Injectable({
   providedIn: 'root',
 })
-export class FoodDataService implements OnInit {
+export class FoodDataService {
   listItems: foodObject[] = [];
   currentDate!: string | Date;
   compute!: number;
@@ -16,15 +16,8 @@ export class FoodDataService implements OnInit {
     sortedBy: 'date',
     order: 'ascending',
   };
-  notificationsDays = 5;
-  hasBeenNotified = 0;
-  newItemUnderNotification: foodObject[] = [];
-  ObsArrayNotifications = new Subject<number>();
-  // notification = new Subject<number>();
 
   constructor(private http: HttpClient) {}
-
-  ngOnInit() {}
 
   fetchItems(): Observable<foodObject[]> {
     return this.http.get<foodObject>(this.url).pipe(
@@ -45,7 +38,6 @@ export class FoodDataService implements OnInit {
   }
 
   deleteItems() {
-    this.listItems = [];
     return this.http.delete(this.url);
   }
 
@@ -78,10 +70,6 @@ export class FoodDataService implements OnInit {
     }
     item.dayLeft = this.compute;
     return item.dayLeft;
-  }
-
-  filterAccordingToDaysBefore(daysBefore: number): foodObject[] {
-    return this.listItems.filter((item) => item.dayLeft! <= daysBefore);
   }
 
   sortItems(type: string, order: string, defaultItems = this.listItems) {
@@ -136,14 +124,6 @@ export class FoodDataService implements OnInit {
     return defaultItems.filter(
       (item) => item.name.toLowerCase().trim() === term
     )!;
-  }
-
-  itemsToBeNotified(): foodObject[] {
-    return this.filterAccordingToDaysBefore(this.notificationsDays);
-  }
-
-  numberOfNotifications(): number {
-    return this.itemsToBeNotified().length - this.hasBeenNotified;
   }
 
   checkValidDate(choosenDate: string) {

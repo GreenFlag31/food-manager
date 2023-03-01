@@ -1,5 +1,3 @@
-<app-header [notificationsNumber]="notificationsNumber"></app-header>
-
 <div class="layer">
   <app-change-item
     [item]="item"
@@ -17,7 +15,7 @@
     <div class="food-container">
       <div class="left-container">
         <h2
-          [@openClose]="
+          [@opacityAnimation]="
             statusAnimation && changedName ? 'invisible' : 'visible'
           "
         >
@@ -29,7 +27,7 @@
             <i class="fa-regular fa-calendar-days"></i>
             <p
               [ngClass]="item.class"
-              [@openClose]="
+              [@opacityAnimation]="
                 statusAnimation && changedDate ? 'invisible' : 'visible'
               "
             >
@@ -39,7 +37,7 @@
           <div class="dayLeft">
             <i class="fa-regular fa-clock"></i>
             <p
-              [@openClose]="
+              [@opacityAnimation]="
                 statusAnimation && changedDate ? 'invisible' : 'visible'
               "
             >

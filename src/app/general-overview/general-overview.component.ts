@@ -10,9 +10,10 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { fadeInOut, slidingApparition } from '../animations';
+import { fadeInOut, slidingApparition } from '../shared/animations';
 import { FoodDataService } from '../shared/food-data-service.service';
 import { Criteria, foodObject } from '../shared/IfoodObject';
+import { NotificationsService } from '../shared/notifications-service.service';
 import { PaginationService } from '../shared/pagination-service.service';
 
 @Component({
@@ -41,12 +42,12 @@ export class GeneralOverviewComponent implements OnInit, OnChanges {
   @Input() notificationsDays!: number;
   filteredItems!: foodObject[];
   @Output() itemsToExpire = new EventEmitter<number>(true);
-  @Output() notificationsNumber = new EventEmitter<number>();
   numberOfNotifications = 0;
 
   constructor(
     private foodData: FoodDataService,
     private pagination: PaginationService,
+    private notification: NotificationsService,
     private ref: ChangeDetectorRef,
     private route: ActivatedRoute
   ) {}
@@ -93,22 +94,22 @@ export class GeneralOverviewComponent implements OnInit, OnChanges {
   }
 
   setNotification() {
-    const notifications = this.foodData.filterAccordingToDaysBefore(
-      this.foodData.notificationsDays
+    const notifications = this.notification.filterAccordingToDaysBefore(
+      this.notification.notificationsDays
     );
     this.numberOfNotifications =
-      notifications.length - this.foodData.hasBeenNotified;
+      notifications.length - this.notification.hasBeenNotified;
 
     if (this.numberOfNotifications > 0) {
-      this.foodData.newItemUnderNotification = [...notifications];
+      this.notification.newItemUnderNotification = [...notifications];
     }
-    this.notificationsNumber.emit(this.numberOfNotifications);
+    this.notification.notificationSubject.next(this.numberOfNotifications);
   }
 
   updateItemsToDisplay(daysBefore = Infinity) {
     if (daysBefore < Infinity) {
       this.filteredItems =
-        this.foodData.filterAccordingToDaysBefore(daysBefore);
+        this.notification.filterAccordingToDaysBefore(daysBefore);
       this.foodData.setDayLeftItems(daysBefore);
 
       this.itemsToExpire.emit(this.filteredItems.length);
@@ -135,14 +136,15 @@ export class GeneralOverviewComponent implements OnInit, OnChanges {
     if (this.filteredItems?.length) {
       this.filteredItems.splice(item.itemId, 1);
       this.itemsToExpire.emit(this.filteredItems.length);
-      this.foodData.ObsArrayNotifications.next(this.filteredItems.length);
+      this.notification.notificationSubject.next(this.filteredItems.length);
+    } else {
+      this.notification.notificationSubject.next(
+        this.notification.newItemUnderNotification.length
+      );
     }
 
     this.updateItemsToDisplay();
     this.updateTP.emit(this.totalPages);
-    this.notificationsNumber.emit(
-      this.foodData.newItemUnderNotification.length
-    );
 
     this.currentPage = this.pagination.currentPage;
     if (this.totalPages === 0) {

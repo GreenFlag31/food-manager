@@ -4,9 +4,9 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { of } from 'rxjs';
 import { FoodDataService } from '../shared/food-data-service.service';
 import { Criteria, foodObject } from '../shared/IfoodObject';
+import { NotificationsService } from '../shared/notifications-service.service';
 import { PaginationService } from '../shared/pagination-service.service';
 
 @Component({
@@ -28,6 +28,7 @@ export class DataComponent implements OnInit {
   constructor(
     private foodData: FoodDataService,
     private pagination: PaginationService,
+    private notification: NotificationsService,
     private ref: ChangeDetectorRef
   ) {}
 
@@ -57,19 +58,13 @@ export class DataComponent implements OnInit {
     this.pagination.totalPages = this.totalPages;
     this.itemsToDisplay = this.pagination.paginate(this.currentPage);
 
-    if (newItem.dayLeft! <= this.foodData.notificationsDays) {
-      // this.notificationsNumber++;
-      // this.foodData.notification.next(+1);
-      this.foodData.newItemUnderNotification.push(newItem);
+    if (newItem.dayLeft! <= this.notification.notificationsDays) {
+      this.notification.newItemUnderNotification.push(newItem);
 
-      this.foodData.ObsArrayNotifications.next(
-        this.foodData.newItemUnderNotification.length
+      this.notification.notificationSubject.next(
+        this.notification.newItemUnderNotification.length
       );
     }
-  }
-
-  updateNotifications(notifications: number) {
-    this.notificationsNumber = notifications;
   }
 
   updateCriteria(criteria: Criteria) {
@@ -89,9 +84,10 @@ export class DataComponent implements OnInit {
     this.foodData.deleteItems().subscribe(() => {
       // add an alert confirm message
       this.listItems = [];
+      this.foodData.listItems = [];
       this.itemsToDisplay = [];
-      this.foodData.newItemUnderNotification = [];
-      this.foodData.ObsArrayNotifications.next(0);
+      this.notification.newItemUnderNotification = [];
+      this.notification.notificationSubject.next(0);
       this.notificationsNumber = 0;
       this.totalPages = 0;
       this.pagination.addPaginationToUrl(true);

@@ -7,14 +7,14 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { changedAnimation } from '../animations';
+import { opacityTransition } from '../shared/animations';
 import { PaginationService } from '../shared/pagination-service.service';
 
 @Component({
   selector: 'app-pagination',
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css'],
-  animations: [changedAnimation],
+  animations: [opacityTransition],
 })
 export class PaginationComponent implements OnInit, OnChanges {
   pages: (number | string)[] = [];

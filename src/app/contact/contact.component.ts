@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { iconsCode, selfPic, title } from '../animations';
+import { iconsCode, selfPic, title } from '../shared/animations';
 import { FoodDataService } from '../shared/food-data-service.service';
+import { NotificationsService } from '../shared/notifications-service.service';
 
 @Component({
   selector: 'app-contact',
@@ -21,14 +22,15 @@ export class ContactComponent implements OnInit {
   ];
   constructor(
     private foodData: FoodDataService,
+    private notification: NotificationsService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.route.data.subscribe(() => {
-      this.foodData.setDayLeftItems(this.foodData.notificationsDays);
+      this.foodData.setDayLeftItems(this.notification.notificationsDays);
 
-      this.notificationsNumber = this.foodData.numberOfNotifications();
+      this.notificationsNumber = this.notification.numberOfNotifications();
     });
   }
 }

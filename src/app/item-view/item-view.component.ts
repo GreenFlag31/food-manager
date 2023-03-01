@@ -6,15 +6,16 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { delay, interval, takeWhile } from 'rxjs';
-import { changedAnimation } from '../animations';
+import { opacityTransition } from '../shared/animations';
 import { FoodDataService } from '../shared/food-data-service.service';
 import { foodObject } from '../shared/IfoodObject';
+import { NotificationsService } from '../shared/notifications-service.service';
 
 @Component({
   selector: 'app-item-view',
   templateUrl: './item-view.component.html',
   styleUrls: ['./item-view.component.css'],
-  animations: [changedAnimation],
+  animations: [opacityTransition],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemViewComponent implements OnInit {
@@ -31,6 +32,7 @@ export class ItemViewComponent implements OnInit {
     private route: ActivatedRoute,
     private foodData: FoodDataService,
     private router: Router,
+    private notification: NotificationsService,
     private ref: ChangeDetectorRef
   ) {}
 
@@ -43,13 +45,15 @@ export class ItemViewComponent implements OnInit {
 
   setNotification() {
     // if direct URL
-    this.foodData.newItemUnderNotification = this.foodData.itemsToBeNotified();
+    this.notification.newItemUnderNotification =
+      this.notification.itemsToBeNotified();
     this.notificationsNumber =
-      this.foodData.newItemUnderNotification.length -
-      this.foodData.hasBeenNotified;
+      this.notification.newItemUnderNotification.length -
+      this.notification.hasBeenNotified;
     if (this.notificationsNumber === 0) {
-      this.foodData.newItemUnderNotification = [];
+      this.notification.newItemUnderNotification = [];
     }
+    this.notification.notificationSubject.next(this.notificationsNumber);
   }
 
   addDataIfDirectAccess() {
@@ -64,7 +68,7 @@ export class ItemViewComponent implements OnInit {
         return;
       }
 
-      this.foodData.setDayLeftItems(this.foodData.notificationsDays);
+      this.foodData.setDayLeftItems(this.notification.notificationsDays);
       this.foodData.sortItems(
         this.foodData.criteria.sortedBy,
         this.foodData.criteria.order
@@ -81,7 +85,7 @@ export class ItemViewComponent implements OnInit {
     // if animation stopped by changing item, recompute
     this.item.dayLeft = this.foodData.setDayLeftItem(
       this.item,
-      this.foodData.notificationsDays
+      this.notification.notificationsDays
     );
 
     this.id = this.foodData.listItems.indexOf(this.item);
@@ -125,7 +129,7 @@ export class ItemViewComponent implements OnInit {
       this.item.bestBefore = copiedItem[1].bestBefore;
       const totalDays = this.foodData.setDayLeftItem(
         this.item,
-        this.foodData.notificationsDays
+        this.notification.notificationsDays
       );
 
       this.changeNotification(copiedItem[0]);
@@ -139,32 +143,36 @@ export class ItemViewComponent implements OnInit {
     const [index, hasBeenNotified] = this.checkIfNotified();
     // no notification if previous already under notification
     if (
-      itemBeforeChange.dayLeft! >= this.foodData.notificationsDays &&
-      this.item.dayLeft! <= this.foodData.notificationsDays &&
+      itemBeforeChange.dayLeft! >= this.notification.notificationsDays &&
+      this.item.dayLeft! <= this.notification.notificationsDays &&
       !hasBeenNotified
     ) {
       // this.notificationsNumber++;
-      this.foodData.newItemUnderNotification.push(this.item);
-      this.foodData.ObsArrayNotifications.next(
-        this.foodData.newItemUnderNotification.length
+      this.notification.newItemUnderNotification.push(this.item);
+      this.notification.notificationSubject.next(
+        this.notification.newItemUnderNotification.length
       );
     } else if (
-      this.item.dayLeft! > this.foodData.notificationsDays &&
+      this.item.dayLeft! > this.notification.notificationsDays &&
       hasBeenNotified
     ) {
       // this.notificationsNumber--;
-      this.foodData.newItemUnderNotification.splice(index, 1);
-      this.foodData.ObsArrayNotifications.next(
-        this.foodData.newItemUnderNotification.length
+      this.notification.newItemUnderNotification.splice(index, 1);
+      this.notification.notificationSubject.next(
+        this.notification.newItemUnderNotification.length
       );
     }
   }
 
   checkIfNotified(): [number, boolean] {
     let index = 0;
-    for (let i = 0; i < this.foodData.newItemUnderNotification.length; i++) {
+    for (
+      let i = 0;
+      i < this.notification.newItemUnderNotification.length;
+      i++
+    ) {
       index = i;
-      if (this.item.id === this.foodData.newItemUnderNotification[i].id) {
+      if (this.item.id === this.notification.newItemUnderNotification[i].id) {
         return [index, true];
       }
     }
@@ -191,10 +199,9 @@ export class ItemViewComponent implements OnInit {
   itemDeleted() {
     const [index, notified] = this.checkIfNotified();
     if (notified) {
-      // this.notificationsNumber--;
-      this.foodData.newItemUnderNotification.splice(index, 1);
-      this.foodData.ObsArrayNotifications.next(
-        this.foodData.newItemUnderNotification.length
+      this.notification.newItemUnderNotification.splice(index, 1);
+      this.notification.notificationSubject.next(
+        this.notification.newItemUnderNotification.length
       );
     }
     if (!this.foodData.listItems.length) {

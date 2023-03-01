@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { itemsToExpire } from '../animations';
-import { FoodDataService } from '../shared/food-data-service.service';
+import { itemsToExpire } from '../shared/animations';
+import { NotificationsService } from '../shared/notifications-service.service';
 
 @Component({
   selector: 'app-notifications',
@@ -9,13 +9,13 @@ import { FoodDataService } from '../shared/food-data-service.service';
   animations: [itemsToExpire],
 })
 export class NotificationsComponent implements OnInit {
-  notificationsDays = this.foodData.notificationsDays;
+  notificationsDays = this.notification.notificationsDays;
   nItemsToExpire!: number;
   animate = true;
-  constructor(private foodData: FoodDataService) {}
+  constructor(private notification: NotificationsService) {}
 
   ngOnInit() {
-    this.foodData.newItemUnderNotification = [];
+    this.notification.newItemUnderNotification = [];
     this.toggleAnimation();
   }
 
@@ -24,8 +24,8 @@ export class NotificationsComponent implements OnInit {
       this.toggleAnimation();
     }
     this.nItemsToExpire = numberItems;
-    this.foodData.notificationsDays = this.notificationsDays;
-    this.foodData.hasBeenNotified = this.nItemsToExpire;
+    this.notification.notificationsDays = this.notificationsDays;
+    this.notification.hasBeenNotified = this.nItemsToExpire;
   }
 
   toggleAnimation() {

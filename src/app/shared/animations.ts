@@ -46,7 +46,7 @@ const animateStartStyle = animation([
 ]);
 
 export const slideInAnimation = trigger('routeAnimations', [
-  transition('started => login', [
+  transition('login => myList', [
     useAnimation(startStyle),
 
     useAnimation(animateStartStyle, {
@@ -56,7 +56,7 @@ export const slideInAnimation = trigger('routeAnimations', [
       },
     }),
   ]),
-  transition('login => started', [
+  transition('myList => login', [
     useAnimation(startStyle),
 
     useAnimation(animateStartStyle, {
@@ -109,7 +109,23 @@ export const slidingApparition = trigger('slidingApparition', [
   ]),
 ]);
 
-export const changedAnimation = trigger('openClose', [
+export const opacityTransition = trigger('opacityAnimation', [
+  state(
+    'visible',
+    style({
+      opacity: 1,
+    })
+  ),
+  state(
+    'invisible',
+    style({
+      opacity: 0,
+    })
+  ),
+  transition('invisible <=> visible', [animate('0.3s')]),
+]);
+
+export const loginTransition = trigger('loginAnimation', [
   state(
     'visible',
     style({
@@ -128,7 +144,17 @@ export const changedAnimation = trigger('openClose', [
       padding: '0',
     })
   ),
-  transition('invisible <=> visible', [animate('0.3s')]),
+  transition('visible => invisible', [
+    animate(
+      '1s',
+      keyframes([
+        style({ opacity: 1 }),
+        style({ opacity: 0 }),
+        style({ width: '*', height: '*', padding: '*' }),
+        style({ width: '0', height: '0', padding: '0' }),
+      ])
+    ),
+  ]),
 ]);
 
 export const tipsAnimation = trigger('tips', [

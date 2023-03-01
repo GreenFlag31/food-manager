@@ -3,10 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { GettingStartedRoutingModule } from './getting-started-routing.module';
 import { GettingStartedComponent } from './getting-started.component';
-import { SharedHeaderOnlyModule } from '../shared/sharedHeaderOnly-module.module';
 
 @NgModule({
   declarations: [GettingStartedComponent],
-  imports: [CommonModule, GettingStartedRoutingModule, SharedHeaderOnlyModule],
+  imports: [CommonModule, GettingStartedRoutingModule],
 })
 export class GettingStartedModule {}

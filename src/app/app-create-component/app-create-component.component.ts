@@ -9,7 +9,7 @@ import { NgForm } from '@angular/forms';
 import { FoodDataService } from '../shared/food-data-service.service';
 import { DatePipe } from '@angular/common';
 import { foodObject } from '../shared/IfoodObject';
-import { selfPic } from '../animations';
+import { selfPic } from '../shared/animations';
 
 @Component({
   selector: 'app-create-component',

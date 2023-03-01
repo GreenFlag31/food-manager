@@ -10,7 +10,6 @@ import { AppCreateComponent } from '../app-create-component/app-create-component
 import { FormsModule } from '@angular/forms';
 import { SafeHTMLPipe } from './safe-html.pipe';
 import { RouterModule } from '@angular/router';
-import { SharedHeaderOnlyModule } from './sharedHeaderOnly-module.module';
 import { KeyDownDirective } from './key-down.directive';
 
 @NgModule({
@@ -26,7 +25,7 @@ import { KeyDownDirective } from './key-down.directive';
     KeyDownDirective,
   ],
 
-  imports: [CommonModule, RouterModule, SharedHeaderOnlyModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   exports: [
     GeneralOverviewComponent,
     TipsComponent,
@@ -36,7 +35,6 @@ import { KeyDownDirective } from './key-down.directive';
     ChangeItemComponent,
     AppCreateComponent,
     FormsModule,
-    SharedHeaderOnlyModule,
   ],
   providers: [SafeHTMLPipe, DatePipe],
 })

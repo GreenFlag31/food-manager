@@ -1,5 +1,3 @@
-<app-header [notificationsNumber]="notificationsNumber"></app-header>
-
 <div class="layer" appKeyDown>
   <app-create-component (newItemAdded)="addItem($event)"></app-create-component>
 
@@ -12,7 +10,6 @@
     [(searching)]="searchInProgress"
     [currentPage]="currentPage"
     (LI)="updateLI($event)"
-    (notificationsNumber)="updateNotifications($event)"
   ></app-general-overview>
   <footer>
     <app-tips></app-tips>

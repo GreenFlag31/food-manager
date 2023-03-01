@@ -13,7 +13,7 @@
         class="login"
         routerLink="/login"
         routerLinkActive="active"
-        [@openClose]="isAuthenticated ? 'invisible' : 'visible'"
+        [@loginAnimation]="isAuthenticated ? 'invisible' : 'visible'"
       >
         <i class="fa-solid fa-right-to-bracket"></i><a>Log In</a>
       </div>
@@ -43,6 +43,7 @@
         routerLinkActive="active"
         *ngIf="isAuthenticated"
         [@fadeInOut]
+        (click)="onLogOut()"
       >
         <i class="fa-solid fa-right-from-bracket"></i><a>Log Out</a>
       </div>

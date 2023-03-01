@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { selfPic } from '../animations';
+import { selfPic } from '../shared/animations';
 import { AuthResponseData } from '../shared/IfoodObject';
 import { AuthService } from './auth.service';
 
@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
     this.loginObservable.subscribe({
       next: () => {
         this.error = false;
-        this.router.navigate(['/getting-started']);
+        this.router.navigate(['/my-list']);
       },
       error: (errorResponse) => {
         this.error = true;

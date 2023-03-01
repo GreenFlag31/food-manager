@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { selfPic } from '../animations';
+import { selfPic } from '../shared/animations';
 import { FoodDataService } from '../shared/food-data-service.service';
 import { foodObject } from '../shared/IfoodObject';
 
