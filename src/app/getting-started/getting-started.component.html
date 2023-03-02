@@ -12,7 +12,8 @@
       <span class="emphasize">good for the planet and your wallet.</span>
     </p>
     <p>
-      Just log in and insert the name and the expiry date of a product.
+      Just create an account or log in and insert the name and the expiry date
+      of a product.
       <span class="emphasize">No email validation is required.</span>
     </p>
     <p>
@@ -28,5 +29,7 @@
       <input type="checkbox" id="landing" name="landing" />
     </div>
   </div>
-  <footer><button routerLink="/login">Log In</button></footer>
+  <footer *ngIf="!userIsConnected">
+    <button routerLink="/login">Log In</button>
+  </footer>
 </div>

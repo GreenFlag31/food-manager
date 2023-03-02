@@ -1,7 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { first, Observable } from 'rxjs';
 import { selfPic } from '../shared/animations';
 import { AuthResponseData } from '../shared/IfoodObject';
 import { AuthService } from './auth.service';
@@ -12,18 +18,27 @@ import { AuthService } from './auth.service';
   styleUrls: ['./login.component.css'],
   animations: [selfPic],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements AfterViewInit {
   isLoading = false;
   error = false;
   loginObservable!: Observable<AuthResponseData>;
-
+  @ViewChild('choice') choice!: ElementRef;
   ErrorResponseMessage!: string;
+
   constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit(): void {}
+  ngAfterViewInit() {
+    const firstVisit = localStorage.getItem('alreadyVisited');
+    if (!firstVisit) {
+      this.choice.nativeElement.checked = true;
+    } else {
+      this.choice.nativeElement.checked = false;
+    }
+  }
 
   onSubmit(form: NgForm, choice: HTMLInputElement) {
     this.isLoading = true;
+    this.error = false;
     const formValues = form.form.value;
     const { email, password } = formValues;
 
@@ -36,6 +51,7 @@ export class LoginComponent implements OnInit {
     this.loginObservable.subscribe({
       next: () => {
         this.error = false;
+        localStorage.setItem('alreadyVisited', 'true');
         this.router.navigate(['/my-list']);
       },
       error: (errorResponse) => {
@@ -43,7 +59,6 @@ export class LoginComponent implements OnInit {
         this.ErrorResponseMessage = errorResponse;
       },
       complete: () => {
-        form.reset();
         this.isLoading = false;
       },
     });

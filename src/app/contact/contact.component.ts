@@ -27,6 +27,7 @@ export class ContactComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // direct URL
     this.route.data.subscribe(() => {
       this.foodData.setDayLeftItems(this.notification.notificationsDays);
 

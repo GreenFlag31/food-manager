@@ -16,7 +16,7 @@ export class AuthService {
     EMAIL_EXISTS: 'This email already exists',
     TOO_MANY_ATTEMPTS_TRY_LATER: 'Try again later',
     EMAIL_NOT_FOUND: 'No user found with provided address',
-    INVALID_PASSWORD: 'Invalid email or password',
+    INVALID_PASSWORD: 'Invalid password',
   };
   ErrorResponseMessage!: string;
   user = new BehaviorSubject<User | null>(null);

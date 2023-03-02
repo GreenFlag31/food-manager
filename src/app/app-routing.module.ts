@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuardService } from './login/auth-guard.service';
 import { DataResolverService } from './shared/data-resolver.service';
 
 const routes: Routes = [
@@ -11,11 +12,13 @@ const routes: Routes = [
   },
   {
     path: 'my-list',
+    canActivate: [AuthGuardService],
     loadChildren: () => import('./data/data.module').then((m) => m.DataModule),
     data: { animation: 'myList' },
   },
   {
     path: 'my-list/item',
+    canActivate: [AuthGuardService],
     loadChildren: () =>
       import('./item-view/item-view.module').then((m) => m.ItemViewModule),
     resolve: {
@@ -48,6 +51,7 @@ const routes: Routes = [
   },
   {
     path: 'notifications',
+    canActivate: [AuthGuardService],
     loadChildren: () =>
       import('./notifications/notifications.module').then(
         (m) => m.NotificationsModule

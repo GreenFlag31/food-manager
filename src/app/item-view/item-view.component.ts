@@ -40,7 +40,6 @@ export class ItemViewComponent implements OnInit {
     this.id = Number(this.route.snapshot.queryParamMap.get('id')) || 0;
     this.addDataIfDirectAccess();
     this.navigateTo(0);
-    this.setNotification();
   }
 
   setNotification() {
@@ -74,6 +73,7 @@ export class ItemViewComponent implements OnInit {
         this.foodData.criteria.order
       );
       this.listItems = this.foodData.listItems;
+      this.setNotification();
     });
   }
 
@@ -147,7 +147,6 @@ export class ItemViewComponent implements OnInit {
       this.item.dayLeft! <= this.notification.notificationsDays &&
       !hasBeenNotified
     ) {
-      // this.notificationsNumber++;
       this.notification.newItemUnderNotification.push(this.item);
       this.notification.notificationSubject.next(
         this.notification.newItemUnderNotification.length
@@ -156,7 +155,6 @@ export class ItemViewComponent implements OnInit {
       this.item.dayLeft! > this.notification.notificationsDays &&
       hasBeenNotified
     ) {
-      // this.notificationsNumber--;
       this.notification.newItemUnderNotification.splice(index, 1);
       this.notification.notificationSubject.next(
         this.notification.newItemUnderNotification.length
