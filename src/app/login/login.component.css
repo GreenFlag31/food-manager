@@ -190,3 +190,7 @@ button.login[disabled] {
   font-weight: bolder;
   border-radius: 0.2em;
 }
+.error i.inactivity,
+.error p.inactivity {
+  color: orange;
+}

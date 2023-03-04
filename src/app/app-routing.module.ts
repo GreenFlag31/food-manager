@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuardService } from './login/auth-guard.service';
+import { AuthGuardLoggedInService } from './login/auth-guard.service copy';
 import { DataResolverService } from './shared/data-resolver.service';
 
 const routes: Routes = [
@@ -41,10 +42,14 @@ const routes: Routes = [
       import('./getting-started/getting-started.module').then(
         (m) => m.GettingStartedModule
       ),
+    resolve: {
+      items: DataResolverService,
+    },
     data: { animation: 'started' },
   },
   {
     path: 'login',
+    canActivate: [AuthGuardLoggedInService],
     loadChildren: () =>
       import('./login/login.module').then((m) => m.LoginModule),
     data: { animation: 'login' },

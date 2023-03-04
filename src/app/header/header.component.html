@@ -17,7 +17,14 @@
       >
         <i class="fa-solid fa-right-to-bracket"></i><a>Log In</a>
       </div>
-      <div class="list" routerLink="/my-list" routerLinkActive="active">
+      <div
+        class="list"
+        routerLink="/my-list"
+        routerLinkActive="active"
+        attr.data-title="{{
+          !isAuthenticated ? 'Log in to see this content' : null
+        }}"
+      >
         <i class="fa-solid fa-rectangle-list"></i><a>My List</a>
       </div>
     </div>
@@ -26,6 +33,9 @@
         class="notifications"
         routerLink="/notifications"
         routerLinkActive="active"
+        attr.data-title="{{
+          !isAuthenticated ? 'Log in to see this content' : null
+        }}"
       >
         <span *ngIf="notificationsNumber > 0" [@fadeInOut]>{{
           notificationsNumber > 9 ? "9+" : notificationsNumber

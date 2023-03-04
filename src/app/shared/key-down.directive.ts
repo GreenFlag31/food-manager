@@ -1,4 +1,4 @@
-import { Directive, HostListener, OnInit } from '@angular/core';
+import { Directive, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   combineLatest,
@@ -6,12 +6,11 @@ import {
   filter,
   fromEvent,
   map,
-  mapTo,
   merge,
   Observable,
   share,
-  tap,
 } from 'rxjs';
+import { AuthService } from '../login/auth.service';
 import { Shortcut } from './IfoodObject';
 
 @Directive({
@@ -21,23 +20,40 @@ export class KeyDownDirective implements OnInit {
   keydown$ = fromEvent<KeyboardEvent>(document, 'keydown').pipe(share());
   keyup$ = fromEvent<KeyboardEvent>(document, 'keyup').pipe(share());
 
+  constructor(private router: Router, private authService: AuthService) {}
+
   shortcuts: Shortcut[] = [
     {
-      keys: ['Shift', 'r', 'x'], //shortcut keys in format how they will be exposed in e.key
-      //callback to call when keys are pressed
+      keys: ['Alt', 's'],
       cb: () => {
-        console.log('RxJS is cool!');
+        this.router.navigate(['/getting-started']);
       },
     },
     {
-      keys: ['Shift', 't', 's'],
+      keys: ['Alt', 'l'],
       cb: () => {
-        console.log('TS is awesome!');
+        this.router.navigate(['/my-list']);
+      },
+    },
+    {
+      keys: ['Alt', 'n'],
+      cb: () => {
+        this.router.navigate(['/notifications']);
+      },
+    },
+    {
+      keys: ['Alt', 'c'],
+      cb: () => {
+        this.router.navigate(['/contact']);
+      },
+    },
+    {
+      keys: ['Alt', 'o'],
+      cb: () => {
+        this.authService.logOut();
       },
     },
   ];
-
-  //   this.router.navigate(['/getting-started']);
 
   ngOnInit() {
     const specifyKeyEvent =
@@ -52,8 +68,8 @@ export class KeyDownDirective implements OnInit {
 
     const keyState$ForKey = (key: string) =>
       merge(
-        keydown$ForKey(key).pipe(mapTo(true)),
-        keyup$ForKey(key).pipe(mapTo(false))
+        keydown$ForKey(key).pipe(map(() => true)),
+        keyup$ForKey(key).pipe(map(() => true))
       );
 
     const keysState$ForKeys = (keys: string[]) =>
@@ -75,6 +91,4 @@ export class KeyDownDirective implements OnInit {
 
     hotkeys(this.shortcuts);
   }
-
-  constructor(private router: Router) {}
 }

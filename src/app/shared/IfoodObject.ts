@@ -28,3 +28,9 @@ export interface AuthResponseData {
   localId: string;
   registered?: boolean;
 }
+
+export interface RefreshToken {
+  idToken: string;
+  refreshToken: string;
+  expiresIn: string;
+}

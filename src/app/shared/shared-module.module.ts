@@ -35,6 +35,7 @@ import { KeyDownDirective } from './key-down.directive';
     ChangeItemComponent,
     AppCreateComponent,
     FormsModule,
+    KeyDownDirective,
   ],
   providers: [SafeHTMLPipe, DatePipe],
 })

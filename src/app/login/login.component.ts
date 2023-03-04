@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { first, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { selfPic } from '../shared/animations';
 import { AuthResponseData } from '../shared/IfoodObject';
 import { AuthService } from './auth.service';
@@ -18,14 +18,25 @@ import { AuthService } from './auth.service';
   styleUrls: ['./login.component.css'],
   animations: [selfPic],
 })
-export class LoginComponent implements AfterViewInit {
+export class LoginComponent implements OnInit, AfterViewInit {
   isLoading = false;
   error = false;
   loginObservable!: Observable<AuthResponseData>;
   @ViewChild('choice') choice!: ElementRef;
   ErrorResponseMessage!: string;
+  inactivity = false;
 
   constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.authService.inactivity.subscribe((value) => {
+      if (value) {
+        this.error = true;
+        this.inactivity = true;
+        this.ErrorResponseMessage = 'Logged out due to inactivity';
+      }
+    });
+  }
 
   ngAfterViewInit() {
     const firstVisit = localStorage.getItem('alreadyVisited');

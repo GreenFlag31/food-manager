@@ -12,7 +12,6 @@ import { NotificationsService } from '../shared/notifications-service.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactComponent implements OnInit {
-  notificationsNumber = 0;
   imgList = [
     '../../assets/contact-page/Angular.png',
     '../../assets/contact-page/JS.png',
@@ -28,10 +27,13 @@ export class ContactComponent implements OnInit {
 
   ngOnInit() {
     // direct URL
-    this.route.data.subscribe(() => {
-      this.foodData.setDayLeftItems(this.notification.notificationsDays);
+    this.route.data.subscribe((data) => {
+      if (!data['items']) return;
 
-      this.notificationsNumber = this.notification.numberOfNotifications();
+      this.foodData.setDayLeftItems(this.notification.notificationsDays);
+      this.notification.notificationSubject.next(
+        this.notification.numberOfNotifications()
+      );
     });
   }
 }

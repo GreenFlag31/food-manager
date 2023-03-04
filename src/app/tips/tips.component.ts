@@ -1,3 +1,4 @@
+import { LocationStrategy } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -29,15 +30,32 @@ export class TipsComponent implements OnInit {
       content: '',
     },
   ];
-  routes = ['Getting Started', 'Log In', 'My List', 'Contact', 'Log Out'];
+  routes = [
+    'Getting Started',
+    'My List',
+    'Contact',
+    'Notifications',
+    'Log Out',
+  ];
 
-  constructor(private ref: ChangeDetectorRef) {}
+  constructor(private ref: ChangeDetectorRef, private url: LocationStrategy) {}
 
   ngOnInit() {
+    this.noTipsForCurrentRoute();
+
     setTimeout(() => {
       this.isOpen = !this.isOpen;
       this.ref.markForCheck();
     }, 1500);
+  }
+
+  noTipsForCurrentRoute() {
+    const currentURL = this.url.path();
+    if (currentURL.includes('my-list') && !currentURL.includes('item')) {
+      this.routes.splice(1, 1);
+    } else if (currentURL.includes('notifications')) {
+      this.routes.splice(3, 1);
+    }
   }
 
   generateTipsContentAboutNavigation() {
@@ -55,7 +73,7 @@ export class TipsComponent implements OnInit {
   }
 
   getTips() {
-    const randomTips = this.getRandom(this.tipsContent);
+    const randomTips = this.getRandom(this.tipsContent) + 0.2 > 1 ? 1 : 0;
 
     if (randomTips === 1) {
       this.tipsContent[1].content = this.generateTipsContentAboutNavigation();

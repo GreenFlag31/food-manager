@@ -88,7 +88,7 @@ export class GeneralOverviewComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['notificationsDays']?.currentValue) {
+    if (changes['notificationsDays']?.currentValue >= 0) {
       this.updateItemsToDisplay(this.notificationsDays);
     }
   }

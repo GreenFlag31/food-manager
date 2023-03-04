@@ -7,6 +7,7 @@ import {
 import { Injectable } from '@angular/core';
 import { exhaustMap, take } from 'rxjs';
 import { AuthService } from './auth.service';
+import { User } from './user.model';
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
@@ -19,6 +20,9 @@ export class AuthInterceptorService implements HttpInterceptor {
         if (!user) {
           return next.handle(req);
         }
+
+        clearTimeout(this.authService.tokenExpirationTimer);
+        this.authService.keepLogedIn(true);
 
         const clonedReq = req.clone({
           params: new HttpParams().set('auth', user.token!),

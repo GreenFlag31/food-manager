@@ -1,7 +1,8 @@
 <div class="layer">
   <div class="error" *ngIf="error" [@down]="error">
-    <p>
-      <i class="fa-solid fa-circle-exclamation"></i>{{ ErrorResponseMessage }}
+    <p [ngClass]="{ inactivity }">
+      <i class="fa-solid fa-circle-exclamation" [ngClass]="{ inactivity }"></i
+      >{{ ErrorResponseMessage }}
     </p>
   </div>
   <img src="../../assets/login.jpg" alt="" />

@@ -15,7 +15,7 @@ import { foodObject } from './IfoodObject';
   providedIn: 'root',
 })
 export class DataResolverService implements Resolve<foodObject[]> {
-  noRedirectTo = '/contact';
+  noRedirectToRoutes = ['/contact', '/getting-started'];
 
   constructor(
     private foodData: FoodDataService,
@@ -28,11 +28,12 @@ export class DataResolverService implements Resolve<foodObject[]> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<foodObject[]> | any {
-    if (!this.authService.user['_value']) return;
+    if (!this.authService.user['_value']) return false;
 
     // direct URL or interface access
     const redirection =
-      state.url !== this.noRedirectTo && this.url.path() !== this.noRedirectTo;
+      !this.noRedirectToRoutes.includes(state.url) &&
+      !this.noRedirectToRoutes.includes(this.url.path());
 
     if (this.foodData.listItems.length) return of(this.foodData.listItems);
 
