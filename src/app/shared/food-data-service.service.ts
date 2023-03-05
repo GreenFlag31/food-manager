@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+
 import { foodObject, Criteria } from './IfoodObject';
 
 @Injectable({
@@ -10,8 +11,9 @@ export class FoodDataService {
   listItems: foodObject[] = [];
   currentDate!: string | Date;
   compute!: number;
+  uniqueID = '';
   url =
-    'https://my-list-a7fb0-default-rtdb.europe-west1.firebasedatabase.app/items.json';
+    'https://my-list-a7fb0-default-rtdb.europe-west1.firebasedatabase.app/items';
   criteria: Criteria = {
     sortedBy: 'date',
     order: 'ascending',

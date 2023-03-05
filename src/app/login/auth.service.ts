@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
+
 import { AuthResponseData } from '../shared/IfoodObject';
 import { NotificationsService } from '../shared/notifications-service.service';
 import { User } from './user.model';
