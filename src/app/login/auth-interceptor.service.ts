@@ -10,6 +10,7 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
+  itemToDelete!: string;
   constructor(private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
@@ -20,13 +21,16 @@ export class AuthInterceptorService implements HttpInterceptor {
           return next.handle(req);
         }
 
-        clearTimeout(this.authService.tokenExpirationTimer);
-        this.authService.keepLogedIn(true);
-
+        this.itemToDelete = this.authService.itemDeletedID;
         const clonedReq = req.clone({
-          url: req.url + `/${user.id}.json`,
+          url:
+            req.url +
+            `/${user.id}${
+              this.itemToDelete ? `/${this.itemToDelete}.json` : '.json'
+            }`,
           params: new HttpParams().set('auth', user.token!),
         });
+        this.authService.itemDeletedID = '';
         return next.handle(clonedReq);
       })
     );

@@ -69,7 +69,7 @@ export class KeyDownDirective implements OnInit {
     const keyState$ForKey = (key: string) =>
       merge(
         keydown$ForKey(key).pipe(map(() => true)),
-        keyup$ForKey(key).pipe(map(() => true))
+        keyup$ForKey(key).pipe(map(() => false))
       );
 
     const keysState$ForKeys = (keys: string[]) =>

@@ -18,7 +18,7 @@ import { AuthService } from './auth.service';
   styleUrls: ['./login.component.css'],
   animations: [selfPic],
 })
-export class LoginComponent implements OnInit, AfterViewInit {
+export class LoginComponent implements AfterViewInit {
   isLoading = false;
   error = false;
   loginObservable!: Observable<AuthResponseData>;
@@ -27,16 +27,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
   inactivity = false;
 
   constructor(private authService: AuthService, private router: Router) {}
-
-  ngOnInit(): void {
-    this.authService.inactivity.subscribe((value) => {
-      if (value) {
-        this.error = true;
-        this.inactivity = true;
-        this.ErrorResponseMessage = 'Logged out due to inactivity';
-      }
-    });
-  }
 
   ngAfterViewInit() {
     const firstVisit = localStorage.getItem('alreadyVisited');

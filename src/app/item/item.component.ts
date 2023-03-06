@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AuthService } from '../login/auth.service';
 import { FoodDataService } from '../shared/food-data-service.service';
 import { foodObject } from '../shared/IfoodObject';
 import { NotificationsService } from '../shared/notifications-service.service';
@@ -15,13 +16,15 @@ export class ItemComponent implements OnInit {
 
   constructor(
     private foodService: FoodDataService,
-    private notification: NotificationsService
+    private notification: NotificationsService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {}
 
   onDeleteItem() {
-    const url = `https://my-list-a7fb0-default-rtdb.europe-west1.firebasedatabase.app/items/${this.item.id}.json`;
+    this.authService.itemDeletedID = this.item.id!;
+    const url = `https://my-list-a7fb0-default-rtdb.europe-west1.firebasedatabase.app/items`;
     this.foodService.deleteSingleItem(url).subscribe(() => {
       this.foodService.listItems.splice(this.item.itemId, 1);
       this.foodService.setUniqueId();

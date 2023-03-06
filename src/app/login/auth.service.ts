@@ -22,7 +22,7 @@ export class AuthService {
   ErrorResponseMessage!: string;
   user = new BehaviorSubject<User | null>(null);
   tokenExpirationTimer!: number;
-  inactivity = new BehaviorSubject(false);
+  itemDeletedID!: string;
 
   constructor(
     private http: HttpClient,
@@ -85,13 +85,11 @@ export class AuthService {
     localStorage.setItem('userData', JSON.stringify(user));
   }
 
-  keepLogedIn(refresh = false) {
+  keepLogedIn() {
     const userData: User = JSON.parse(localStorage.getItem('userData')!);
     if (!userData) return;
 
-    const newExpirationTime = refresh
-      ? new Date().getTime() + 3600 * 1000
-      : userData._tokenExpirationDate;
+    const newExpirationTime = userData._tokenExpirationDate;
     const currentUser = new User(
       userData.email,
       userData.id,
@@ -105,7 +103,6 @@ export class AuthService {
 
       this.logOutInactivity(expirationDuration);
       this.user.next(currentUser);
-      localStorage.setItem('userData', JSON.stringify(currentUser));
     }
   }
 
@@ -117,7 +114,6 @@ export class AuthService {
 
   logOutInactivity(expirationDuration: number) {
     this.tokenExpirationTimer = window.setTimeout(() => {
-      this.inactivity.next(true);
       this.logOut();
     }, expirationDuration);
   }
