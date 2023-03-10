@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
@@ -10,6 +11,7 @@ import { foodObject, Criteria } from './IfoodObject';
 export class FoodDataService {
   listItems: foodObject[] = [];
   currentDate!: string | Date;
+  dateNextWeek = new Date();
   compute!: number;
   uniqueID = '';
   url =
@@ -19,7 +21,7 @@ export class FoodDataService {
     order: 'ascending',
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private date: DatePipe) {}
 
   fetchItems(): Observable<foodObject[]> {
     return this.http.get<foodObject>(this.url).pipe(
@@ -128,10 +130,10 @@ export class FoodDataService {
     )!;
   }
 
-  checkValidDate(choosenDate: string) {
-    if (new Date(choosenDate) < this.currentDate) {
-      return false;
-    }
-    return true;
+  dateNextWeekToString() {
+    this.dateNextWeek = new Date(
+      this.dateNextWeek.setDate(this.dateNextWeek.getDate() + 7)
+    );
+    return this.date.transform(this.dateNextWeek, 'yyyy-MM-dd')!;
   }
 }

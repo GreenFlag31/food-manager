@@ -131,6 +131,7 @@ export const loginTransition = trigger('loginAnimation', [
     style({
       opacity: 1,
       width: '*',
+      minHeight: '*',
       height: '*',
       padding: '*',
     })
@@ -140,6 +141,7 @@ export const loginTransition = trigger('loginAnimation', [
     style({
       opacity: 0,
       width: '0',
+      minHeight: '0',
       height: '0',
       padding: '0',
     })
@@ -173,6 +175,48 @@ export const tipsAnimation = trigger('tips', [
     })
   ),
   transition('default => visible', [animate('0.5s')]),
+]);
+
+const transitionAnimation = animation([
+  style({ opacity: 0, transform: 'translateX(-20%)' }),
+  animate('{{ time }}', style({ opacity: 1, transform: 'translateX(0)' })),
+]);
+
+export const linkAnimationGS = trigger('linkGS', [
+  transition(':enter', [
+    useAnimation(transitionAnimation, {
+      params: {
+        time: '0.3s',
+      },
+    }),
+  ]),
+]);
+export const linkAnimationL = trigger('linkL', [
+  transition(':enter', [
+    useAnimation(transitionAnimation, {
+      params: {
+        time: '0.3s 0.2s',
+      },
+    }),
+  ]),
+]);
+export const linkAnimationC = trigger('linkC', [
+  transition(':enter', [
+    useAnimation(transitionAnimation, {
+      params: {
+        time: '0.3s 0.4s',
+      },
+    }),
+  ]),
+]);
+export const linkAnimationLO = trigger('linkLO', [
+  transition(':enter', [
+    useAnimation(transitionAnimation, {
+      params: {
+        time: '0.3s 0.6s',
+      },
+    }),
+  ]),
 ]);
 
 export const iconsCode = trigger('up', [

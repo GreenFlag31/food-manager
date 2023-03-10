@@ -27,4 +27,13 @@ export class NotificationsService {
   numberOfNotifications(): number {
     return this.itemsToBeNotified().length - this.hasBeenNotified;
   }
+
+  updateListOfNotifiedItems(id: string) {
+    for (let i = 0; i < this.newItemUnderNotification.length; i++) {
+      if (this.newItemUnderNotification[i].id === id) {
+        this.newItemUnderNotification.splice(i, 1);
+        break;
+      }
+    }
+  }
 }

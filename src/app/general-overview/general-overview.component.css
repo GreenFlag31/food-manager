@@ -1,5 +1,5 @@
 :host {
-  margin-top: 1em;
+  margin: 1em 0;
   padding: 0 0.625em;
 }
 .main-container {
@@ -8,7 +8,7 @@
   height: 100%;
 }
 .food-container {
-  font-size: 0.8em;
+  font-size: 0.9em;
   padding: 0.3em 0;
 }
 .header {
@@ -16,6 +16,7 @@
   justify-content: space-between;
   align-items: center;
   font-weight: bold;
+  font-size: 1.1em;
 }
 .header p {
   cursor: pointer;
@@ -23,6 +24,9 @@
 .header i {
   font-size: 0.8em;
   margin-left: 0.4em;
+}
+div i.fa-magnifying-glass {
+  font-size: 1em;
 }
 
 [data-title]:after {
@@ -70,7 +74,7 @@
 }
 hr {
   background: rgb(0 106 187);
-  height: 1px;
+  height: 2px;
   border: none;
   margin: 0.1em 0 0.3em 0;
 }

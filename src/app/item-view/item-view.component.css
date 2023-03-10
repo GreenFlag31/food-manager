@@ -1,12 +1,13 @@
 .layer {
   padding: 0.625em;
-  grid-template-rows: 135px auto min-content;
+  grid-template-rows: 135px auto min-content min-content;
 }
 main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 10em;
+  height: 12em;
+  margin-top: 1em;
 }
 main.center {
   justify-content: center;
@@ -33,8 +34,9 @@ main.center {
   display: grid;
   grid-template-columns: 70% 30%;
   min-width: 300px;
+  /* min-height: 200px; */
+  max-width: 500px;
   height: 100%;
-  font-size: 1em;
   box-shadow: 0px 1px 8px -5px rgb(0 0 0 / 71%);
 }
 .left-container {
@@ -52,7 +54,7 @@ main.center {
   background: #161f5e;
 }
 .right-container img {
-  height: 80px;
+  height: 75px;
   width: 75%;
   border-radius: 50%;
   object-fit: cover;
@@ -79,7 +81,7 @@ main.center {
   margin: 1em 0;
 }
 .actions {
-  align-self: flex-end;
+  margin-bottom: 1em;
 }
 .actions button {
   width: max-content;
@@ -103,7 +105,4 @@ button {
   background: rgb(164, 164, 164);
   border-radius: 0.2em;
   cursor: pointer;
-}
-app-tips {
-  display: grid;
 }

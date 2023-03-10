@@ -17,16 +17,14 @@
 
 body {
   font-family: sans-serif;
-  background: linear-gradient(to bottom right, blue, rgb(2, 242, 255));
-  height: 100vh;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 .layer {
   display: grid;
   width: 80%;
   margin: auto;
   background: #fff;
-  height: 26rem;
+  height: 30.5em;
   box-shadow: 0px 0px 7px -5px rgb(0 0 0 / 71%);
   clip-path: inset(0px -15px 0px -15px);
   color: rgb(0 106 187);
@@ -85,5 +83,28 @@ body {
   }
   100% {
     transform: translate(24px, 0);
+  }
+}
+/* Because Angular adds custom attributes (and therefore change the priority level), you might see !important, which should normally be avoided */
+@media (max-width: 800px) {
+  .layer {
+    width: 88%;
+  }
+  .transparent-overlay {
+    width: 95% !important;
+    padding: 0.7em !important;
+  }
+}
+@media (max-width: 700px) {
+  .layer {
+    width: 96%;
+  }
+  .transparent-overlay {
+    width: 98% !important;
+  }
+}
+@media (max-width: 600px) {
+  .layer {
+    width: 100%;
   }
 }

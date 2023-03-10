@@ -1,15 +1,15 @@
 <div class="layer">
   <header class="header">
     <div class="presentation">
-      <div class="img-container" [@down]="true">
+      <div class="img-container" [@down]>
         <img src="../../assets/contact-page/self.png" alt="" />
       </div>
       <div class="text">
         <p [@right]>Front-End Developer</p>
         <div class="list-container">
           <ul class="languages-img" [@up]="imgList.length">
-            <li *ngFor="let img of imgList">
-              <img [src]="img" alt="Coding Language" />
+            <li *ngFor="let img of imgList; let i = index">
+              <img [src]="img" alt="Coding Language" [title]="imgTitle[i]" />
             </li>
           </ul>
         </div>
@@ -18,23 +18,24 @@
   </header>
   <main>
     <section class="self">
-      <p>
-        My name is <span class="emphasize">Manu Claeys</span>, I'm a junior
-        Front-End Developer. I studied music and economics, and then I turned to
-        Web development.
-      </p>
-      <p>
-        I discovered programming in March 2020 while optimizing an Excel file
-        using VBA. Since then, I'm passionated about programming. Coding is like
-        a game of logic and creativity.
-      </p>
-      <p>
-        Coding is the synthesis of my path: music (creativity) + economics
-        (logic) = Coding (Web development) 🙃
-      </p>
-
-      <p>This is my first app in <span class="angular">Angular</span>.</p>
-      <p>
+      <div class="description">
+        <p>
+          My name is <span class="emphasize">Manu Claeys</span>, I'm a junior
+          Front-End Developer. I studied music and economics, and then I turned
+          to Web development.
+        </p>
+        <p>
+          I discovered programming in March 2020 while optimizing an Excel file
+          using VBA. Since then, I'm passionated about programming. Coding is
+          like a game of logic and creativity.
+        </p>
+        <p>
+          Coding is the synthesis of my path: music (creativity) + economics
+          (logic) = Coding (Web development) 🙃
+        </p>
+        <p>This is my first app in <span class="angular">Angular</span>.</p>
+      </div>
+      <p class="get-in-touch">
         If you have any comment, suggestion, or want to get in touch, feel free
         to contact me at <span class="emphasize">unam31@gmail.com</span>
       </p>

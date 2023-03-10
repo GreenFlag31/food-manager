@@ -1,11 +1,13 @@
-<div class="transparent-overlay">
-  <section>
-    <div class="main">
-      <app-header></app-header>
+<div class="general-container">
+  <div class="transparent-overlay">
+    <section>
+      <div class="main">
+        <app-header></app-header>
 
-      <div class="routes" [@routeAnimations]="getRouteAnimationData()">
-        <router-outlet></router-outlet>
+        <div class="routes" [@routeAnimations]="getRouteAnimationData()">
+          <router-outlet></router-outlet>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </div>

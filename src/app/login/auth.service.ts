@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
+import { FoodDataService } from '../shared/food-data-service.service';
 
 import { AuthResponseData } from '../shared/IfoodObject';
 import { NotificationsService } from '../shared/notifications-service.service';
@@ -27,7 +28,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private notificationService: NotificationsService
+    private notificationService: NotificationsService,
+    private foodData: FoodDataService
   ) {}
 
   signUp(email: string, password: string) {

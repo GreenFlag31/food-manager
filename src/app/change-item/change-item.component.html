@@ -1,12 +1,12 @@
-<form (ngSubmit)="onChange(itemForm, bestBefore)" #itemForm="ngForm">
+<form (ngSubmit)="onChange()" [formGroup]="changeForm">
   <div class="change-item-container">
     <div class="name">
       <label for="name">Name</label>
       <input
         type="text"
         id="name"
-        ngModel="{{ item.name }}"
         name="name"
+        formControlName="name"
         maxlength="20"
         required
       />
@@ -16,15 +16,13 @@
       <input
         type="date"
         id="bestBefore"
-        [ngModel]="item.bestBefore | date : 'yyyy-MM-dd'"
-        [ngClass]="{ 'ng-invalid': dateError }"
         name="bestBefore"
-        #bestBefore
+        formControlName="bestBefore"
         required
       />
     </div>
     <div class="actions">
-      <button type="submit" [disabled]="!itemForm.valid">
+      <button type="submit" [disabled]="!changeForm.valid">
         <i class="fa-regular fa-pen-to-square"></i>Edit
       </button>
       <button type="button" (click)="onDeleteItem()">
@@ -32,7 +30,7 @@
       </button>
     </div>
   </div>
-  <div class="date-error" *ngIf="dateError" [@down]="dateError">
+  <div class="date-error" *ngIf="bestBefore!.errors?.['invalidDate']" [@down]>
     <p>Date can't be set in the past</p>
   </div>
 </form>

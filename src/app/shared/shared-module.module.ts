@@ -7,7 +7,7 @@ import { ItemComponent } from '../item/item.component';
 import { ItemViewComponent } from '../item-view/item-view.component';
 import { ChangeItemComponent } from '../change-item/change-item.component';
 import { AppCreateComponent } from '../app-create-component/app-create-component.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SafeHTMLPipe } from './safe-html.pipe';
 import { RouterModule } from '@angular/router';
 import { KeyDownDirective } from './key-down.directive';
@@ -24,8 +24,7 @@ import { KeyDownDirective } from './key-down.directive';
     SafeHTMLPipe,
     KeyDownDirective,
   ],
-
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [
     GeneralOverviewComponent,
     TipsComponent,

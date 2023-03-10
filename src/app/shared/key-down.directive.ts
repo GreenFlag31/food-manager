@@ -2,6 +2,7 @@ import { Directive, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   combineLatest,
+  debounceTime,
   distinctUntilChanged,
   filter,
   fromEvent,
@@ -9,6 +10,7 @@ import {
   merge,
   Observable,
   share,
+  tap,
 } from 'rxjs';
 import { AuthService } from '../login/auth.service';
 import { Shortcut } from './IfoodObject';
@@ -24,31 +26,31 @@ export class KeyDownDirective implements OnInit {
 
   shortcuts: Shortcut[] = [
     {
-      keys: ['Alt', 's'],
+      keys: ['Shift', 'Alt', 's'],
       cb: () => {
         this.router.navigate(['/getting-started']);
       },
     },
     {
-      keys: ['Alt', 'l'],
+      keys: ['Shift', 'Alt', 'l'],
       cb: () => {
         this.router.navigate(['/my-list']);
       },
     },
     {
-      keys: ['Alt', 'n'],
+      keys: ['Shift', 'Alt', 'n'],
       cb: () => {
         this.router.navigate(['/notifications']);
       },
     },
     {
-      keys: ['Alt', 'c'],
+      keys: ['Shift', 'Alt', 'c'],
       cb: () => {
         this.router.navigate(['/contact']);
       },
     },
     {
-      keys: ['Alt', 'o'],
+      keys: ['Shift', 'Alt', 'o'],
       cb: () => {
         this.authService.logOut();
       },

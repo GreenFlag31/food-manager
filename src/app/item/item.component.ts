@@ -28,18 +28,8 @@ export class ItemComponent implements OnInit {
     this.foodService.deleteSingleItem(url).subscribe(() => {
       this.foodService.listItems.splice(this.item.itemId, 1);
       this.foodService.setUniqueId();
-      this.updateListOfNotifiedItems();
+      this.notification.updateListOfNotifiedItems(this.item.id!);
       this.itemDeleted.emit();
     });
-  }
-
-  updateListOfNotifiedItems() {
-    const notifiedItems = this.notification.newItemUnderNotification;
-    for (let i = 0; i < notifiedItems.length; i++) {
-      if (notifiedItems[i].id === this.item.id) {
-        notifiedItems.splice(i, 1);
-        break;
-      }
-    }
   }
 }

@@ -1,5 +1,5 @@
 .layer {
-  grid-template-rows: min-content;
+  grid-template-rows: min-content auto;
 }
 .header {
   background: radial-gradient(
@@ -8,11 +8,12 @@
     var(--background-3) 80%
   );
   height: 10em;
-  padding: 1.625em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .presentation {
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 2em;
   color: white;
@@ -49,6 +50,10 @@ main {
   padding: 0.625em;
   color: #333;
 }
+section {
+  display: grid;
+  height: 100%;
+}
 .emphasize {
   color: var(--background-3);
   font-weight: 600;
@@ -60,4 +65,17 @@ main {
 .angular {
   color: #d10f0f;
   font-weight: 600;
+}
+.get-in-touch {
+  align-self: flex-end;
+}
+@media (max-width: 380px) {
+  .presentation {
+    gap: 1em;
+  }
+}
+@media (max-width: 340px) {
+  .presentation {
+    gap: 0.5em;
+  }
 }

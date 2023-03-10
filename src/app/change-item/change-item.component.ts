@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../login/auth.service';
 import { selfPic } from '../shared/animations';
+import { DateValidator } from '../shared/date-validator.directive';
 import { FoodDataService } from '../shared/food-data-service.service';
 import { foodObject } from '../shared/IfoodObject';
 
@@ -11,43 +13,52 @@ import { foodObject } from '../shared/IfoodObject';
   animations: [selfPic],
 })
 export class ChangeItemComponent implements OnInit {
+  changeForm!: FormGroup;
   @Input() item!: foodObject;
   @Output() itemChanged = new EventEmitter();
   @Output() itemDeleted = new EventEmitter();
-  dateError = false;
+  url =
+    'https://my-list-a7fb0-default-rtdb.europe-west1.firebasedatabase.app/items';
 
-  constructor(private foodData: FoodDataService) {}
+  constructor(
+    private foodData: FoodDataService,
+    private authService: AuthService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.changeForm = new FormGroup({
+      name: new FormControl(this.item.name, [
+        Validators.required,
+        Validators.maxLength(20),
+      ]),
+      bestBefore: new FormControl(this.item.bestBefore, [
+        Validators.required,
+        DateValidator(),
+      ]),
+    });
+  }
 
-  onChange(form: NgForm, bestBefore: HTMLInputElement) {
+  get bestBefore() {
+    return this.changeForm.get('bestBefore');
+  }
+
+  onChange() {
     const copiedItem = { ...this.item };
-    const formValues = form.form.value;
+    const formValues = this.changeForm.value;
 
-    if (!this.foodData.checkValidDate(formValues.bestBefore)) {
-      this.dateError = true;
-      bestBefore.blur();
-      bestBefore.focus();
-      return;
-    }
-
-    const url = this.targetUrl();
-    this.foodData.patchItem(url, formValues).subscribe(() => {
-      this.dateError = false;
+    this.authService.itemDeletedID = this.item.id!;
+    this.foodData.patchItem(this.url, formValues).subscribe(() => {
       this.itemChanged.emit([copiedItem, formValues]);
     });
   }
 
   onDeleteItem() {
-    const url = this.targetUrl();
-    this.foodData.deleteSingleItem(url).subscribe(() => {
+    this.authService.itemDeletedID = this.item.id!;
+
+    this.foodData.deleteSingleItem(this.url).subscribe(() => {
       this.foodData.listItems.splice(this.item.itemId, 1);
       this.foodData.setUniqueId();
       this.itemDeleted.emit();
     });
-  }
-
-  targetUrl(): string {
-    return `https://my-list-a7fb0-default-rtdb.europe-west1.firebasedatabase.app/items/${this.item.id}.json`;
   }
 }

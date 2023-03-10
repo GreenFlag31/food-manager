@@ -1,10 +1,11 @@
 .layer {
-  grid-template-rows: 130px auto min-content;
+  grid-template-rows: 150px auto min-content;
 }
 
 .clear button {
   padding: 0.625em;
   background: brown;
+  min-width: 66px;
   color: white;
   border: none;
   border-radius: 0.2em;
@@ -19,4 +20,12 @@ footer {
   justify-content: space-between;
   align-items: flex-end;
   padding: 0.625em;
+}
+@media (max-width: 530px) {
+  footer {
+    justify-content: end;
+  }
+  app-tips {
+    display: none;
+  }
 }

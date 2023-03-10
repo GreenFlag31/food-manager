@@ -1,77 +1,68 @@
 import {
-  ChangeDetectorRef,
+  ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FoodDataService } from '../shared/food-data-service.service';
-import { DatePipe } from '@angular/common';
 import { foodObject } from '../shared/IfoodObject';
 import { selfPic } from '../shared/animations';
+import { DateValidator } from '../shared/date-validator.directive';
 
 @Component({
   selector: 'app-create-component',
   templateUrl: './app-create-component.component.html',
   styleUrls: ['./app-create-component.component.css'],
   animations: [selfPic],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppCreateComponent implements OnInit {
-  dateNextWeek = new Date();
-  currentDate = new Date();
-  dateNextWeekStringified!: string;
-  dateError = false;
+  initialName = '';
   @Output() newItemAdded = new EventEmitter<foodObject>();
-  @Output() wrongDate = new EventEmitter<boolean>();
+  @ViewChild('name') name!: ElementRef;
+  initialForm!: FormGroup;
 
-  constructor(
-    private foodData: FoodDataService,
-    private date: DatePipe,
-    private ref: ChangeDetectorRef
-  ) {}
+  constructor(private foodData: FoodDataService) {}
 
   ngOnInit() {
-    this.dateNextWeek = new Date(
-      this.dateNextWeek.setDate(this.dateNextWeek.getDate() + 7)
-    );
-    this.dateNextWeekStringified = this.date.transform(
-      this.dateNextWeek,
-      'yyyy-MM-dd'
-    )!;
+    this.initialForm = new FormGroup({
+      name: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(20),
+      ]),
+      bestBefore: new FormControl(this.foodData.dateNextWeekToString(), [
+        Validators.required,
+        DateValidator(),
+      ]),
+    });
   }
 
-  onCreateItem(
-    itemForm: NgForm,
-    name: HTMLInputElement,
-    bestBefore: HTMLInputElement
-  ) {
-    const values = itemForm.form.value;
-    if (!this.foodData.checkValidDate(values.bestBefore)) {
-      this.dateError = true;
-      bestBefore.blur();
-      bestBefore.focus();
-      return;
-    }
+  get bestBefore() {
+    return this.initialForm.get('bestBefore');
+  }
 
+  onCreateItem() {
+    const values = this.initialForm.value;
     this.foodData.addItem(values).subscribe((res) => {
-      this.dateError = false;
       values.id = res.name;
-      this.resetFields(name);
+      this.resetFields();
       this.newItemAdded.emit(values);
     });
   }
 
-  onCancel(name: HTMLInputElement) {
-    this.resetFields(name);
+  onCancel() {
+    this.resetFields();
   }
 
-  resetFields(name: HTMLInputElement) {
-    name.value = '';
-    this.dateNextWeekStringified = this.date.transform(
-      this.dateNextWeek,
-      'yyyy-MM-dd'
-    )!;
-    name.focus();
+  resetFields() {
+    this.initialForm.patchValue({
+      name: '',
+      bestBefore: this.foodData.dateNextWeekToString(),
+    });
+    this.name.nativeElement.focus();
   }
 }

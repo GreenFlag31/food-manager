@@ -14,11 +14,12 @@ import { NotificationsService } from '../shared/notifications-service.service';
 export class ContactComponent implements OnInit {
   imgList = [
     '../../assets/contact-page/Angular.png',
-    '../../assets/contact-page/JS.png',
-    '../../assets/contact-page/HTML.png',
-    '../../assets/contact-page/CSS.png',
+    '../../assets/contact-page/javascript.png',
+    '../../assets/contact-page/HTML5.png',
+    '../../assets/contact-page/css3.jpg',
     '../../assets/contact-page/NodeJS.png',
   ];
+  imgTitle = ['Angular', 'Javascript', 'HTML5', 'CSS3', 'NodeJS'];
   constructor(
     private foodData: FoodDataService,
     private notification: NotificationsService,

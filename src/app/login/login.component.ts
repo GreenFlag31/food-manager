@@ -1,11 +1,5 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { selfPic } from '../shared/animations';
@@ -25,6 +19,15 @@ export class LoginComponent implements AfterViewInit {
   @ViewChild('choice') choice!: ElementRef;
   ErrorResponseMessage!: string;
   inactivity = false;
+  expanded = false;
+  loginForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+    ]),
+    confirmPassword: new FormControl(''),
+  });
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -37,29 +40,38 @@ export class LoginComponent implements AfterViewInit {
     }
   }
 
-  onSubmit(form: NgForm, choice: HTMLInputElement) {
+  onSubmit(choice: HTMLInputElement) {
     this.isLoading = true;
+    const formValues = this.loginForm.value;
+
+    if (this.expanded) {
+      if (formValues.password !== formValues.confirmPassword) {
+        this.ErrorResponseMessage = 'Entered Passwords does not match';
+        this.isLoading = false;
+        this.error = true;
+        return;
+      }
+    }
+
     this.error = false;
-    const formValues = form.form.value;
     const { email, password } = formValues;
 
     if (choice.checked) {
-      this.loginObservable = this.authService.signUp(email, password);
+      this.loginObservable = this.authService.signUp(email!, password!);
     } else {
-      this.loginObservable = this.authService.signIn(email, password);
+      this.loginObservable = this.authService.signIn(email!, password!);
     }
 
     this.loginObservable.subscribe({
       next: () => {
         this.error = false;
+        this.isLoading = false;
         localStorage.setItem('alreadyVisited', 'true');
         this.router.navigate(['/my-list']);
       },
       error: (errorResponse) => {
         this.error = true;
         this.ErrorResponseMessage = errorResponse;
-      },
-      complete: () => {
         this.isLoading = false;
       },
     });
@@ -69,9 +81,12 @@ export class LoginComponent implements AfterViewInit {
     if (choice.checked) {
       // new user
       text.textContent = 'Sign Up';
+      this.expanded = true;
     } else {
       // existing user
       text.textContent = 'Sign In';
+      this.expanded = false;
     }
+    this.error = false;
   }
 }

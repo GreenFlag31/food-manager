@@ -1,6 +1,7 @@
 .description {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .description .name {
   text-transform: capitalize;
@@ -11,12 +12,14 @@
 .time {
   display: flex;
   justify-content: space-between;
-  min-width: 220px;
+  /* gap: 0.5em; */
+  min-width: 235px;
 }
 .best-before {
   display: flex;
 }
 .actions i {
+  font-size: 1.2em;
   cursor: pointer;
   will-change: transform;
 }
@@ -25,7 +28,7 @@
   transition: 0.3s;
 }
 .actions i:first-child {
-  margin-right: 0.3rem;
+  margin-right: 0.4rem;
 }
 
 .priority-1,
@@ -37,4 +40,12 @@
 }
 .priority-2 {
   color: orange;
+}
+@media (max-width: 460px) {
+  .time {
+    min-width: auto;
+  }
+  .time .best-before {
+    display: none;
+  }
 }

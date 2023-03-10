@@ -1,10 +1,13 @@
-<header>
-  <nav>
-    <div class="left-side">
+<header [ngClass]="{ open }">
+  <nav [ngClass]="{ open }">
+    <div class="left-side" [ngClass]="{ open }">
       <div
         class="started"
         routerLink="/getting-started"
         routerLinkActive="active"
+        *ngIf="open || notResponsiveMode"
+        [@linkGS]
+        (click)="unExpandNavigationMenu()"
       >
         <i class="fa-solid fa-play"></i>
         <a>Getting Started</a>
@@ -13,6 +16,7 @@
         class="login"
         routerLink="/login"
         routerLinkActive="active"
+        (click)="unExpandNavigationMenu()"
         [@loginAnimation]="isAuthenticated ? 'invisible' : 'visible'"
       >
         <i class="fa-solid fa-right-to-bracket"></i><a>Log In</a>
@@ -20,6 +24,9 @@
       <div
         class="list"
         routerLink="/my-list"
+        [@linkL]
+        *ngIf="open || notResponsiveMode"
+        (click)="unExpandNavigationMenu()"
         routerLinkActive="active"
         attr.data-title="{{
           !isAuthenticated ? 'Log in to see this content' : null
@@ -28,7 +35,7 @@
         <i class="fa-solid fa-rectangle-list"></i><a>My List</a>
       </div>
     </div>
-    <div class="right-side">
+    <div class="right-side" [ngClass]="{ open }">
       <div
         class="notifications"
         routerLink="/notifications"
@@ -45,14 +52,32 @@
           class="fa-solid fa-bell"
         ></i>
       </div>
-      <div class="contact" routerLink="/contact" routerLinkActive="active">
+      <button
+        type="button"
+        class="nav-toggler"
+        (click)="toggleMenu()"
+        [ngClass]="{ active: open }"
+      >
+        <span class="line l1"></span>
+        <span class="line l2"></span>
+        <span class="line l3"></span>
+      </button>
+      <div
+        class="contact"
+        routerLink="/contact"
+        routerLinkActive="active"
+        [@linkC]
+        *ngIf="open || notResponsiveMode"
+        (click)="unExpandNavigationMenu()"
+      >
         <i class="fa-solid fa-address-card"></i><a>Contact</a>
       </div>
       <div
         class="logout"
         routerLinkActive="active"
-        *ngIf="isAuthenticated"
-        [@fadeInOut]
+        *ngIf="isAuthenticated && (open || notResponsiveMode)"
+        [@linkLO]
+        (click)="unExpandNavigationMenu()"
         (click)="onLogOut()"
       >
         <i class="fa-solid fa-right-from-bracket"></i><a>Log Out</a>

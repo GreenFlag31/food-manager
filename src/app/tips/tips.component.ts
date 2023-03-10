@@ -69,7 +69,7 @@ export class TipsComponent implements OnInit {
         ? `${lastWordRouteTips[0]} <span style="font-weight:600">${upperFirstLetter}</span>${restWord}`
         : `<span style="font-weight:600">${upperFirstLetter}</span>${restWord}`;
 
-    return `&nbsp;Use <span style="font-weight:600">Alt + ${upperFirstLetter}</span> to navigate to "${endString}"`;
+    return `&nbsp;Use <span style="font-weight:600">Shift + Alt + ${upperFirstLetter}</span> to navigate to "${endString}"`;
   }
 
   getTips() {
