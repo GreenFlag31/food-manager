@@ -70,7 +70,7 @@ export class GeneralOverviewComponent implements OnInit, OnChanges {
         }
 
         this.listItems = items;
-        this.foodData.setDayLeftItems(this.notificationsDays);
+        this.foodData.setDayLeftItems(this.notification.notificationsDays);
         this.foodData.sortItems(this.criteria.sortedBy, this.criteria.order);
         this.isLoading = false;
         this.updateItemsToDisplay(this.notificationsDays);

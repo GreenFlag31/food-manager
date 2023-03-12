@@ -3,7 +3,7 @@ export interface foodObject {
   name: string;
   bestBefore: Date;
   class?: string;
-  dayLeft?: number;
+  dayLeft: number;
   itemId: number;
 }
 export interface Criteria {
@@ -15,10 +15,6 @@ export interface Shortcut {
   keys: string[];
   cb: { (): void };
 }
-
-export type paginationSchema = {
-  type: 'endMore' | 'startMore' | 'symmetrical';
-};
 
 export interface AuthResponseData {
   idToken: string;

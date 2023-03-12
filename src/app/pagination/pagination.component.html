@@ -14,7 +14,7 @@
         <i class="fa-solid fa-angles-left"></i>
       </button>
     </li>
-    <li *ngFor="let page of pages; let indexPage = index">
+    <li *ngFor="let page of pages">
       <a
         [attr.aria-current]="page === current ? 'page' : null"
         [attr.aria-label]="
@@ -22,8 +22,8 @@
         "
         [class.current]="page === current"
         tabindex="0"
-        (click)="onGoTo(indexPage)"
-        (keyup.enter)="onGoTo(indexPage)"
+        (click)="onGoTo(page)"
+        (keyup.enter)="onGoTo(page)"
       >
         {{ page }}</a
       >

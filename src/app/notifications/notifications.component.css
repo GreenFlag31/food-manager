@@ -23,7 +23,7 @@
 .alert i {
   font-size: 0.9em;
   color: #1a2d65;
-  margin-right: 0.2em;
+  margin-right: 0.3em;
 }
 .notifications-container {
   padding: 0.625em;
@@ -59,4 +59,9 @@ app-general-overview {
 }
 app-tips {
   padding: 0.625em;
+}
+@media (max-width: 500px) {
+  .layer {
+    grid-template-rows: 115px min-content auto min-content;
+  }
 }

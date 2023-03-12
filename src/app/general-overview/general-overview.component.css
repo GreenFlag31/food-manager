@@ -1,5 +1,5 @@
 :host {
-  margin: 1em 0;
+  margin: 1.8em 0 1em 0;
   padding: 0 0.625em;
 }
 .main-container {
@@ -108,4 +108,6 @@ hr {
   background: #ffd2d2;
   font-weight: 600;
   border-radius: 0.2em;
+}
+@media (max-width: 500px) {
 }

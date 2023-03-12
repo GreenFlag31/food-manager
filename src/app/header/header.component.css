@@ -8,7 +8,6 @@ header {
   background: var(--background-3);
   border-radius: 0.5rem 0.5rem 0 0;
   position: absolute;
-  /* top: -46px; */
   width: 100%;
   z-index: 1;
 }
@@ -66,7 +65,6 @@ nav a {
 .notifications.active {
   border-bottom: 3px solid #1f1f89;
 }
-
 .notifications i {
   color: rgb(85 161 220);
 }
@@ -74,7 +72,6 @@ nav a {
 .notifications.active i {
   color: white;
 }
-
 .started:hover,
 .login:hover,
 .logout:hover,
@@ -107,7 +104,6 @@ nav a {
     transform: scale(1);
   }
 }
-
 [data-title]:after {
   content: attr(data-title);
   background-color: rgb(0 106 187);
@@ -125,7 +121,7 @@ nav a {
 }
 [data-title]:hover:after {
   opacity: 0.9;
-  transition: all 0.8s;
+  transition: 0.8s;
 }
 [data-title] {
   position: relative;
@@ -175,7 +171,7 @@ nav a {
   }
 }
 .nav-toggler.active .l3 {
-  transform: translateY(-4px) rotate(-135deg);
+  transform: translateY(-5px) rotate(-135deg);
 }
 @media (max-width: 700px) {
   .nav-toggler {
@@ -188,6 +184,9 @@ nav a {
   }
   .notifications {
     margin-right: 3em;
+  }
+  [data-title]:after {
+    left: -111px;
   }
   .started,
   .login,
@@ -209,7 +208,7 @@ nav a {
   nav.open .contact,
   nav.open .logout {
     display: flex;
-    min-width: 200px;
+    min-width: 180px;
   }
   nav.open .notifications {
     display: none;

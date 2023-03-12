@@ -89,26 +89,6 @@ export const fadeInOut = trigger('fadeInOut', [
   ]),
 ]);
 
-export const slidingApparition = trigger('slidingApparition', [
-  transition('* => *', [
-    query(':enter', style({ opacity: 0 }), { optional: true }),
-
-    query(
-      ':enter',
-      stagger('200ms', [
-        animate(
-          '.5s ease-in',
-          keyframes([
-            style({ transform: 'translateY(10px)' }),
-            style({ opacity: 1, transform: 'translateY(0)' }),
-          ])
-        ),
-      ]),
-      { optional: true }
-    ),
-  ]),
-]);
-
 export const opacityTransition = trigger('opacityAnimation', [
   state(
     'visible',
@@ -125,39 +105,39 @@ export const opacityTransition = trigger('opacityAnimation', [
   transition('invisible <=> visible', [animate('0.3s')]),
 ]);
 
-export const loginTransition = trigger('loginAnimation', [
-  state(
-    'visible',
-    style({
-      opacity: 1,
-      width: '*',
-      minHeight: '*',
-      height: '*',
-      padding: '*',
-    })
-  ),
-  state(
-    'invisible',
-    style({
-      opacity: 0,
-      width: '0',
-      minHeight: '0',
-      height: '0',
-      padding: '0',
-    })
-  ),
-  transition('visible => invisible', [
-    animate(
-      '1s',
-      keyframes([
-        style({ opacity: 1 }),
-        style({ opacity: 0 }),
-        style({ width: '*', height: '*', padding: '*' }),
-        style({ width: '0', height: '0', padding: '0' }),
-      ])
-    ),
-  ]),
-]);
+// export const loginTransition = trigger('loginAnimation', [
+//   state(
+//     'visible',
+//     style({
+//       opacity: 1,
+//       width: '*',
+//       minHeight: '*',
+//       height: '*',
+//       padding: '*',
+//     })
+//   ),
+//   state(
+//     'invisible',
+//     style({
+//       opacity: 0,
+//       width: '0',
+//       minHeight: '0',
+//       height: '0',
+//       padding: '0',
+//     })
+//   ),
+//   transition('visible => invisible', [
+//     animate(
+//       '1s',
+//       keyframes([
+//         style({ opacity: 1 }),
+//         style({ opacity: 0 }),
+//         style({ width: '*', height: '*', padding: '*' }),
+//         style({ width: '0', height: '0', padding: '0' }),
+//       ])
+//     ),
+//   ]),
+// ]);
 
 export const tipsAnimation = trigger('tips', [
   state(
@@ -177,43 +157,42 @@ export const tipsAnimation = trigger('tips', [
   transition('default => visible', [animate('0.5s')]),
 ]);
 
-const transitionAnimation = animation([
-  style({ opacity: 0, transform: 'translateX(-20%)' }),
-  animate('{{ time }}', style({ opacity: 1, transform: 'translateX(0)' })),
+const transformAnimation = animation([
+  query(':enter', style({ opacity: 0 }), { optional: true }),
+
+  query(
+    ':enter',
+    stagger('200ms', [
+      animate(
+        '{{time}} ease-in',
+        keyframes([
+          style({ transform: '{{transformationStart}}' }),
+          style({ opacity: 1, transform: '{{transformationEnd}}' }),
+        ])
+      ),
+    ]),
+    { optional: true }
+  ),
 ]);
 
-export const linkAnimationGS = trigger('linkGS', [
-  transition(':enter', [
-    useAnimation(transitionAnimation, {
+export const slidingApparition = trigger('slidingApparition', [
+  transition('* => *', [
+    useAnimation(transformAnimation, {
       params: {
-        time: '0.3s',
+        time: '0.5s',
+        transformationStart: 'translateY(10px)',
+        transformationEnd: 'translateY(0)',
       },
     }),
   ]),
 ]);
-export const linkAnimationL = trigger('linkL', [
-  transition(':enter', [
-    useAnimation(transitionAnimation, {
+export const goingToRight = trigger('goingToRight', [
+  transition('* => *', [
+    useAnimation(transformAnimation, {
       params: {
-        time: '0.3s 0.2s',
-      },
-    }),
-  ]),
-]);
-export const linkAnimationC = trigger('linkC', [
-  transition(':enter', [
-    useAnimation(transitionAnimation, {
-      params: {
-        time: '0.3s 0.4s',
-      },
-    }),
-  ]),
-]);
-export const linkAnimationLO = trigger('linkLO', [
-  transition(':enter', [
-    useAnimation(transitionAnimation, {
-      params: {
-        time: '0.3s 0.6s',
+        time: '0.2s',
+        transformationStart: 'translateX(-20px)',
+        transformationEnd: 'translateX(0)',
       },
     }),
   ]),

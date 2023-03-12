@@ -15,10 +15,14 @@
     transform: rotateY(5turn);
   }
 }
-
 .tips-message {
   display: inline-block;
 }
 .two {
   display: none;
+}
+@media (max-width: 530px) {
+  :host {
+    display: none;
+  }
 }

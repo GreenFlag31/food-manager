@@ -1,5 +1,5 @@
 .layer {
-  grid-template-rows: 150px auto min-content;
+  grid-template-rows: 180px auto min-content;
 }
 
 .clear button {
@@ -24,8 +24,5 @@ footer {
 @media (max-width: 530px) {
   footer {
     justify-content: end;
-  }
-  app-tips {
-    display: none;
   }
 }

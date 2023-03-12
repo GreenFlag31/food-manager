@@ -7,7 +7,7 @@ main {
   justify-content: space-between;
   align-items: center;
   height: 12em;
-  margin-top: 1em;
+  margin-top: 3em;
 }
 main.center {
   justify-content: center;
@@ -51,12 +51,12 @@ main.center {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #161f5e;
+  /* background: #161f5e; */
 }
 .right-container img {
-  height: 75px;
-  width: 75%;
-  border-radius: 50%;
+  height: 100%;
+  width: 100%;
+  /* border-radius: 50%; */
   object-fit: cover;
   box-shadow: 0px 1px 15px -5px rgb(0 0 0 / 71%);
 }
@@ -105,4 +105,80 @@ button {
   background: rgb(164, 164, 164);
   border-radius: 0.2em;
   cursor: pointer;
+}
+@media (max-width: 1000px) {
+  .food-container {
+    max-width: 450px;
+  }
+}
+@media (max-width: 590px) {
+  .food-container {
+    max-width: 400px;
+  }
+}
+@media (max-width: 530px) {
+  .actions {
+    margin-bottom: 0;
+  }
+  .food-container {
+    max-width: 350px;
+  }
+  .left-container h2 {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: auto;
+  }
+}
+@media (max-width: 500px) {
+  .layer {
+    grid-template-rows: min-content auto min-content min-content;
+  }
+  main {
+    margin-top: 3.3em;
+  }
+}
+@media (max-width: 490px) {
+  .food-container {
+    max-width: 300px;
+  }
+}
+@media (max-width: 450px) {
+  .food-container {
+    max-width: 280px;
+  }
+}
+@media (max-width: 430px) {
+  .food-container {
+    grid-template-columns: auto;
+    grid-template-rows: auto 75px;
+    height: auto;
+  }
+  .right-container img {
+    border-radius: initial;
+    width: 100%;
+  }
+  .goto-left,
+  .goto-right {
+    width: 1.7em;
+    height: 1.7em;
+  }
+  .goto-left i,
+  .goto-right i {
+    font-size: 0.9em;
+  }
+}
+@media (max-width: 415px) {
+  .food-container {
+    min-width: auto;
+    width: 250px;
+  }
+}
+@media (max-width: 380px) {
+  .food-container {
+    width: 210px;
+  }
+  .left-container h2 {
+    max-width: 180px;
+  }
 }

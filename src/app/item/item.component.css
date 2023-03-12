@@ -6,13 +6,14 @@
 .description .name {
   text-transform: capitalize;
 }
-.description p {
-  min-width: 60px;
+.description > p {
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .time {
   display: flex;
-  justify-content: space-between;
-  /* gap: 0.5em; */
+  gap: 0.4em;
   min-width: 235px;
 }
 .best-before {

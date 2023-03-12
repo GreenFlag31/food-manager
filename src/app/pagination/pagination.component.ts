@@ -30,36 +30,8 @@ export class PaginationComponent implements OnInit, OnChanges {
 
   ngOnInit() {}
 
-  onGoTo(page: number) {
-    page = page + 1;
-
-    if (this.pagination.paginationSchema.type === 'symmetrical') {
-      if (page === 6) {
-        page = this.current + 2;
-      } else if (page > 6) {
-        page = this.total;
-      } else if (page === 2) {
-        page = this.current - 2;
-      } else {
-        const correctionIndex = this.total - this.current - 3;
-        page += correctionIndex;
-      }
-    }
-
-    if (this.pagination.paginationSchema.type === 'startMore') {
-      if (page === 2) {
-        page = this.total - 5;
-      } else if (page > 2) {
-        const correctionIndex = this.total - this.pagination.maxPages;
-        page += correctionIndex;
-      }
-    }
-    if (this.pagination.paginationSchema.type === 'endMore') {
-      if (page > 6) {
-        page = this.total;
-      }
-    }
-
+  onGoTo(page: number | string) {
+    if (typeof page === 'string') return;
     this.goTo.emit(page);
   }
   onNext() {

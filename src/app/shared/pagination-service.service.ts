@@ -1,19 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FoodDataService } from './food-data-service.service';
-import { foodObject, paginationSchema } from './IfoodObject';
+import { foodObject } from './IfoodObject';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PaginationService {
   currentPage = 1;
-  itemsperPage = 3;
+  itemsperPage = 5;
   totalPages = 1;
-  maxPages = 7;
-  paginationSchema: paginationSchema = {
-    type: 'endMore',
-  };
+  maxPages = 6;
 
   constructor(
     private foodData: FoodDataService,
@@ -54,17 +51,14 @@ export class PaginationService {
       return [...Array(total).keys()].map((x) => ++x);
     }
 
-    if (current > 5) {
-      if (current >= total - 4) {
-        this.paginationSchema.type = 'startMore';
-        return [1, '...', total - 4, total - 3, total - 2, total - 1, total];
+    if (current > 4) {
+      if (current >= total - 3) {
+        return [1, '...', total - 3, total - 2, total - 1, total];
       } else {
-        this.paginationSchema.type = 'symmetrical';
-        return [1, '...', current - 1, current, current + 1, '...', total];
+        return [1, '...', current, current + 1, '...', total];
       }
     }
 
-    this.paginationSchema.type = 'endMore';
-    return [1, 2, 3, 4, 5, '...', total];
+    return [1, 2, 3, 4, '...', total];
   }
 }

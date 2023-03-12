@@ -1,12 +1,11 @@
 <header [ngClass]="{ open }">
-  <nav [ngClass]="{ open }">
+  <nav [ngClass]="{ open }" [@goingToRight]="open">
     <div class="left-side" [ngClass]="{ open }">
       <div
         class="started"
         routerLink="/getting-started"
         routerLinkActive="active"
         *ngIf="open || notResponsiveMode"
-        [@linkGS]
         (click)="unExpandNavigationMenu()"
       >
         <i class="fa-solid fa-play"></i>
@@ -16,15 +15,14 @@
         class="login"
         routerLink="/login"
         routerLinkActive="active"
+        *ngIf="!isAuthenticated && (open || notResponsiveMode)"
         (click)="unExpandNavigationMenu()"
-        [@loginAnimation]="isAuthenticated ? 'invisible' : 'visible'"
       >
         <i class="fa-solid fa-right-to-bracket"></i><a>Log In</a>
       </div>
       <div
         class="list"
         routerLink="/my-list"
-        [@linkL]
         *ngIf="open || notResponsiveMode"
         (click)="unExpandNavigationMenu()"
         routerLinkActive="active"
@@ -66,7 +64,6 @@
         class="contact"
         routerLink="/contact"
         routerLinkActive="active"
-        [@linkC]
         *ngIf="open || notResponsiveMode"
         (click)="unExpandNavigationMenu()"
       >
@@ -76,7 +73,6 @@
         class="logout"
         routerLinkActive="active"
         *ngIf="isAuthenticated && (open || notResponsiveMode)"
-        [@linkLO]
         (click)="unExpandNavigationMenu()"
         (click)="onLogOut()"
       >

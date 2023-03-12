@@ -12,8 +12,7 @@
   align-items: center;
   width: 90%;
   max-width: 1400px;
-  /* height: 35rem; */
-  max-height: 700px;
+  /* max-height: 700px; */
   box-shadow: 0px 3px 13px -5px rgb(0 0 0 / 71%);
   border-radius: 1rem;
   padding: 1rem;
@@ -24,8 +23,8 @@ section {
   width: 100%;
   border-radius: 0.5rem;
   background: var(--background-1);
-  height: 33.4rem;
-  max-height: 680px;
+  height: 40.4rem;
+  /* max-height: 680px; */
   overflow: hidden;
 }
 .main {

@@ -1,13 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { debounceTime, fromEvent, Subscription } from 'rxjs';
 import {
-  opacityTransition,
   fadeInOut,
-  loginTransition,
-  linkAnimationC,
-  linkAnimationGS,
-  linkAnimationL,
-  linkAnimationLO,
+  slidingApparition,
+  goingToRight,
 } from '../shared/animations';
 import { AuthService } from '../login/auth.service';
 import { NotificationsService } from '../shared/notifications-service.service';
@@ -16,15 +12,7 @@ import { NotificationsService } from '../shared/notifications-service.service';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
-  animations: [
-    fadeInOut,
-    opacityTransition,
-    loginTransition,
-    linkAnimationC,
-    linkAnimationGS,
-    linkAnimationL,
-    linkAnimationLO,
-  ],
+  animations: [fadeInOut, slidingApparition, goingToRight],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   private userSub!: Subscription;
@@ -32,7 +20,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   notificationsNumber = 0;
   open = false;
-  notResponsiveMode = true;
+  notResponsiveMode = window.innerWidth > 700;
 
   constructor(
     private authService: AuthService,
@@ -54,6 +42,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .pipe(debounceTime(300))
       .subscribe(() => {
         this.notResponsiveMode = window.innerWidth > 700;
+        this.open = false;
       });
   }
 

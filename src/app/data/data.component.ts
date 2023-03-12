@@ -39,7 +39,7 @@ export class DataComponent implements OnInit {
     this.foodData.listItems.push(newItem);
     this.listItems = this.foodData.listItems;
 
-    this.foodData.setDayLeftItem(newItem);
+    this.foodData.setDayLeftItem(newItem, this.notification.notificationsDays);
     this.foodData.sortItems(this.criteria.sortedBy, this.criteria.order);
 
     this.totalPages = Math.ceil(
