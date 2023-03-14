@@ -64,9 +64,18 @@
       </div>
     </div>
     <section class="wrapper" [@slidingApparition]="listItems.length">
+      <div
+        class="delete-all-confirm"
+        *ngIf="confirmDeleteCount === 1"
+        [@delAll]
+      >
+        <p>Delete all ?</p>
+        <i class="fa-solid fa-xmark" (click)="onCancel()"></i>
+      </div>
       <div class="food-container" *ngFor="let item of itemsToDisplay">
         <app-item
           [item]="item"
+          [confirmDeleteCount]="confirmDeleteCount"
           class="item"
           (itemDeleted)="onDelete(item)"
         ></app-item>

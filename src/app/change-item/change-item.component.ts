@@ -1,8 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { AuthService } from '../login/auth.service';
 import { selfPic } from '../shared/animations';
-import { DateValidator } from '../shared/date-validator.directive';
 import { FoodDataService } from '../shared/food-data-service.service';
 import { foodObject } from '../shared/IfoodObject';
 
@@ -12,8 +11,7 @@ import { foodObject } from '../shared/IfoodObject';
   styleUrls: ['./change-item.component.css'],
   animations: [selfPic],
 })
-export class ChangeItemComponent implements OnInit {
-  changeForm!: FormGroup;
+export class ChangeItemComponent {
   @Input() item!: foodObject;
   @Output() itemChanged = new EventEmitter();
   @Output() itemDeleted = new EventEmitter();
@@ -25,26 +23,9 @@ export class ChangeItemComponent implements OnInit {
     private authService: AuthService
   ) {}
 
-  ngOnInit(): void {
-    this.changeForm = new FormGroup({
-      name: new FormControl(this.item.name, [
-        Validators.required,
-        Validators.maxLength(20),
-      ]),
-      bestBefore: new FormControl(this.item.bestBefore, [
-        Validators.required,
-        DateValidator(),
-      ]),
-    });
-  }
-
-  get bestBefore() {
-    return this.changeForm.get('bestBefore');
-  }
-
-  onChange() {
+  onChange(changeForm: NgForm) {
     const copiedItem = { ...this.item };
-    const formValues = this.changeForm.value;
+    const formValues = changeForm.form.value;
 
     this.authService.itemDeletedID = this.item.id!;
     this.foodData.patchItem(this.url, formValues).subscribe(() => {

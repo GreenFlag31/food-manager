@@ -24,6 +24,7 @@ export class DataComponent implements OnInit {
   searchInProgress = false;
   notificationsNumber = 0;
   dateError = false;
+  confirmDeleteCount = 0;
 
   constructor(
     private foodData: FoodDataService,
@@ -46,7 +47,6 @@ export class DataComponent implements OnInit {
       this.foodData.listItems.length / this.pagination.itemsperPage
     );
 
-    // debugger;
     if (this.searchInProgress) {
       this.currentPage = 1;
       this.searchInProgress = false;
@@ -81,14 +81,17 @@ export class DataComponent implements OnInit {
   }
 
   onDeleteAll() {
+    this.confirmDeleteCount += 1;
+    if (this.confirmDeleteCount < 2) return;
+
     this.foodData.deleteItems().subscribe(() => {
-      // add an alert confirm message
       this.listItems = [];
       this.foodData.listItems = [];
       this.itemsToDisplay = [];
       this.notification.newItemUnderNotification = [];
       this.notification.notificationSubject.next(0);
       this.notificationsNumber = 0;
+      this.confirmDeleteCount = 0;
       this.totalPages = 0;
       this.pagination.addPaginationToUrl(true);
       this.ref.markForCheck();

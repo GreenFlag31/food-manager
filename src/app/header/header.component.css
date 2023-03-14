@@ -49,9 +49,9 @@ nav a {
 }
 .notifications span {
   position: absolute;
-  top: 7px;
+  top: 4px;
   left: 15px;
-  padding: 1px 3px;
+  padding: 2px 4px;
   background: red;
   color: #fff;
   border-radius: 50%;

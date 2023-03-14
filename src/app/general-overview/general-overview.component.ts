@@ -10,7 +10,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { fadeInOut, slidingApparition } from '../shared/animations';
+import { deleteAll, fadeInOut, slidingApparition } from '../shared/animations';
 import { FoodDataService } from '../shared/food-data-service.service';
 import { Criteria, foodObject } from '../shared/IfoodObject';
 import { NotificationsService } from '../shared/notifications-service.service';
@@ -20,7 +20,7 @@ import { PaginationService } from '../shared/pagination-service.service';
   selector: 'app-general-overview',
   templateUrl: './general-overview.component.html',
   styleUrls: ['./general-overview.component.css'],
-  animations: [fadeInOut, slidingApparition],
+  animations: [fadeInOut, slidingApparition, deleteAll],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GeneralOverviewComponent implements OnInit, OnChanges {
@@ -43,6 +43,9 @@ export class GeneralOverviewComponent implements OnInit, OnChanges {
   filteredItems!: foodObject[];
   @Output() itemsToExpire = new EventEmitter<number>(true);
   numberOfNotifications = 0;
+  confirmDeleteSingle = 0;
+  @Input() confirmDeleteCount!: number;
+  @Output() confirmDeleteCountChange = new EventEmitter<number>();
 
   constructor(
     private foodData: FoodDataService,
@@ -132,6 +135,11 @@ export class GeneralOverviewComponent implements OnInit, OnChanges {
     );
   }
 
+  onCancel() {
+    this.confirmDeleteCount = 0;
+    this.confirmDeleteCountChange.emit(0);
+  }
+
   onDelete(item: foodObject) {
     if (this.filteredItems?.length) {
       this.filteredItems.splice(item.itemId, 1);
@@ -199,7 +207,6 @@ export class GeneralOverviewComponent implements OnInit, OnChanges {
   }
 
   onSearch(term: string) {
-    // debugger;
     const defaultItems = this.filteredItems || this.listItems;
     const items = this.foodData.getItemByName(term, defaultItems);
     if (items.length) {

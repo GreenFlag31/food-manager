@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { map, Observable } from 'rxjs';
 
 import { foodObject, Criteria } from './IfoodObject';
@@ -10,8 +10,10 @@ import { foodObject, Criteria } from './IfoodObject';
 })
 export class FoodDataService {
   listItems: foodObject[] = [];
-  currentDate!: string | Date;
-  dateNextWeek = new Date();
+  currentDate = new Date();
+  dateNextWeek = new Date(
+    this.currentDate.setDate(this.currentDate.getDate() + 7)
+  );
   compute!: number;
   uniqueID = '';
   url =
@@ -131,9 +133,6 @@ export class FoodDataService {
   }
 
   dateNextWeekToString() {
-    this.dateNextWeek = new Date(
-      this.dateNextWeek.setDate(this.dateNextWeek.getDate() + 7)
-    );
     return this.date.transform(this.dateNextWeek, 'yyyy-MM-dd')!;
   }
 }

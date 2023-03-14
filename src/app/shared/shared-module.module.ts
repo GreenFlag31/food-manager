@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SafeHTMLPipe } from './safe-html.pipe';
 import { RouterModule } from '@angular/router';
 import { KeyDownDirective } from './key-down.directive';
+import { DateValidatorDirective } from './date-validatorTemplate.directive';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { KeyDownDirective } from './key-down.directive';
     AppCreateComponent,
     SafeHTMLPipe,
     KeyDownDirective,
+    DateValidatorDirective,
   ],
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [
@@ -35,6 +37,7 @@ import { KeyDownDirective } from './key-down.directive';
     AppCreateComponent,
     FormsModule,
     KeyDownDirective,
+    DateValidatorDirective,
   ],
   providers: [SafeHTMLPipe, DatePipe],
 })

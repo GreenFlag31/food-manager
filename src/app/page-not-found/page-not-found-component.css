@@ -1,11 +1,11 @@
 main {
   position: relative;
 }
-.intruder img {
+.bg-picture img {
   position: absolute;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 .text-wrapper {
   position: relative;
@@ -18,22 +18,30 @@ main {
 }
 .text {
   display: grid;
-  grid-template-rows: 50px auto;
-  max-width: 260px;
+  grid-template-rows: 70px auto;
+  min-height: 250px;
   border-radius: 0.2em;
   background: #ffffff6e;
 }
 .header {
   background: #01020ac4;
-  padding: 0.425em;
+  padding: 0.625em;
+  display: flex;
+  align-items: center;
 }
 .header p {
   color: #fff;
+  line-height: 1.5;
 }
 .message {
   padding: 1em 0.625em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 1em;
 }
 .message p {
+  font-size: 1.2em;
   text-align: center;
 }
 p {
@@ -43,13 +51,14 @@ p {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  gap: 0.3em;
+  gap: 0.7em;
   margin-top: 0.7em;
 }
 .redirect button {
+  font-size: 0.9em;
   border: none;
   border-radius: 0.2em;
-  padding: 0.3em;
+  padding: 0.7em;
   color: #fff;
   background: var(--background-2);
   cursor: pointer;

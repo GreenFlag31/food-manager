@@ -1,5 +1,5 @@
 .layer {
-  grid-template-rows: 150px auto min-content;
+  grid-template-rows: 180px auto min-content;
   color: #333;
 }
 .layer button {
@@ -18,11 +18,12 @@ button:hover {
 }
 .intro img {
   width: 100%;
-  height: 150px;
+  height: 100%;
   object-fit: cover;
 }
 .text {
   padding: 0.625em;
+  line-height: 1.4;
 }
 p {
   margin-bottom: 0.3em;
@@ -31,30 +32,15 @@ p {
   font-weight: 600;
   color: #1d8719;
 }
+.actions {
+  margin-top: 1.5em;
+}
+.emphasize.blue {
+  font-weight: 600;
+  color: var(--background-3);
+  cursor: pointer;
+  text-decoration: underline;
+}
 a {
   text-decoration: none;
-}
-.confirm-landing {
-  display: flex;
-  gap: 0.4em;
-  margin-top: 1.5em;
-  font-size: 0.9em;
-}
-.confirm-landing label {
-  cursor: pointer;
-  user-select: none;
-}
-.confirm-landing input:checked {
-  animation: transition 0.5s;
-}
-@keyframes transition {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-footer {
-  padding: 0.625em;
 }

@@ -235,6 +235,35 @@ export const title = trigger('right', [
   ]),
 ]);
 
+const deleteConfirmAnimation = animation([
+  style({ transform: '{{transformStart}}' }),
+  animate('{{time}} ease-out', style({ transform: '{{transformEnd}}' })),
+]);
+
+export const deleteAll = trigger('delAll', [
+  transition(':enter', [
+    useAnimation(deleteConfirmAnimation, {
+      params: {
+        time: '0.3s',
+        transformStart: 'translateY(-100%)',
+        transformEnd: 'translateY(0)',
+      },
+    }),
+  ]),
+]);
+
+export const deleteSingle = trigger('delSingle', [
+  transition(':enter', [
+    useAnimation(deleteConfirmAnimation, {
+      params: {
+        time: '0.2s',
+        transformStart: 'translateX(100%)',
+        transformEnd: 'translateY(0)',
+      },
+    }),
+  ]),
+]);
+
 export const itemsToExpire = trigger('expiration', [
   state(
     'visible',

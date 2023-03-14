@@ -2,7 +2,6 @@ import { Directive, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   combineLatest,
-  debounceTime,
   distinctUntilChanged,
   filter,
   fromEvent,
@@ -10,7 +9,6 @@ import {
   merge,
   Observable,
   share,
-  tap,
 } from 'rxjs';
 import { AuthService } from '../login/auth.service';
 import { Shortcut } from './IfoodObject';

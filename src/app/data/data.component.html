@@ -10,6 +10,7 @@
     [(searching)]="searchInProgress"
     [currentPage]="currentPage"
     (LI)="updateLI($event)"
+    [(confirmDeleteCount)]="confirmDeleteCount"
   ></app-general-overview>
   <footer>
     <app-tips></app-tips>
@@ -19,7 +20,7 @@
         [disabled]="!listItems.length"
         (click)="onDeleteAll()"
       >
-        Clear all
+        {{ confirmDeleteCount < 1 ? "Clear all" : "Delete" }}
       </button>
     </div>
   </footer>

@@ -1,4 +1,13 @@
 <div class="description">
+  <div
+    class="delete-single-confirm"
+    [@delSingle]
+    *ngIf="confirmDeleteSingle === 1 && confirmDeleteCount !== 1"
+  >
+    <p>Delete ?</p>
+    <i class="fa-regular fa-trash-can" (click)="onDeleteItem()"></i>
+    <i class="fa-solid fa-xmark" (click)="confirmDeleteSingle = 0"></i>
+  </div>
   <p class="name">{{ item.name }}</p>
   <div class="time">
     <div class="best-before">

@@ -56,10 +56,9 @@
 }
 .date-error {
   position: relative;
-  top: 40px;
+  top: 56px;
   max-width: 250px;
   background: rgb(226 230 243 / 90%);
-  opacity: 0.9;
   padding: 0.225em;
   margin: 0.2em 0.925em;
   border-radius: 0.2em;
@@ -94,8 +93,8 @@ input.ng-invalid.ng-touched {
     margin-right: 0.4em;
   }
   .date-error {
-    top: 17px;
-    left: -13px;
-    background: none;
+    top: 22px;
+    left: -10px;
+    /* background: none; */
   }
 }

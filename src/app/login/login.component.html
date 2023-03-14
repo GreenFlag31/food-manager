@@ -51,12 +51,12 @@
               class="login"
               type="submit"
               [disabled]="!loginForm.valid"
-              [ngClass]="{ loading: isLoading }"
+              [ngClass]="{ loadingLogin: isLoading }"
             >
               Login
               <i
-                *ngIf="isLoading && !error"
                 class="fas fa-spinner fa-pulse"
+                *ngIf="isLoading && !error"
               ></i>
             </button>
           </div>
