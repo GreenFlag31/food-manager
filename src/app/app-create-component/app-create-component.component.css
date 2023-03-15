@@ -34,13 +34,17 @@
   color: white;
   cursor: pointer;
   border-radius: 0.2em;
+  transition: 0.5s;
 }
 .change-item-container input {
   display: block;
   outline: none;
-  border: 1px solid rgb(198, 198, 198);
+  border: none;
+  font-size: 1.2em;
+  height: 23px;
+  margin-top: 0.1em;
+  max-width: 200px;
 }
-
 .actions button:first-child {
   margin-right: 0.3em;
 }
@@ -70,7 +74,7 @@
 input.ng-invalid.ng-touched {
   border: 1px solid red;
 }
-@media (max-width: 500px) {
+@media (max-width: 570px) {
   .change-item-container {
     flex-direction: column;
     align-items: initial;
@@ -84,6 +88,7 @@ input.ng-invalid.ng-touched {
   }
   .name input,
   .date input {
+    max-width: none;
     width: 100%;
   }
   .actions {
@@ -95,6 +100,5 @@ input.ng-invalid.ng-touched {
   .date-error {
     top: 22px;
     left: -10px;
-    /* background: none; */
   }
 }

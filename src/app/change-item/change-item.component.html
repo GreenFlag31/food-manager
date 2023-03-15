@@ -36,7 +36,8 @@
         <i class="fa-regular fa-pen-to-square"></i>Edit
       </button>
       <button type="button" (click)="onDeleteItem()">
-        <i class="fa-regular fa-trash-can"></i>Delete
+        <i class="fa-regular fa-trash-can"></i
+        >{{ confirmDeleteCount !== 1 ? "Delete" : "Confirm" }}
       </button>
     </div>
   </div>

@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -11,6 +18,7 @@ import { AuthService } from './auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   animations: [selfPic],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements AfterViewInit {
   isLoading = false;
@@ -29,7 +37,11 @@ export class LoginComponent implements AfterViewInit {
     confirmPassword: new FormControl(''),
   });
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private ref: ChangeDetectorRef
+  ) {}
 
   ngAfterViewInit() {
     const firstVisit = localStorage.getItem('alreadyVisited');
@@ -73,6 +85,7 @@ export class LoginComponent implements AfterViewInit {
         this.error = true;
         this.ErrorResponseMessage = errorResponse;
         this.isLoading = false;
+        this.ref.markForCheck();
       },
     });
   }

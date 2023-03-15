@@ -2,6 +2,7 @@
   <app-change-item
     [item]="item"
     (itemChanged)="statusChanged($event)"
+    [(confirmDeleteCount)]="confirmDeleteSingle"
     (itemDeleted)="itemDeleted()"
   ></app-change-item>
   <main [class.center]="listItems.length === 1">
@@ -13,6 +14,14 @@
       <i class="fa-solid fa-arrow-left"></i>
     </div>
     <div class="food-container">
+      <div
+        class="delete-single-confirm"
+        [@delAll]
+        *ngIf="confirmDeleteSingle === 1"
+      >
+        <p>Delete item ?</p>
+        <i class="fa-solid fa-xmark" (click)="confirmDeleteSingle = 0"></i>
+      </div>
       <div class="left-container">
         <h2
           [@opacityAnimation]="
@@ -26,7 +35,6 @@
           <div class="best-before">
             <i class="fa-regular fa-calendar-days"></i>
             <p
-              [ngClass]="item.class"
               [@opacityAnimation]="
                 statusAnimation && changedDate ? 'invisible' : 'visible'
               "
@@ -37,6 +45,7 @@
           <div class="dayLeft">
             <i class="fa-regular fa-clock"></i>
             <p
+              [ngClass]="item.class"
               [@opacityAnimation]="
                 statusAnimation && changedDate ? 'invisible' : 'visible'
               "

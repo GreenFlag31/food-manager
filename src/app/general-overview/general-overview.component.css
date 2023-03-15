@@ -63,6 +63,8 @@ div i.fa-magnifying-glass {
   max-width: 6em;
 }
 .search input {
+  font-size: 0.85em;
+  font-weight: 600;
   border: none;
   width: 100%;
   color: rgb(0 106 187);

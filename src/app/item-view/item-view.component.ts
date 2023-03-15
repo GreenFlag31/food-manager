@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { delay, interval, takeWhile } from 'rxjs';
-import { opacityTransition } from '../shared/animations';
+import { opacityTransition, deleteAll } from '../shared/animations';
 import { FoodDataService } from '../shared/food-data-service.service';
 import { foodObject } from '../shared/IfoodObject';
 import { NotificationsService } from '../shared/notifications-service.service';
@@ -15,7 +15,7 @@ import { NotificationsService } from '../shared/notifications-service.service';
   selector: 'app-item-view',
   templateUrl: './item-view.component.html',
   styleUrls: ['./item-view.component.css'],
-  animations: [opacityTransition],
+  animations: [opacityTransition, deleteAll],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemViewComponent implements OnInit {
@@ -27,6 +27,7 @@ export class ItemViewComponent implements OnInit {
   enableCountUp = true;
   listItems: foodObject[] = [];
   notificationsNumber = 0;
+  confirmDeleteSingle = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -96,6 +97,7 @@ export class ItemViewComponent implements OnInit {
       return this.goBack();
     }
 
+    this.confirmDeleteSingle = 0;
     this.enableCountUp = false;
     this.correctIdUrl(this.id + n);
     this.getItem(this.id);
@@ -127,13 +129,16 @@ export class ItemViewComponent implements OnInit {
     setTimeout(() => {
       this.item.name = copiedItem[1].name;
       this.item.bestBefore = copiedItem[1].bestBefore;
-      const totalDays = this.foodData.setDayLeftItem(
-        this.item,
-        this.notification.notificationsDays
-      );
 
-      this.changeNotification(copiedItem[0]);
-      this.countUp(totalDays);
+      if (this.changedDate) {
+        const totalDays = this.foodData.setDayLeftItem(
+          this.item,
+          this.notification.notificationsDays
+        );
+
+        this.changeNotification(copiedItem[0]);
+        this.countUp(totalDays);
+      }
       this.statusAnimation = !this.statusAnimation;
       this.ref.markForCheck();
     }, 500);
@@ -141,10 +146,10 @@ export class ItemViewComponent implements OnInit {
 
   changeNotification(itemBeforeChange: foodObject) {
     const [index, hasBeenNotified] = this.checkIfNotified();
-    // no notification if previous already under notification
+    // no notification if previous item already under notification
     if (
-      itemBeforeChange.dayLeft! >= this.notification.notificationsDays &&
-      this.item.dayLeft! <= this.notification.notificationsDays &&
+      itemBeforeChange.dayLeft > this.notification.notificationsDays &&
+      this.item.dayLeft <= this.notification.notificationsDays &&
       !hasBeenNotified
     ) {
       this.notification.newItemUnderNotification.push(this.item);
@@ -152,7 +157,7 @@ export class ItemViewComponent implements OnInit {
         this.notification.newItemUnderNotification.length
       );
     } else if (
-      this.item.dayLeft! > this.notification.notificationsDays &&
+      this.item.dayLeft > this.notification.notificationsDays &&
       hasBeenNotified
     ) {
       this.notification.newItemUnderNotification.splice(index, 1);
@@ -189,7 +194,7 @@ export class ItemViewComponent implements OnInit {
     );
 
     daysSub.subscribe(() => {
-      this.item.dayLeft!++;
+      this.item.dayLeft++;
       this.ref.markForCheck();
     });
   }

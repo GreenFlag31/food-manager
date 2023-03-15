@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -15,6 +16,7 @@ import { PaginationService } from '../shared/pagination-service.service';
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css'],
   animations: [opacityTransition],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaginationComponent implements OnInit, OnChanges {
   pages: (number | string)[] = [];
