@@ -34,13 +34,14 @@
   color: white;
   cursor: pointer;
   border-radius: 0.2em;
+  font-size: 0.85em;
   transition: 0.5s;
 }
 .change-item-container input {
   display: block;
   outline: none;
   border: none;
-  font-size: 1.2em;
+  font-size: 1em;
   height: 23px;
   margin-top: 0.1em;
   max-width: 200px;
@@ -74,7 +75,7 @@
 input.ng-invalid.ng-touched {
   border: 1px solid red;
 }
-@media (max-width: 570px) {
+@media (max-width: 610px) {
   .change-item-container {
     flex-direction: column;
     align-items: initial;
@@ -98,7 +99,8 @@ input.ng-invalid.ng-touched {
     margin-right: 0.4em;
   }
   .date-error {
-    top: 22px;
+    top: 6px;
     left: -10px;
+    background: none;
   }
 }

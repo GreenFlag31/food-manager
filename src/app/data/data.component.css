@@ -21,7 +21,7 @@ footer {
   align-items: flex-end;
   padding: 0.625em;
 }
-@media (max-width: 530px) {
+@media (max-width: 610px) {
   footer {
     justify-content: end;
   }

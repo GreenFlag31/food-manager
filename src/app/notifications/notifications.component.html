@@ -3,7 +3,7 @@
     <div class="alert">
       <i class="fa-solid fa-bell"></i>
       Set a notification for items that expire in max
-      <input type="number" [(ngModel)]="notificationsDays" />
+      <input type="number" [(ngModel)]="notificationsDays" min="0" />
       day{{ notificationsDays > 1 ? "s" : "" }}
     </div>
   </div>

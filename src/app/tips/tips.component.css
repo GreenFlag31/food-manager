@@ -21,7 +21,7 @@
 .two {
   display: none;
 }
-@media (max-width: 530px) {
+@media (max-width: 610px) {
   :host {
     display: none;
   }

@@ -57,7 +57,7 @@
 .time {
   display: flex;
   gap: 0.4em;
-  min-width: 235px;
+  min-width: 280px;
 }
 .best-before {
   display: flex;
@@ -88,9 +88,9 @@
 .priority-2 {
   color: orange;
 }
-@media (max-width: 460px) {
+@media (max-width: 480px) {
   .time {
-    min-width: auto;
+    min-width: 125px;
   }
   .time .best-before {
     display: none;

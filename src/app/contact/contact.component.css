@@ -1,5 +1,5 @@
 .layer {
-  grid-template-rows: 180px auto;
+  grid-template-rows: 170px auto;
 }
 .header {
   background: radial-gradient(
@@ -69,7 +69,7 @@ section {
 }
 .self p {
   line-height: 1.4;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.4em;
 }
 .angular {
   color: #d10f0f;

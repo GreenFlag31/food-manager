@@ -1,5 +1,5 @@
 .layer {
-  grid-template-rows: 180px auto min-content;
+  grid-template-rows: 170px auto min-content;
   color: #333;
 }
 .layer button {
@@ -47,7 +47,7 @@ p {
 a {
   text-decoration: none;
 }
-@media (max-width: 400px) {
+@media (max-width: 430px) {
   .text {
     line-height: 1.3;
   }
@@ -59,7 +59,7 @@ a {
     margin-top: 0.9em;
   }
 }
-@media (max-width: 335px) {
+@media (max-width: 360px) {
   .text {
     line-height: 1.25;
   }
