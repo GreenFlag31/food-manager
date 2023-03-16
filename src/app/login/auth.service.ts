@@ -2,18 +2,18 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
-import { FoodDataService } from '../shared/food-data-service.service';
 
 import { AuthResponseData } from '../shared/IfoodObject';
 import { NotificationsService } from '../shared/notifications-service.service';
 import { User } from './user.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   endPoint = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=';
-  APIKEY = 'AIzaSyCWOoL3J-yVKEdd2zsplS1zxYPrwBFbWuk';
+  APIKEY = environment.firebaseAPIKey;
   errorMessagesTypes: any = {
     EMAIL_EXISTS: 'This email already exists',
     TOO_MANY_ATTEMPTS_TRY_LATER: 'Try again later',
@@ -28,8 +28,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private notificationService: NotificationsService,
-    private foodData: FoodDataService
+    private notificationService: NotificationsService
   ) {}
 
   signUp(email: string, password: string) {

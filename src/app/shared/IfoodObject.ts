@@ -10,12 +10,6 @@ export interface Criteria {
   sortedBy: string;
   order: string;
 }
-
-export interface Shortcut {
-  keys: string[];
-  cb: { (): void };
-}
-
 export interface AuthResponseData {
   idToken: string;
   email: string;
@@ -23,10 +17,4 @@ export interface AuthResponseData {
   expiresIn: string;
   localId: string;
   registered?: boolean;
-}
-
-export interface RefreshToken {
-  idToken: string;
-  refreshToken: string;
-  expiresIn: string;
 }

@@ -105,40 +105,6 @@ export const opacityTransition = trigger('opacityAnimation', [
   transition('invisible <=> visible', [animate('0.3s')]),
 ]);
 
-// export const loginTransition = trigger('loginAnimation', [
-//   state(
-//     'visible',
-//     style({
-//       opacity: 1,
-//       width: '*',
-//       minHeight: '*',
-//       height: '*',
-//       padding: '*',
-//     })
-//   ),
-//   state(
-//     'invisible',
-//     style({
-//       opacity: 0,
-//       width: '0',
-//       minHeight: '0',
-//       height: '0',
-//       padding: '0',
-//     })
-//   ),
-//   transition('visible => invisible', [
-//     animate(
-//       '1s',
-//       keyframes([
-//         style({ opacity: 1 }),
-//         style({ opacity: 0 }),
-//         style({ width: '*', height: '*', padding: '*' }),
-//         style({ width: '0', height: '0', padding: '0' }),
-//       ])
-//     ),
-//   ]),
-// ]);
-
 export const tipsAnimation = trigger('tips', [
   state(
     'visible',
@@ -186,6 +152,7 @@ export const slidingApparition = trigger('slidingApparition', [
     }),
   ]),
 ]);
+
 export const goingToRight = trigger('goingToRight', [
   transition('* => *', [
     useAnimation(transformAnimation, {
@@ -218,10 +185,31 @@ export const iconsCode = trigger('up', [
   ]),
 ]);
 
+const downGenericAnimation = animation([
+  style({ opacity: 0, transform: 'translateY(-20%)' }),
+  animate(
+    '{{time}} ease-out',
+    style({ opacity: 1, transform: 'translateY(0)' })
+  ),
+]);
+
+export const downConfirmPassword = trigger('downConfPassword', [
+  transition(':enter', [
+    useAnimation(downGenericAnimation, {
+      params: {
+        time: '0.3s 0.3s',
+      },
+    }),
+  ]),
+]);
+
 export const selfPic = trigger('down', [
   transition(':enter', [
-    style({ opacity: 0, transform: 'translateY(-20%)' }),
-    animate('0.5s ease-out', style({ opacity: 1, transform: 'translateY(0)' })),
+    useAnimation(downGenericAnimation, {
+      params: {
+        time: '0.5s',
+      },
+    }),
   ]),
 ]);
 

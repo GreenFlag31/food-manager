@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -9,7 +8,7 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { selfPic } from '../shared/animations';
+import { downConfirmPassword } from '../shared/animations';
 import { AuthResponseData } from '../shared/IfoodObject';
 import { AuthService } from './auth.service';
 
@@ -17,16 +16,16 @@ import { AuthService } from './auth.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  animations: [selfPic],
+  animations: [downConfirmPassword],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent implements AfterViewInit {
+export class LoginComponent {
   isLoading = false;
   error = false;
   loginObservable!: Observable<AuthResponseData>;
   @ViewChild('choice') choice!: ElementRef;
+  @ViewChild('choiceText') choiceText!: ElementRef;
   ErrorResponseMessage!: string;
-  inactivity = false;
   expanded = false;
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -42,15 +41,6 @@ export class LoginComponent implements AfterViewInit {
     private router: Router,
     private ref: ChangeDetectorRef
   ) {}
-
-  ngAfterViewInit() {
-    const firstVisit = localStorage.getItem('alreadyVisited');
-    if (!firstVisit) {
-      this.choice.nativeElement.checked = true;
-    } else {
-      this.choice.nativeElement.checked = false;
-    }
-  }
 
   onSubmit(choice: HTMLInputElement) {
     this.isLoading = true;
@@ -78,7 +68,6 @@ export class LoginComponent implements AfterViewInit {
       next: () => {
         this.error = false;
         this.isLoading = false;
-        localStorage.setItem('alreadyVisited', 'true');
         this.router.navigate(['/my-list']);
       },
       error: (errorResponse) => {
@@ -90,16 +79,20 @@ export class LoginComponent implements AfterViewInit {
     });
   }
 
-  toggleLogin(choice: HTMLInputElement, text: HTMLParagraphElement) {
-    if (choice.checked) {
+  textToggleLogin() {
+    this.choice.nativeElement.checked = !this.choice.nativeElement.checked;
+    this.toggleLogin();
+  }
+
+  toggleLogin() {
+    if (this.choice.nativeElement.checked) {
       // new user
-      text.textContent = 'Sign Up';
       this.expanded = true;
     } else {
       // existing user
-      text.textContent = 'Sign In';
       this.expanded = false;
     }
     this.error = false;
+    this.ref.markForCheck();
   }
 }

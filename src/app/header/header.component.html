@@ -42,9 +42,12 @@
           !isAuthenticated ? 'Log in to see this content' : null
         }}"
       >
-        <span *ngIf="notificationsNumber > 0" [@fadeInOut]>{{
-          notificationsNumber > 9 ? "9+" : notificationsNumber
-        }}</span>
+        <span
+          *ngIf="notificationsNumber > 0"
+          [@fadeInOut]
+          [ngClass]="{ nineMore: notificationsNumber > 9 }"
+          >{{ notificationsNumber > 9 ? "9+" : notificationsNumber }}</span
+        >
         <i
           [ngClass]="{ active: notificationsNumber > 0 }"
           class="fa-solid fa-bell"

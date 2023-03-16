@@ -10,7 +10,6 @@ import { AppCreateComponent } from '../app-create-component/app-create-component
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SafeHTMLPipe } from './safe-html.pipe';
 import { RouterModule } from '@angular/router';
-import { KeyDownDirective } from './key-down.directive';
 import { DateValidatorDirective } from './date-validatorTemplate.directive';
 
 @NgModule({
@@ -23,7 +22,6 @@ import { DateValidatorDirective } from './date-validatorTemplate.directive';
     ChangeItemComponent,
     AppCreateComponent,
     SafeHTMLPipe,
-    KeyDownDirective,
     DateValidatorDirective,
   ],
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
@@ -36,7 +34,6 @@ import { DateValidatorDirective } from './date-validatorTemplate.directive';
     ChangeItemComponent,
     AppCreateComponent,
     FormsModule,
-    KeyDownDirective,
     DateValidatorDirective,
   ],
   providers: [SafeHTMLPipe, DatePipe],

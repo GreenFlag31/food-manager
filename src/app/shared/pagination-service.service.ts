@@ -8,7 +8,7 @@ import { foodObject } from './IfoodObject';
 })
 export class PaginationService {
   currentPage = 1;
-  itemsperPage = 3;
+  itemsperPage = 5;
   totalPages = 1;
   maxPages = 6;
 

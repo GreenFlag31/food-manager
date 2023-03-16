@@ -39,7 +39,6 @@ p {
   margin-top: 1.5em;
 }
 .emphasize.blue {
-  font-weight: 600;
   color: var(--background-3);
   cursor: pointer;
   text-decoration: underline;

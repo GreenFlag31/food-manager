@@ -24,21 +24,19 @@ form {
 .form-content {
   display: grid;
   grid-template-rows: 3.3em auto min-content;
-  height: 305px;
+  height: 330px;
   width: 350px;
-  transition: 0.3s;
   background: var(--background-1);
   border-radius: 0.3em;
   box-shadow: 0px 2px 14px 3px rgb(0 0 0 / 71%);
   opacity: 0.9;
+  transition: 0.3s;
 }
-.input-controls {
-  margin-top: 0.5em;
-}
+
 .form-content.expanded {
-  height: 320px;
+  height: 340px;
 }
-.form-content span {
+.form-content .login-header {
   display: block;
   height: 100%;
   background: var(--background-2);
@@ -61,7 +59,7 @@ button.login {
   gap: 0.5em;
   justify-content: center;
   border: none;
-  padding: 0.6em 1.8em;
+  padding: 0.4em 1.8em;
   border-radius: 1.2em;
   color: white;
   background: var(--background-2);
@@ -80,6 +78,11 @@ button.login:hover:not([disabled]):not(.loadingLogin) {
 button.login[disabled] {
   background: rgb(85 161 220);
   cursor: not-allowed;
+}
+.underline {
+  text-decoration: underline;
+  font-weight: 600;
+  cursor: pointer;
 }
 .form {
   padding: 0.625em;
@@ -100,7 +103,7 @@ button.login[disabled] {
 .user i,
 .password i {
   position: absolute;
-  top: 1px;
+  top: 3px;
   left: 0;
   font-size: 0.9em;
 }
@@ -110,6 +113,7 @@ button.login[disabled] {
 
 .sign-choice {
   display: flex;
+  align-items: center;
   justify-content: flex-end;
   gap: 0.2em;
   padding: 0.625em;
@@ -200,10 +204,7 @@ button.login[disabled] {
   font-weight: bolder;
   border-radius: 0.2em;
 }
-.error i.inactivity,
-.error p.inactivity {
-  color: orange;
-}
+
 @media (max-width: 430px) {
   .form-content {
     width: 320px;

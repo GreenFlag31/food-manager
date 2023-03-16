@@ -149,15 +149,17 @@ button {
     margin: auto;
   }
 }
+@media (max-width: 610px) {
+  .actions {
+    margin-bottom: 0;
+  }
+}
 @media (max-width: 590px) {
   .food-container {
     max-width: 400px;
   }
 }
 @media (max-width: 530px) {
-  .actions {
-    margin-bottom: 0;
-  }
   .food-container {
     max-width: 350px;
   }
@@ -171,9 +173,6 @@ button {
   .layer {
     grid-template-rows: 210px auto min-content min-content;
   }
-  /* main {
-    margin-bottom: 6em;
-  } */
 }
 @media (max-width: 490px) {
   .food-container {

@@ -68,6 +68,7 @@ export class GeneralOverviewComponent implements OnInit, OnChanges {
       next: (items: foodObject[]) => {
         if (items.length === 0) {
           this.isLoading = false;
+          this.listItems = [];
           this.pagination.addPaginationToUrl(true);
           return;
         }
@@ -207,6 +208,8 @@ export class GeneralOverviewComponent implements OnInit, OnChanges {
   }
 
   onSearch(term: string) {
+    if (!this.listItems.length) return;
+
     const defaultItems = this.filteredItems || this.listItems;
     const items = this.foodData.getItemByName(term, defaultItems);
     if (items.length) {
@@ -221,7 +224,6 @@ export class GeneralOverviewComponent implements OnInit, OnChanges {
       this.itemsToDisplay = this.pagination.paginate(this.currentPage);
       this.searching = false;
     } else {
-      // this.totalPages = this.pagination.updateItemsToDisplay();
       this.itemsToDisplay = [];
       this.searching = false;
     }

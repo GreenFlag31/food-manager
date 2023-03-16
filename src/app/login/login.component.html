@@ -1,8 +1,7 @@
 <div class="layer">
   <div class="error" *ngIf="error" [@down]>
-    <p [ngClass]="{ inactivity }">
-      <i class="fa-solid fa-circle-exclamation" [ngClass]="{ inactivity }"></i
-      >{{ ErrorResponseMessage }}
+    <p>
+      <i class="fa-solid fa-circle-exclamation"></i>{{ ErrorResponseMessage }}
     </p>
   </div>
   <img src="../../assets/login.jpg" alt="Esthetic dinner plate" />
@@ -35,7 +34,7 @@
                 required
               />
             </div>
-            <div class="confirm password" *ngIf="expanded" [@down]>
+            <div class="confirm password" *ngIf="expanded" [@downConfPassword]>
               <i class="fa-solid fa-lock"></i>
               <input
                 type="password"
@@ -64,15 +63,13 @@
       </div>
       <div class="sign-choice">
         <div class="option">
-          <p #choiceText>Sign In</p>
+          <p #choiceText>
+            First visit ?
+            <span class="underline" (click)="textToggleLogin()">Sign Up</span>
+          </p>
         </div>
         <div class="checkbox">
-          <input
-            type="checkbox"
-            id="cbx-3"
-            #choice
-            (click)="toggleLogin(choice, choiceText)"
-          />
+          <input type="checkbox" id="cbx-3" #choice (click)="toggleLogin()" />
           <label for="cbx-3" class="toggle"><span></span></label>
         </div>
       </div>
