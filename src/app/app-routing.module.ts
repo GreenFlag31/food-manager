@@ -7,7 +7,7 @@ import { DataResolverService } from './shared/data-resolver.service';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/my-list',
+    redirectTo: '/getting-started',
     pathMatch: 'full',
     data: { animation: 'myList' },
   },

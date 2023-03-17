@@ -84,6 +84,7 @@ export class GeneralOverviewComponent implements OnInit, OnChanges {
       error: () => {
         this.error = true;
         this.isLoading = false;
+        this.ref.markForCheck();
       },
       complete: () => {
         this.ref.markForCheck();

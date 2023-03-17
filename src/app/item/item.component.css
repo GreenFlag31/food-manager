@@ -61,6 +61,7 @@
 }
 .best-before {
   display: flex;
+  min-width: 175px;
 }
 .actions {
   margin-right: 0.2em;

@@ -129,7 +129,6 @@ section.wrapper {
 .error {
   color: red;
   width: 100%;
-  margin-top: 1em;
 }
 .error i {
   margin-right: 0.3em;
@@ -145,6 +144,7 @@ section.wrapper {
 }
 .error p {
   background: #ffd2d2;
+  padding: 0.625em;
   font-weight: 600;
   border-radius: 0.2em;
 }
